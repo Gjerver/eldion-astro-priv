@@ -126,28 +126,29 @@
     const CX  = W / 2;
 
     interface NewsParticle {
-      baseX: number; y: number;
+      baseX: number; curX: number; y: number;
       size: number; speed: number; opacity: number;
       phase: number; freq: number; amplitude: number;
-      color: number;
-      vibPhase: number;
+      color: number; vibPhase: number;
     }
 
-    /* 55% of particles biased toward the centre timeline axis */
+    function makeBaseX() {
+      return Math.random() < 0.90
+        ? CX + (Math.random() - 0.5) * W * 0.22   // ±11 % from centre axis
+        : CX + (Math.random() - 0.5) * W * 0.70;  // remaining 10 % wider
+    }
+
     const COUNT = 190;
-    const pts: NewsParticle[] = Array.from({ length: COUNT }, (_, i) => {
-      const nearCenter = i < Math.floor(COUNT * 0.55);
-      const baseX = nearCenter
-        ? CX + (Math.random() - 0.5) * W * 0.34
-        : Math.random() * W;
+    const pts: NewsParticle[] = Array.from({ length: COUNT }, () => {
+      const baseX = makeBaseX();
       return {
-        baseX, y: Math.random() * H,
+        baseX, curX: baseX, y: Math.random() * H,
         size:      Math.random() * 1.9 + 0.6,
         speed:     Math.random() * 0.44 + 0.11,
         opacity:   Math.random() * 0.52 + 0.14,
         phase:     Math.random() * Math.PI * 2,
         freq:      Math.random() * 0.009 + 0.003,
-        amplitude: Math.random() * 26 + 7,
+        amplitude: Math.random() * 28 + 8,
         color: 0, vibPhase: 0,
       };
     });
@@ -168,6 +169,7 @@
 
     function updateFocused() {
       if (hoverCard) { computeFocused(hoverCard); return; }
+      /* Scroll fallback: colour only, no vibration (hoverCard stays null) */
       const viewMid = window.innerHeight / 2;
       let best: HTMLElement | null = null;
       let bestD = Infinity;
@@ -183,7 +185,6 @@
       }
     }
 
-    /* Hover takes priority over scroll-centre detection */
     cards.forEach(card => {
       card.addEventListener('mouseenter', () => { hoverCard = card; computeFocused(card); });
       card.addEventListener('mouseleave', () => { hoverCard = null; updateFocused(); });
@@ -203,8 +204,18 @@
       ctx.clearRect(0, 0, W, H);
 
       for (const p of pts) {
-        const sineX = p.baseX + p.amplitude * Math.sin(p.freq * p.y + p.phase);
+        /* ── Magnetic drift: curX chases focusedX when hot, home when cool ── */
+        if (focusedX !== null && p.color > 0.04) {
+          p.curX += (focusedX - p.curX) * p.color * 0.04;
+        } else {
+          p.curX += (p.baseX - p.curX) * 0.015;
+        }
 
+        /* Sine amplitude collapses as particle heats — tighter cluster at card */
+        const amp  = p.amplitude * (1 - p.color * 0.80);
+        const sineX = p.curX + amp * Math.sin(p.freq * p.y + p.phase);
+
+        /* Colour target — Y proximity to focused card */
         let target = 0;
         if (focusedY !== null) {
           const dy = Math.abs(p.y - focusedY);
@@ -212,17 +223,13 @@
         }
         p.color += (target - p.color) * 0.09;
 
-        /* Sinusoidal vibration scales with heat */
-        p.vibPhase += p.color * 0.55;
-        const vx = Math.sin(p.vibPhase * 11 + p.phase) * p.color * 3.5;
-        const vy = Math.sin(p.vibPhase * 7)             * p.color * 1.5;
-
-        /* Gentle X pull toward focused card */
-        const ax = (focusedX !== null && p.color > 0.1)
-          ? (focusedX - sineX) * p.color * 0.08
-          : 0;
-
-        const drawX = sineX + vx + ax;
+        /* Vibration ONLY when mouse is actually hovering a card */
+        let vx = 0, vy = 0;
+        if (hoverCard !== null && p.color > 0.05) {
+          p.vibPhase += p.color * 0.55;
+          vx = Math.sin(p.vibPhase * 11 + p.phase) * p.color * 3.5;
+          vy = Math.sin(p.vibPhase * 7)             * p.color * 1.5;
+        }
 
         /* cyan (0,191,255) → eldION orange (233,78,27) */
         const r = Math.round(         p.color * 233);
@@ -231,13 +238,17 @@
 
         ctx.globalAlpha = p.opacity * (1 + p.color * 0.45);
         ctx.beginPath();
-        ctx.arc(drawX, p.y + vy, p.size * (1 + p.color * 0.45), 0, Math.PI * 2);
+        ctx.arc(sineX + vx, p.y + vy, p.size * (1 + p.color * 0.45), 0, Math.PI * 2);
         ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fill();
         ctx.globalAlpha = 1;
 
         p.y -= p.speed;
-        if (p.y < -10) { p.y = H + 10; p.baseX = Math.random() * W; }
+        if (p.y < -10) {
+          p.y = H + 10;
+          p.baseX = makeBaseX();
+          p.curX  = p.baseX;
+        }
       }
     }
 
