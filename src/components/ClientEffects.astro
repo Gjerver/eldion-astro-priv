@@ -97,7 +97,136 @@
     gsap.set('.timeline-item', { opacity: 1, x: 0, scale: 1 });
   }
 
-  /* Section 4 (particle stream) removed — replaced with static CSS line */
+  /* ══════════════════════════════════════════════════════════════
+     4. NEWS SECTION — solid background fade + sine-wave particles
+        Background: rgba(83,127,143) fades in via IntersectionObserver.
+        Particles: drift upward in sine waves (cyan), turn orange + vibrate
+        when near the card closest to viewport centre (heat atoms).
+        Desktop only — touch devices skip canvas.
+     ══════════════════════════════════════════════════════════════ */
+  const newsBg      = document.getElementById('news-bg')        as HTMLElement      | null;
+  const newsCanvas  = document.getElementById('news-particles')  as HTMLCanvasElement| null;
+  const newsSection = document.getElementById('news')            as HTMLElement      | null;
+
+  if (newsBg && newsSection) {
+    /* Fade the solid background in when section enters viewport */
+    new IntersectionObserver(
+      ([e]) => { newsBg.style.opacity = e.isIntersecting ? '1' : '0'; },
+      { threshold: 0.08 }
+    ).observe(newsSection);
+  }
+
+  if (newsCanvas && newsSection && !isTouch && !isReduced) {
+
+    /* Size canvas to match section */
+    newsCanvas.width  = newsSection.offsetWidth;
+    newsCanvas.height = newsSection.offsetHeight;
+    const ctx = newsCanvas.getContext('2d')!;
+    const W   = newsCanvas.width;
+    const H   = newsCanvas.height;
+
+    interface NewsParticle {
+      baseX: number; y: number;
+      size: number; speed: number; opacity: number;
+      phase: number; freq: number; amplitude: number;
+      color: number;   // 0 = cyan, 1 = orange (smoothly animated)
+      vibPhase: number;
+    }
+
+    const COUNT = 72;
+    const pts: NewsParticle[] = Array.from({ length: COUNT }, () => ({
+      baseX:     Math.random() * W,
+      y:         Math.random() * H,
+      size:      Math.random() * 1.7 + 0.7,
+      speed:     Math.random() * 0.38 + 0.14,
+      opacity:   Math.random() * 0.45 + 0.18,
+      phase:     Math.random() * Math.PI * 2,
+      freq:      Math.random() * 0.008 + 0.003,
+      amplitude: Math.random() * 22 + 8,
+      color:     0,
+      vibPhase:  0,
+    }));
+
+    /* Cache focused card position — updated on scroll, not per frame */
+    const cards = Array.from(newsSection.querySelectorAll<HTMLElement>('.tl-card'));
+    let focusedY: number | null = null;
+    let focusedHalf = 0;
+
+    function updateFocused() {
+      const secTop  = newsSection!.getBoundingClientRect().top;
+      const viewMid = window.innerHeight / 2;
+      let best: Element | null = null;
+      let bestD = Infinity;
+      cards.forEach(c => {
+        const r = c.getBoundingClientRect();
+        const d = Math.abs((r.top + r.bottom) / 2 - viewMid);
+        if (d < bestD) { bestD = d; best = c; }
+      });
+      if (best && bestD < window.innerHeight * 0.65) {
+        const r = (best as Element).getBoundingClientRect();
+        focusedY    = (r.top + r.bottom) / 2 - secTop;
+        focusedHalf = r.height / 2 + 90;
+      } else {
+        focusedY = null;
+      }
+    }
+    window.addEventListener('scroll', updateFocused, { passive: true });
+    updateFocused();
+
+    /* Frame loop — throttled to 30 fps */
+    const FPS_MS = 1000 / 30;
+    let lastTs = 0;
+    let rafId: number | null = null;
+
+    function frame(ts: number) {
+      rafId = requestAnimationFrame(frame);
+      if (ts - lastTs < FPS_MS) return;
+      lastTs = ts;
+
+      ctx.clearRect(0, 0, W, H);
+
+      for (const p of pts) {
+        const x = p.baseX + p.amplitude * Math.sin(p.freq * p.y + p.phase);
+
+        /* Colour target based on proximity to focused card */
+        let target = 0;
+        if (focusedY !== null) {
+          const d = Math.abs(p.y - focusedY);
+          if (d < focusedHalf) target = 1 - d / focusedHalf;
+        }
+        p.color += (target - p.color) * 0.07;
+
+        /* Vibration — sinusoidal, not random, so it looks intentional */
+        p.vibPhase += p.color * 0.45;
+        const vx = Math.sin(p.vibPhase * 11 + p.phase) * p.color * 2.8;
+        const vy = Math.sin(p.vibPhase *  7             ) * p.color * 1.2;
+
+        /* Interpolate cyan (0,191,255) → eldION orange (233,78,27) */
+        const r = Math.round(        p.color * 233);
+        const g = Math.round(191 - p.color * 113);
+        const b = Math.round(255 - p.color * 228);
+
+        ctx.globalAlpha = p.opacity * (1 + p.color * 0.35);
+        ctx.beginPath();
+        ctx.arc(x + vx, p.y + vy, p.size * (1 + p.color * 0.4), 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        p.y -= p.speed;
+        if (p.y < -10) { p.y = H + 10; p.baseX = Math.random() * W; }
+      }
+    }
+
+    /* Pause loop when section is off-screen */
+    new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) { if (!rafId) rafId = requestAnimationFrame(frame); }
+        else { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+      },
+      { rootMargin: '120px 0px' }
+    ).observe(newsSection);
+  }
 
   /* ══════════════════════════════════════════════════════════════
      4b. TEAM IMAGES – colour on scroll-into-view (touch/mobile)

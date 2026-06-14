@@ -2,28 +2,39 @@
 import TimelineItem from './TimelineItem.astro';
 import { events } from '../data/timeline';
 ---
-<section id="news" class="pt-[140px] pb-[80px] max-[768px]:pt-[180px]">
+<section id="news" class="pt-[140px] pb-[80px] max-[768px]:pt-[180px] relative overflow-hidden">
 
-  <h2 data-animate class="font-comfortaa text-[2em] text-center mb-3">Vår tidslinje</h2>
-  <p data-animate class="text-center text-white/35 text-sm mb-[60px] tracking-wide">
-    Scroll ned for å gå tilbake i tid ↓
-  </p>
+  <!-- Solid background — fades in on scroll, hides video so backdrop-filter is cheap -->
+  <div id="news-bg" aria-hidden="true"
+       style="position:absolute;inset:0;background:#537f8f;opacity:0;transition:opacity 1.1s ease;pointer-events:none;z-index:0;"></div>
 
-  <div class="timeline-container">
-    <!-- Static center line (replaces particle canvas) -->
-    <div class="timeline-track" aria-hidden="true"></div>
+  <!-- Particle canvas (desktop only, driven by JS) -->
+  <canvas id="news-particles" aria-hidden="true"
+          style="position:absolute;inset:0;pointer-events:none;z-index:1;"></canvas>
 
-    {events.map((event, index) => (
-      <TimelineItem
-        date={event.date}
-        logo={event.logo}
-        logoAlt={event.logoAlt}
-        title={event.title}
-        content={event.content}
-        logoStyle={event.logoStyle}
-        side={index % 2 === 0 ? 'left' : 'right'}
-      />
-    ))}
+  <!-- All content above bg + canvas -->
+  <div style="position:relative;z-index:2;">
+
+    <h2 data-animate class="font-comfortaa text-[2em] text-center mb-3">Vår tidslinje</h2>
+    <p data-animate class="text-center text-white/35 text-sm mb-[60px] tracking-wide">
+      Scroll ned for å gå tilbake i tid ↓
+    </p>
+
+    <div class="timeline-container">
+      <div class="timeline-track" aria-hidden="true"></div>
+
+      {events.map((event, index) => (
+        <TimelineItem
+          date={event.date}
+          logo={event.logo}
+          logoAlt={event.logoAlt}
+          title={event.title}
+          content={event.content}
+          logoStyle={event.logoStyle}
+          side={index % 2 === 0 ? 'left' : 'right'}
+        />
+      ))}
+    </div>
+
   </div>
-
 </section>
