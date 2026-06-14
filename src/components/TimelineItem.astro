@@ -9,16 +9,23 @@ interface Props {
   side?: 'left' | 'right';
 }
 const { date, logo, logoAlt, title, content, logoStyle = '', side = 'left' } = Astro.props;
+const isLeft = side === 'left';
 ---
 <div class={`timeline-item tl-${side}`}>
-  <div class="tl-card">
+  <div class={`tl-card ${isLeft ? 'text-right max-[768px]:text-left' : 'text-left'}`}>
     <img
       src={`/images/${logo}`}
       alt={logoAlt}
-      class={`tl-logo ${logoStyle}`}
+      class={`tl-logo ${isLeft ? 'ml-auto max-[768px]:ml-0' : ''} ${logoStyle}`}
     />
-    <span class="tl-date">{date}</span>
-    <h3 class="tl-title">{title}</h3>
-    <p class="tl-content">{content}</p>
+    <span class="block text-[0.6rem] font-bold text-cyan-400 uppercase tracking-[0.22em] mb-2.5">
+      {date}
+    </span>
+    <h3 class="font-comfortaa text-[1.08rem] font-semibold text-white/95 mb-2.5 leading-snug tracking-tight">
+      {title}
+    </h3>
+    <p class="text-[0.83rem] text-white/52 leading-relaxed">
+      {content}
+    </p>
   </div>
 </div>
