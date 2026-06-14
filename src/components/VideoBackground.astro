@@ -58,6 +58,17 @@
     }
   });
 
+  /* ── bfcache restore (back/forward navigation) ────────────────────
+     When the browser restores this page from the Back/Forward Cache
+     (e.g. after returning from the Formsree confirmation page), the
+     video element is frozen in its cached state. `pageshow` with
+     event.persisted = true is the correct signal for this case.      */
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted && vid.paused) {
+      vid.play().catch(() => {});
+    }
+  });
+
   setInterval(() => {
     if (vid.paused && document.visibilityState === 'visible') {
       vid.play().catch(() => {});
