@@ -133,7 +133,17 @@
       trail:   [],
     }));
 
-    function frame() {
+    /* Throttle canvas to 30 fps — background animation doesn't need 60 */
+    const FRAME_MS = 1000 / 30;
+    let lastFrameTs = 0;
+    let rafId: number | null = null;
+
+    function frame(ts: number) {
+      rafId = requestAnimationFrame(frame);
+
+      if (ts - lastFrameTs < FRAME_MS) return; // skip frame
+      lastFrameTs = ts;
+
       ctx.clearRect(0, 0, 24, containerH);
 
       /* Gradient center line — bright present (top) → dim past (bottom) */
@@ -179,11 +189,21 @@
         p.y -= p.speed;
         if (p.y < -8) { p.y = containerH + 8; p.trail = []; }
       }
-
-      requestAnimationFrame(frame);
     }
 
-    frame();
+    /* Only run the loop while the timeline section is in the viewport.
+       100px margin so animation is already going when it scrolls in. */
+    const canvasObs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!rafId) rafId = requestAnimationFrame(frame);
+        } else {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        }
+      },
+      { rootMargin: '100px 0px' }
+    );
+    canvasObs.observe(tlCanvas);
   }
 
   /* ══════════════════════════════════════════════════════════════
