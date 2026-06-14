@@ -124,7 +124,7 @@
       trail: number[];
     }
 
-    const COUNT = 22;
+    const COUNT = 14; // reduced from 22
     const particles: Particle[] = Array.from({ length: COUNT }, () => ({
       y:       Math.random() * containerH,
       size:    Math.random() * 1.8 + 0.6,
@@ -132,6 +132,13 @@
       opacity: Math.random() * 0.42 + 0.08,
       trail:   [],
     }));
+
+    /* Cache the static center-line gradient — no need to recreate every frame */
+    const lineGrad = ctx.createLinearGradient(0, 0, 0, containerH);
+    lineGrad.addColorStop(0,    'rgba(0, 174, 239, 0.55)');
+    lineGrad.addColorStop(0.35, 'rgba(0, 174, 239, 0.28)');
+    lineGrad.addColorStop(0.7,  'rgba(0, 100, 160, 0.14)');
+    lineGrad.addColorStop(1,    'rgba(0,  60, 100, 0.05)');
 
     /* Throttle canvas to 30 fps — background animation doesn't need 60 */
     const FRAME_MS = 1000 / 30;
@@ -146,13 +153,7 @@
 
       ctx.clearRect(0, 0, 24, containerH);
 
-      /* Gradient center line — bright present (top) → dim past (bottom) */
-      const lineGrad = ctx.createLinearGradient(0, 0, 0, containerH);
-      lineGrad.addColorStop(0,    'rgba(0, 174, 239, 0.55)');
-      lineGrad.addColorStop(0.35, 'rgba(0, 174, 239, 0.28)');
-      lineGrad.addColorStop(0.7,  'rgba(0, 100, 160, 0.14)');
-      lineGrad.addColorStop(1,    'rgba(0,  60, 100, 0.05)');
-
+      /* Center line (cached gradient, no new object) */
       ctx.beginPath();
       ctx.moveTo(CX, 0);
       ctx.lineTo(CX, containerH);
@@ -162,30 +163,31 @@
 
       /* Particles */
       for (const p of particles) {
-        /* Trailing tail */
+        /* Trailing tail — simple filled circles, no gradient objects */
         for (let i = p.trail.length - 1; i >= 0; i--) {
           const age  = p.trail.length - i;
-          const fade = (1 - age / p.trail.length);
+          const fade = 1 - age / p.trail.length;
           const r    = p.size * 0.65 * fade;
           if (r < 0.1) continue;
+          ctx.globalAlpha = p.opacity * 0.35 * fade;
           ctx.beginPath();
           ctx.arc(CX, p.trail[i], r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(0, 191, 255, ${p.opacity * 0.35 * fade})`;
+          ctx.fillStyle = '#00BFFF';
           ctx.fill();
         }
 
-        /* Core with radial glow */
-        const grd = ctx.createRadialGradient(CX, p.y, 0, CX, p.y, p.size * 2.8);
-        grd.addColorStop(0, `rgba(120, 230, 255, ${Math.min(p.opacity * 1.4, 1)})`);
-        grd.addColorStop(1, 'rgba(0, 174, 239, 0)');
+        /* Core — solid circle, no createRadialGradient per frame */
+        ctx.globalAlpha = Math.min(p.opacity * 1.3, 0.9);
         ctx.beginPath();
         ctx.arc(CX, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
+        ctx.fillStyle = '#78E6FF';
         ctx.fill();
 
-        /* Update */
+        ctx.globalAlpha = 1; // reset
+
+        /* Update — shorter trail (6 instead of 10) */
         p.trail.push(p.y);
-        if (p.trail.length > 10) p.trail.shift();
+        if (p.trail.length > 6) p.trail.shift();
         p.y -= p.speed;
         if (p.y < -8) { p.y = containerH + 8; p.trail = []; }
       }

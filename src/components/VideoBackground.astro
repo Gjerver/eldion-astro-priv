@@ -1,9 +1,9 @@
 ---
 ---
-<!-- Full-screen video layer — driven by scroll position, no autoplay loop -->
+<!-- Full-screen video layer -->
 <video
   id="bg-video"
-  muted playsinline preload="auto"
+  autoplay muted loop playsinline preload="auto"
   aria-hidden="true"
   style="position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;"
 >
@@ -28,34 +28,78 @@
   const vid = document.getElementById('bg-video') as HTMLVideoElement | null;
   if (!vid) throw new Error('bg-video not found');
 
-  /* Scroll-driven playback:
-     scroll position (0 → bottom) maps to video time (0 → duration).
-     Scrolling down advances the video; scrolling up rewinds it.
-     No autoplay, no loop — the loop-jump issue disappears entirely. */
+  vid.playbackRate = 1;
+  vid.addEventListener('canplay', () => { vid.playbackRate = 1; }, { once: true });
 
-  vid.pause();
+  /* ── Stall / freeze recovery ──────────────────────────────────────
+     Browsers can stall background videos on slow connections or after
+     the tab has been hidden. We detect this and force a reload.      */
 
-  function seekToScroll() {
-    if (!vid.duration || !isFinite(vid.duration)) return;
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (maxScroll > 0) {
-      vid.currentTime = (window.scrollY / maxScroll) * vid.duration;
+  let stallTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function recover() {
+    vid.load();
+    vid.play().catch(() => {});
+  }
+
+  vid.addEventListener('stalled', recover);
+
+  vid.addEventListener('waiting', () => {
+    stallTimer = setTimeout(recover, 3000);
+  });
+  vid.addEventListener('playing', () => {
+    if (stallTimer) { clearTimeout(stallTimer); stallTimer = null; }
+    vid.playbackRate = 1;
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && vid.paused) {
+      vid.play().catch(() => {});
+    }
+  });
+
+  setInterval(() => {
+    if (vid.paused && document.visibilityState === 'visible') {
+      vid.play().catch(() => {});
+    }
+  }, 5000);
+
+  /* ── Loop-point blur ──────────────────────────────────────────────
+     A very subtle blur on the video element itself masks the visual
+     jump at the loop point. Quadratic easing (t²) keeps the effect
+     near-invisible except in the last fraction of a second.
+
+     Timeline:  … -0.55s → blur rises 0→2px → [loop] → 0.32s → 0px
+     At midpoint (-0.275 s): only 0.5 px — below perception threshold.  */
+
+  const BLUR_MAX    = 3.5;
+  const FADE_OUT    = 0.75;
+  const FADE_IN     = 0.45;
+  const BLUR_FRAME  = 1000 / 30; // throttle to 30 fps — no need to run faster
+  let   lastBlurTs  = 0;
+  let   lastBlurVal = '';        // only write style when value actually changes
+
+  function loopBlurTick(ts: number) {
+    requestAnimationFrame(loopBlurTick);
+
+    if (ts - lastBlurTs < BLUR_FRAME) return;
+    lastBlurTs = ts;
+
+    if (!vid.duration || !isFinite(vid.duration) || vid.paused) return;
+
+    const timeLeft = vid.duration - vid.currentTime;
+    const timeIn   = vid.currentTime;
+
+    let t = 0;
+    if (timeLeft < FADE_OUT) t = 1 - (timeLeft / FADE_OUT);
+    else if (timeIn < FADE_IN) t = 1 - (timeIn  / FADE_IN);
+
+    const next = t * t > 0.0004 ? `blur(${(t * t * BLUR_MAX).toFixed(2)}px)` : '';
+    if (next !== lastBlurVal) {
+      vid.style.filter = next;
+      lastBlurVal = next;
     }
   }
 
-  /* Seek as soon as duration is known, and on every scroll (rAF-throttled) */
-  vid.addEventListener('loadedmetadata', seekToScroll);
-
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(() => { seekToScroll(); ticking = false; });
-    }
-  }, { passive: true });
-
-  /* Re-sync when tab becomes visible after being hidden */
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') seekToScroll();
-  });
+  requestAnimationFrame(loopBlurTick);
 </script>
