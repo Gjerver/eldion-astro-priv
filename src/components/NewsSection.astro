@@ -10,8 +10,8 @@ import { events } from '../data/timeline';
   </p>
 
   <div class="timeline-container">
-    <!-- Particle stream canvas — replaces the old static line div -->
-    <canvas id="tl-stream" class="timeline-stream-canvas" aria-hidden="true"></canvas>
+    <!-- Static center line (replaces particle canvas) -->
+    <div class="timeline-track" aria-hidden="true"></div>
 
     {events.map((event, index) => (
       <TimelineItem
