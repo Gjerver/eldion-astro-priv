@@ -1,7 +1,53 @@
 ---
+const navLinks = [
+  { href: '#home',    label: 'Hjem' },
+  { href: '#goal',    label: 'Løsning' },
+  { href: '#team',    label: 'Team' },
+  { href: '#contact', label: 'Kontakt' },
+];
 ---
-<footer class="text-center py-[25px] px-5 mt-[50px] bg-[rgba(10,10,10,0.7)] backdrop-blur-sm border-t border-white/10 text-[0.9em] text-[#aaa] w-full box-border">
-  <p class="m-0">eldION AS | Kontakt@eldion.no | +47 48204754</p>
-  <p class="m-0">Org.nr. 934 839 080</p>
-  <p class="m-0">© 2026</p>
+<footer class="w-full mt-[50px] bg-[rgba(10,10,10,0.7)] backdrop-blur-sm border-t border-white/10">
+
+  <div class="max-w-[900px] mx-auto px-6 py-10 flex flex-col items-center gap-8">
+
+    <!-- Nav links -->
+    <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
+      {navLinks.map(({ href, label }) => (
+        <a
+          href={href}
+          class="text-[0.82rem] text-white/45 uppercase tracking-[0.18em] no-underline
+                 transition-colors duration-200 hover:text-eldion-cyan"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Divider -->
+    <div class="w-px h-0 border-t border-white/10 w-full"></div>
+
+    <!-- Contact + LinkedIn row -->
+    <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-[0.83rem] text-white/40">
+      <span>Kontakt@eldion.no</span>
+      <span class="text-white/15 hidden sm:inline">|</span>
+      <span>+47 482 04 754</span>
+      <span class="text-white/15 hidden sm:inline">|</span>
+      <a
+        href="https://www.linkedin.com/company/eldion-as"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 text-white/40 no-underline
+               transition-colors duration-200 hover:text-eldion-cyan"
+      >
+        <img src="/images/linkedin.png" alt="" class="w-4 h-4 opacity-50" />
+        LinkedIn
+      </a>
+    </div>
+
+    <!-- Legal -->
+    <p class="text-[0.75rem] text-white/22 text-center m-0 leading-relaxed">
+      eldION AS &nbsp;·&nbsp; Org.nr. 934 839 080 &nbsp;·&nbsp; © 2026
+    </p>
+
+  </div>
 </footer>

@@ -13,53 +13,85 @@ const topics = [
   <h1 data-animate class="font-comfortaa text-[2.8rem] mb-[15px]">Kontakt oss</h1>
   <p data-animate data-delay="1" class="text-[1.2rem] text-white mb-[40px]">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</p>
 
+  <!-- Form-level error (shown by @formspree/ajax on submission failure) -->
+  <div data-fs-error
+       class="hidden mb-6 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20
+              text-red-400 text-sm text-left">
+  </div>
+
+  <!-- Success message (shown by @formspree/ajax on success) -->
+  <div data-fs-success
+       class="hidden mb-6 px-6 py-10 rounded-2xl bg-white/5 border border-white/10
+              backdrop-blur-lg text-center">
+    <div class="text-5xl mb-4 text-eldion-cyan">✓</div>
+    <p class="text-xl font-semibold text-white mb-2 font-comfortaa">Takk for meldingen!</p>
+    <p class="text-white/55 text-sm">Vi tar kontakt med deg så snart som mulig.</p>
+  </div>
+
   <form
-    action="https://formspree.io/f/xzzknewz"
-    method="POST"
+    id="contact-form"
     data-animate
     data-delay="2"
     class="flex flex-col gap-[25px] bg-white/5 p-[40px] rounded-[20px] shadow-[0_0_20px_rgba(0,0,0,0.3)] backdrop-blur-lg border border-white/10"
   >
     <div>
       <label for="topic" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hva gjelder det?</label>
-      <select id="topic" name="topic" required class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25 [&>option]:text-black [&>option]:bg-white">
+      <select id="topic" name="topic" required data-fs-field
+              class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
+                     focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
+                     [&>option]:text-black [&>option]:bg-white
+                     aria-invalid:border aria-invalid:border-red-500/60">
         <option value="">Velg kategori</option>
         {topics.map(({ value, label }) => (
           <option value={value}>{label}</option>
         ))}
       </select>
+      <span data-fs-error="topic" class="block mt-1 text-xs text-red-400 text-left"></span>
     </div>
 
     <div>
       <label for="name" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hvem er du?</label>
       <input
         type="text" id="name" name="name"
-        placeholder="Navn eller firmanavn" required
-        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+        placeholder="Navn eller firmanavn" required data-fs-field
+        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
+               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
+               aria-invalid:border aria-invalid:border-red-500/60"
       />
+      <span data-fs-error="name" class="block mt-1 text-xs text-red-400 text-left"></span>
     </div>
 
     <div>
       <label for="email" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">E-post</label>
       <input
         type="email" id="email" name="email"
-        placeholder="Din e-postadresse" required
-        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+        placeholder="Din e-postadresse" required data-fs-field
+        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
+               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
+               aria-invalid:border aria-invalid:border-red-500/60"
       />
+      <span data-fs-error="email" class="block mt-1 text-xs text-red-400 text-left"></span>
     </div>
 
     <div>
       <label for="message" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Melding</label>
       <textarea
         id="message" name="message"
-        placeholder="Skriv meldingen din her..." required
-        class="w-full h-[120px] resize-none bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+        placeholder="Skriv meldingen din her..." required data-fs-field
+        class="w-full h-[120px] resize-none bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
+               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
+               aria-invalid:border aria-invalid:border-red-500/60"
       ></textarea>
+      <span data-fs-error="message" class="block mt-1 text-xs text-red-400 text-left"></span>
     </div>
 
     <button
       type="submit"
-      class="magnetic bg-gradient-to-br from-cyan-bright to-[#0099cc] border-none text-white font-bold rounded-xl py-[15px] text-[1.2rem] cursor-pointer transition-all duration-300 hover:from-[#00a0d1] hover:to-[#00c3ff] hover:scale-[1.03]"
+      data-fs-submit-btn
+      class="magnetic bg-gradient-to-br from-cyan-bright to-[#0099cc] border-none text-white font-bold
+             rounded-xl py-[15px] text-[1.2rem] cursor-pointer transition-all duration-300
+             hover:from-[#00a0d1] hover:to-[#00c3ff] hover:scale-[1.03]
+             disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
     >
       Send
     </button>
@@ -70,3 +102,9 @@ const topics = [
   </div>
 
 </section>
+
+<script>
+  import { initForm } from '@formspree/ajax';
+
+  initForm({ formElement: '#contact-form', formId: 'xzzknewz' });
+</script>
