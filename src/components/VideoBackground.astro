@@ -25,10 +25,46 @@
 ></div>
 
 <script>
-  /* Slow-motion playback */
   const vid = document.getElementById('bg-video') as HTMLVideoElement | null;
-  if (vid) {
-    vid.playbackRate = 1;
-    vid.addEventListener('canplay', () => { vid.playbackRate = 1; }, { once: true });
+  if (!vid) throw new Error('bg-video not found');
+
+  vid.playbackRate = 1;
+  vid.addEventListener('canplay', () => { vid.playbackRate = 1; }, { once: true });
+
+  /* ── Stall / freeze recovery ──────────────────────────────────────
+     Browsers can stall background videos on slow connections or after
+     the tab has been hidden. We detect this and force a reload.      */
+
+  let stallTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function recover() {
+    vid.load();
+    vid.play().catch(() => {});
   }
+
+  // stalled fires when the browser stops fetching data
+  vid.addEventListener('stalled', recover);
+
+  // waiting fires when the browser needs to buffer — give it 3 s, then reload
+  vid.addEventListener('waiting', () => {
+    stallTimer = setTimeout(recover, 3000);
+  });
+  vid.addEventListener('playing', () => {
+    if (stallTimer) { clearTimeout(stallTimer); stallTimer = null; }
+    vid.playbackRate = 1;
+  });
+
+  // Tab visibility: mobile browsers often pause videos when the tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && vid.paused) {
+      vid.play().catch(() => {});
+    }
+  });
+
+  // Fallback heartbeat: if the video is somehow frozen without firing events
+  setInterval(() => {
+    if (vid.paused && document.visibilityState === 'visible') {
+      vid.play().catch(() => {});
+    }
+  }, 5000);
 </script>

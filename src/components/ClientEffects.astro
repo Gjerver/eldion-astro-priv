@@ -187,6 +187,31 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
+     4b. TEAM IMAGES – colour on scroll-into-view (touch/mobile)
+         On desktop, CSS group-hover handles grayscale→colour.
+         On touch devices hover never fires, so we use
+         IntersectionObserver: visible card → full colour,
+         out-of-view → grey. CSS transition makes it smooth.
+     ══════════════════════════════════════════════════════════════ */
+  if (isTouch) {
+    const teamObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const img = entry.target as HTMLElement;
+          img.style.filter = entry.isIntersecting
+            ? 'grayscale(0%)'
+            : 'grayscale(100%)';
+        });
+      },
+      { threshold: 0.45, rootMargin: '-8% 0px -8% 0px' }
+    );
+
+    document.querySelectorAll<HTMLElement>('.team-img').forEach((img) => {
+      teamObs.observe(img);
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════════
      5. 3-D TILT ON SOLUTION IMAGES
      ══════════════════════════════════════════════════════════════ */
   if (!isTouch) {
