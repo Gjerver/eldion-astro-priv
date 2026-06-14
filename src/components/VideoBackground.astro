@@ -10,15 +10,6 @@
   <source src="/images/backdropvideo.mp4" type="video/mp4" />
 </video>
 
-<!-- Loop-fade overlay: fades to black at the loop point to hide the jump.
-     Sits between video (z:-2) and vignette (z:-1) in DOM order so
-     vignette renders on top of it. -->
-<div
-  id="bg-loop-fade"
-  aria-hidden="true"
-  style="position:fixed;inset:0;z-index:-1;background:#000;opacity:0;pointer-events:none;"
-></div>
-
 <!-- Radial vignette overlay: subtly clear at centre → near-black at edges -->
 <div
   aria-hidden="true"
@@ -34,8 +25,7 @@
 ></div>
 
 <script>
-  const vid    = document.getElementById('bg-video')     as HTMLVideoElement | null;
-  const fadeEl = document.getElementById('bg-loop-fade') as HTMLElement | null;
+  const vid = document.getElementById('bg-video') as HTMLVideoElement | null;
   if (!vid) throw new Error('bg-video not found');
 
   vid.playbackRate = 1;
@@ -74,30 +64,35 @@
     }
   }, 5000);
 
-  /* ── Loop-point fade ──────────────────────────────────────────────
-     Start darkening 0.8 s before the end, reach full black at the
-     loop point, then fade back over 0.45 s. The overlap hides the
-     visual jump. Uses rAF so the curve is smooth at 60 fps.          */
+  /* ── Loop-point blur ──────────────────────────────────────────────
+     A very subtle blur on the video element itself masks the visual
+     jump at the loop point. Quadratic easing (t²) keeps the effect
+     near-invisible except in the last fraction of a second.
 
-  const FADE_OUT = 0.8;  // seconds before end to begin fading out
-  const FADE_IN  = 0.45; // seconds after loop start to finish fading in
+     Timeline:  … -0.55s → blur rises 0→2px → [loop] → 0.32s → 0px
+     At midpoint (-0.275 s): only 0.5 px — below perception threshold.  */
 
-  function loopFadeTick() {
-    if (fadeEl && vid.duration && isFinite(vid.duration) && !vid.paused) {
+  const BLUR_MAX = 2;    // px  — barely perceptible on a full-screen bg
+  const FADE_OUT = 0.55; // s before end to start blurring
+  const FADE_IN  = 0.32; // s after loop start to clear the blur
+
+  function loopBlurTick() {
+    if (vid.duration && isFinite(vid.duration) && !vid.paused) {
       const timeLeft = vid.duration - vid.currentTime;
       const timeIn   = vid.currentTime;
 
-      let opacity = 0;
+      let t = 0;
       if (timeLeft < FADE_OUT) {
-        opacity = 1 - (timeLeft / FADE_OUT);       // 0 → 1 as end approaches
+        t = 1 - (timeLeft / FADE_OUT);   // 0 → 1 as end approaches
       } else if (timeIn < FADE_IN) {
-        opacity = 1 - (timeIn   / FADE_IN);        // 1 → 0 after loop restarts
+        t = 1 - (timeIn   / FADE_IN);    // 1 → 0 after loop restarts
       }
 
-      fadeEl.style.opacity = opacity.toFixed(3);
+      const blur = (t * t * BLUR_MAX).toFixed(2); // quadratic: slow start, fast peak
+      vid.style.filter = parseFloat(blur) > 0.05 ? `blur(${blur}px)` : '';
     }
-    requestAnimationFrame(loopFadeTick);
+    requestAnimationFrame(loopBlurTick);
   }
 
-  loopFadeTick();
+  loopBlurTick();
 </script>
