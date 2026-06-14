@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teamet | eldION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo2.png" type="image/png">
+
+    <style>
+        /* Grunnleggende rutenett-oppsett */
+        .team-container {
+            display: grid;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Mobiltelefon: 1 kort per rad (Standard uten medie-spørring) */
+        .team-container {
+            grid-template-columns: 1fr;
+        }
+
+        /* Nettbrett: 2 kort per rad */
+        @media (min-width: 768px) {
+            .team-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* PC-skjerm: Nøyaktig 3 kort per rad */
+        @media (min-width: 1100px) {
+            .team-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-section">
+            <a href="index.html" class="home-link">
+                <img src="images/ny_logo.png" alt="eldION logo" class="logo">
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="goal.html">Løsningen</a>
+            <a href="team.html" class="active">Om oss</a> 
+            <a href="news.html">Nyheter</a>
+            <a href="contact.html">Kontakt oss</a>
+        </nav>
+    </header>
+
+    <main class="team-section">
+        
+        <h2>Teamet bak eldION</h2>
+        <div class="team-container">
+
+            <div class="team-member fade-in">
+                <img src="images/joar.jpg" alt="Joar Dale Landa" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Joar'; this.onerror=null;">
+                <h3>Joar Dale Landa</h3>
+                <p class="team-email"><a href="mailto:Joar@eldion.no">Joar@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Sivilingeniør i industriell økonomi (UiS), med fagbrev som automatiker fra Norsk Hydro. Har erfaring som automasjonsingeniør hos Siemens Energy.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/joar-landa-699664137/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/vetle.jpg" alt="Vetle Gjerver" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Vetle'; this.onerror=null;">
+                <h3>Vetle Gjerver</h3>
+                <p class="team-email"><a href="mailto:Vetle@eldion.no">Vetle@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som automatiker fra Borregaard. Har erfaring som metering og robotikkingeniør hos Aker Solutions.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/vetle-gjerver/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/havard.jpg" alt="Håvard Syslak" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Håvard'; this.onerror=null;">
+                <h3>Håvard Syslak</h3>
+                <p class="team-email"><a href="mailto:Haavard@eldion.no">Haavard@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Sivilingeniør i kybernetikk (NTNU), med fagbrev som automatiker. Har erfaring som Embedded & Electronics Engineer hos Blueye Robotics.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/h%C3%A5vard-syslak-2956ab176/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/harald.jpg" alt="Harald Domås" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Harald'; this.onerror=null;">
+                <h3>Harald Domås</h3>
+                <p class="team-email"><a href="mailto:Harald@eldion.no">Harald@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som avioniker. Har erfaring som R&D Project Engineer hos ABB Robotics.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/harald-dom%C3%A5s-91b324205/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/aiken.jpg" alt="Aiken Midttveit" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Aiken'; this.onerror=null;">
+                <h3>Aiken Midttveit</h3>
+                <p class="team-email"><a href="mailto:Aiken@eldion.no">Aiken@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som automatiker. Har erfaring som R&D-elektronikkutvikler hos ABB Robotics.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/aiken-midttveit-913b01264/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/kristoffer.jpg" alt="Kristoffer Tufta" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Kristoffer'; this.onerror=null;">
+                <h3>Kristoffer Tufta</h3>
+                <p class="team-email"><a href="mailto:Kristoffer@eldion.no">Kristoffer@eldion.no</a></p>
+                
+                <div class="team-info-content">
+                    <p>Siviløkonomstudent (HVL) innen Master of Business Administration - MBA, Regional Economics and Innovation. Har erfaring som labassistent fra Norsk Hydro.</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/kristoffertufta/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 style="margin-top: 80px;">Våre mentorer</h2>
+        <div class="team-container" style="justify-content: center; grid-template-columns: repeat(auto-fit, minmax(280px, 400px));">
+
+            <div class="team-member fade-in">
+                <img src="images/kristian.jpg" alt="Kristian Thorsen" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Kristian'; this.onerror=null;">
+                <h3>Kristian Thorsen</h3>
+                <p class="team-email" style="color: #00bfff; font-weight: bold;">Akademisk mentor</p>
+                
+                <div class="team-info-content" style="justify-content: flex-start;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">Førsteamanuensis ved Universitetet i Stavanger (UiS)</p>
+                    <p>Har dyptgående ekspertise innen elektronikkutvikling, robotikk og reguleringsteknikk.</p>
+                    <p>Bidrar med faglig tyngde og kvalitetssikring i utviklingen av de tekniske løsningene.</p>
+                </div>
+            </div>
+
+            <div class="team-member fade-in">
+                <img src="images/stig.jpg" alt="Stig Bruntveit" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Stig'; this.onerror=null;">
+                <h3>Stig Bruntveit</h3>
+                <p class="team-email" style="color: #00bfff; font-weight: bold;">Kommersiell mentor</p>
+                
+                <div class="team-info-content" style="justify-content: flex-start;">
+                    <p style="font-weight: 600; margin-bottom: 10px;">Direktør på Elkem Bjølvefossen</p>
+                    <p>Har lang operasjonell ledererfaring, med 14 års bakgrunn fra olje & gass, samt bred erfaring fra aluminiumsindustrien og maritim sektor.</p>
+                    <p>Bidrar med inngående forståelse for kundenes behov og åpner dører til relevante industrielle miljøer.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>eldION AS | Kontakt@eldion.no | +47 48204754</p>
+        <p>© 2025</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+---
+import TimelineItem from './TimelineItem.astro';
+import { events } from '../data/timeline';
+---
+<section id="news" class="pt-[140px] pb-[80px] max-[768px]:pt-[180px]">
+
+  <h2 data-animate class="font-comfortaa text-[2em] text-center mb-3">Vår tidslinje</h2>
+  <p data-animate class="text-center text-white/35 text-sm mb-[60px] tracking-wide">
+    Scroll ned for å gå tilbake i tid ↓
+  </p>
+
+  <div class="timeline-container">
+    <!-- Particle stream canvas — replaces the old static line div -->
+    <canvas id="tl-stream" class="timeline-stream-canvas" aria-hidden="true"></canvas>
+
+    {events.map((event, index) => (
+      <TimelineItem
+        date={event.date}
+        logo={event.logo}
+        logoAlt={event.logoAlt}
+        title={event.title}
+        content={event.content}
+        logoStyle={event.logoStyle}
+        side={index % 2 === 0 ? 'left' : 'right'}
+      />
+    ))}
+  </div>
+
+</section>

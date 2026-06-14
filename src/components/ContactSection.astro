@@ -1,0 +1,72 @@
+---
+const topics = [
+  { value: 'investering',        label: 'Investering' },
+  { value: 'samarbeid',          label: 'Samarbeid' },
+  { value: 'pilotprosjekt',      label: 'Pilotprosjekt' },
+  { value: 'kundeforespørsel',   label: 'Kundeforespørsel' },
+  { value: 'teknisk',            label: 'Teknisk henvendelse' },
+  { value: 'annet',              label: 'Annet' },
+];
+---
+<section id="contact" class="max-w-[700px] pt-[120px] pb-[40px] px-5 mx-auto text-center max-[900px]:pt-[170px]">
+
+  <h1 data-animate class="font-comfortaa text-[2.8rem] mb-[15px]">Kontakt oss</h1>
+  <p data-animate data-delay="1" class="text-[1.2rem] text-white mb-[40px]">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</p>
+
+  <form
+    action="https://formspree.io/f/xzzknewz"
+    method="POST"
+    data-animate
+    data-delay="2"
+    class="flex flex-col gap-[25px] bg-white/5 p-[40px] rounded-[20px] shadow-[0_0_20px_rgba(0,0,0,0.3)] backdrop-blur-lg border border-white/10"
+  >
+    <div>
+      <label for="topic" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hva gjelder det?</label>
+      <select id="topic" name="topic" required class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25 [&>option]:text-black [&>option]:bg-white">
+        <option value="">Velg kategori</option>
+        {topics.map(({ value, label }) => (
+          <option value={value}>{label}</option>
+        ))}
+      </select>
+    </div>
+
+    <div>
+      <label for="name" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hvem er du?</label>
+      <input
+        type="text" id="name" name="name"
+        placeholder="Navn eller firmanavn" required
+        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">E-post</label>
+      <input
+        type="email" id="email" name="email"
+        placeholder="Din e-postadresse" required
+        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+      />
+    </div>
+
+    <div>
+      <label for="message" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Melding</label>
+      <textarea
+        id="message" name="message"
+        placeholder="Skriv meldingen din her..." required
+        class="w-full h-[120px] resize-none bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="magnetic bg-gradient-to-br from-cyan-bright to-[#0099cc] border-none text-white font-bold rounded-xl py-[15px] text-[1.2rem] cursor-pointer transition-all duration-300 hover:from-[#00a0d1] hover:to-[#00c3ff] hover:scale-[1.03]"
+    >
+      Send
+    </button>
+  </form>
+
+  <div class="mt-[40px] text-[1.1rem] text-[#ccc]">
+    <p>Du kan også nå oss på telefon: <strong class="text-cyan-bright">(+47) 482 04 754</strong></p>
+  </div>
+
+</section>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eldION</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo2.png" type="image/png">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- TILLEGGSSTILER FOR ONE-PAGE LAYOUT --- */
+        
+        /* Sørger for at seksjoner ikke gjemmer seg bak den faste navbaren ved scrolling */
+        section {
+            scroll-margin-top: 90px; 
+        }
+
+        /* Struktur for forsidetekst + rulleknapp */
+        .hero-image {
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 25px;
+        }
+
+        /* Den nye "Finn ut mer"-knappen */
+        .scroll-down-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00bfff;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(10, 10, 10, 0.45);
+            padding: 12px 24px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: bounceArrow 2s infinite;
+        }
+
+        .scroll-down-btn:hover {
+            background: rgba(0, 191, 255, 0.2);
+            border-color: #00bfff;
+            transform: translateY(-3px);
+        }
+
+        /* Hoppe-animasjon for pilen */
+        @keyframes bounceArrow {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Spesifikke farger fra LaTeX-designet (Løsningen) */
+        :root {
+            --latex-cyan: #00AEEF;
+            --latex-orange: #E94E1B;
+            --latex-tech-blue-light: #66b3ff; 
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Siden vi har alt på én side, fjerner vi min-height fra goal-containeren så det flyter bedre */
+        .latex-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            color: #eee;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            overflow: hidden;
+        }
+
+        .latex-main { padding: 40px; }
+        .latex-main h3 {
+            color: var(--latex-cyan);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--glass-border);
+            margin: 30px 0 15px;
+            padding-bottom: 5px;
+            font-family: 'Comfortaa', cursive;
+        }
+        .latex-main p { color: #fff; margin-bottom: 15px; line-height: 1.6; }
+        .latex-sidebar { background-color: rgba(0, 0, 0, 0.2); padding: 40px 30px; border-left: 1px solid var(--glass-border); }
+        .latex-cta { background: rgba(255, 255, 255, 0.03); border: 2px solid var(--latex-orange); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(233, 78, 27, 0.1); margin-bottom: 30px; }
+        .cta-title { color: var(--latex-orange); font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; text-transform: uppercase; font-size: 0.9rem; }
+        .value-item { display: flex; gap: 15px; margin-bottom: 25px; text-align: left; }
+        .icon-circle { min-width: 45px; height: 45px; border-radius: 50%; border: 1px solid var(--latex-cyan); background: rgba(0, 174, 239, 0.1); display: flex; align-items: center; justify-content: center; color: var(--latex-cyan); }
+        .value-item strong { color: white; font-size: 1.05rem; }
+        .tech-data { font-size: 0.95rem; color: #ccc; text-align: left; }
+        .tech-data strong { display: block; margin-top: 15px; color: var(--latex-tech-blue-light); }
+        .image-caption { font-size: 0.8rem; color: #aaa; margin-top: 10px; font-style: italic; }
+
+        /* --- STYRING AV TEAM-RUTENETTET (Overstyrer style.css på PC/Nettbrett) --- */
+        @media (min-width: 769px) {
+            #team .team-grid-pc {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important; /* 2 i bredden på nettbrett */
+                gap: 30px !important;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            #team .team-grid-pc .team-member {
+                width: 100% !important;
+                max-width: none !important;
+            }
+            #team .mentors-grid-pc {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(280px, 400px)) !important; /* Mentorer står side om side */
+                gap: 30px !important;
+                justify-content: center;
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            #team .mentors-grid-pc .team-member {
+                width: 100% !important;
+                max-width: none !important;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            #team .team-grid-pc {
+                grid-template-columns: repeat(3, 1fr) !important; /* Nøyaktig 3 i bredden på PC (3x2 oppsett) */
+                max-width: 1200px;
+            }
+        }
+
+        /* Responsivitet for mobil */
+        @media (max-width: 900px) {
+            section {
+                scroll-margin-top: 170px; /* Mer plass på mobil pga høyere navbar */
+            }
+            .hero-image {
+                align-items: center;
+            }
+            .hero-content {
+                align-items: center;
+            }
+            .latex-container {
+                grid-template-columns: 1fr;
+            }
+            .latex-sidebar {
+                border-left: none;
+                border-top: 1px solid var(--glass-border);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-section">
+            <a href="#home" class="home-link">
+                <img src="images/ny_logo.png" alt="eldION logo" class="logo">
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="#goal">Løsningen</a>
+            <a href="#team">Om oss</a>
+            <a href="#news">Nyheter</a>
+            <a href="#contact">Kontakt oss</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="home" style="scroll-margin-top: 0;">
+            <div class="hero-image">
+                <div class="hero-content">
+                    <h1 class="hero-text">Vi gjør industrien trådløs, mer effektiv og genuint grønnere.</h1>
+                    <a href="#goal" class="scroll-down-btn">
+                        <span>Finn ut mer</span>
+                        <i data-lucide="chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section id="goal" class="page-content fade-in">
+            <div class="latex-container">
+                <article class="latex-main">
+                    <h2 style="font-family: 'Comfortaa'; color: white; margin-bottom: 10px; margin-top:0; text-align: left;">Fremtidens Målinger</h2>
+                    <p style="font-size: 1.1rem; color: var(--latex-orange); margin-bottom: 30px; text-align: left;"><i>Trådløs overvåking uten batterier – drevet av spillvarme.</i></p>
+
+                    <h3>Utfordringen</h3>
+                    <p><strong>En sentral målsetning for Industri 4.0</strong> er heldekkende trådløs overvåking, men infrastrukturen henger etter. Kabling er kostbart, miljøbelastende og en hyppig feilkilde.</p>
+                    <p>Dagens trådløse alternativer er avhengige av batterier, noe som krever hyppige batteribytter eller store kompromisser: For å spare strøm reduseres sendefrekvensen, og man mister verdifull sanntidsinnsikt.</p>
+
+                    <h3>Vår løsning:</h3>
+                    <p>eldION utnytter tapt spillvarme til å generere strøm via termoelektrisk effekt. Enheten drifter og leser av data fra ethvert <strong>standard 2-wire 4-20mA HART-instrument</strong> – uavhengig av leverandør – og sender målingene trådløst videre.</p>
+
+                    <div style="text-align: center; margin: 30px 0;">
+                        <img src="images/skisse3.png" alt="eldION skisse" style="max-width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);" onerror="this.src='https://via.placeholder.com/500x250?text=eldION+3D+Render'">
+                        <p class="image-caption">Plug & Play installasjon uten driftsstans.</p>
+                    </div>
+
+                    <h3>Hvorfor velge oss?</h3>
+                    
+                    <div class="value-item">
+                        <div class="icon-circle"><i data-lucide="coins"></i></div>
+                        <div>
+                            <strong>Reduser installasjonskostnader:</strong><br>
+                            Industriell kabling har ofte en kostnad på 800–1200 kr per meter. Med vår løsning fjerner du denne utgiften fullstendig.
+                        </div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="icon-circle"><i data-lucide="leaf"></i></div>
+                        <div>
+                            <strong>Redusert karbonavtrykk:</strong><br>
+                            Ved å unngå en enkel kabelinstallasjon på 40 meter, sparer vi miljøet for 100 kg CO<sub>2</sub>.
+                        </div>
+                    </div>
+
+                    <div class="value-item">
+                        <div class="icon-circle"><i data-lucide="timer"></i></div>
+                        <div>
+                            <strong>Trådløst i sanntid:</strong><br>
+                            Vi leverer ekte sanntidsdata med mulighet for sub-sekund oppdateringer, der andre må spare på batteriet.
+                        </div>
+                    </div>
+                </article>
+
+                <aside class="latex-sidebar">
+                    <div class="latex-cta">
+                        <div class="cta-title">
+                            <i data-lucide="rocket"></i> Forme fremtiden?
+                        </div>
+                        <p style="font-size: 0.9rem; color: #ddd; text-align: left;">Vi søker innovative partnere for <strong>pilottesting</strong>. Alt vi trenger er en ΔT på >30°C.</p>
+                        <p style="font-size: 0.9rem; color: #ddd; text-align: left;"><strong>Vi tilbyr:</strong> Gratis installasjon og utstyr.</p>
+                        <p style="text-align: center; font-weight: bold; color: var(--latex-orange); margin-top: 15px;">Ta kontakt for en prat!</p>
+                    </div>
+
+                    <h4 style="color: var(--latex-cyan); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; text-align: left;">Tekniske Data</h4>
+                    <div class="tech-data">
+                        <strong>Temperaturområde:</strong>
+                        Overflate: 30°C – 250°C<br>
+                        Omgivelse: -20°C – 50°C
+
+                        <strong>Effekt ut:</strong>
+                        Testet opp til 868 mW
+
+                        <strong>Kommunikasjon:</strong>
+                        LoRaWAN, WirelessHART, ISA100.11a, BLE
+
+                        <strong>Montering:</strong>
+                        Clamp-on eller magnetisk. Ingen inngrep i prosessen.
+                    </div>
+
+                    <h4 style="color: var(--latex-cyan); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-top: 40px; text-align: left;">Fleksibel montering</h4>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <img src="images/montering.png" alt="Montering" style="max-width: 100%; opacity: 0.9;" onerror="this.src='https://via.placeholder.com/200x150?text=Skisse'">
+                        <p class="image-caption">Overflatemontering</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="team" class="team-section">
+            <h2>Teamet bak eldION</h2>
+            <div class="team-container team-grid-pc">
+
+                <div class="team-member fade-in">
+                    <img src="images/joar.jpg" alt="Joar Dale Landa" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Joar'; this.onerror=null;">
+                    <h3>Joar Dale Landa</h3>
+                    <p class="team-email"><a href="mailto:Joar@eldion.no">Joar@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Sivilingeniør i industriell økonomi (UiS), med fagbrev som automatiker. Har erfaring som automasjonsingeniør hos Siemens Energy.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/joar-landa-699664137/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/vetle.jpg" alt="Vetle Gjerver" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Vetle'; this.onerror=null;">
+                    <h3>Vetle Gjerver</h3>
+                    <p class="team-email"><a href="mailto:Vetle@eldion.no">Vetle@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som automatiker. Har erfaring som metering og robotikkingeniør hos Aker Solutions.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/vetle-gjerver/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/havard.jpg" alt="Håvard Syslak" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Håvard'; this.onerror=null;">
+                    <h3>Håvard Syslak</h3>
+                    <p class="team-email"><a href="mailto:Haavard@eldion.no">Haavard@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Sivilingeniør i kybernetikk (NTNU), med fagbrev som automatiker. Har erfaring som Embedded & Electronics Engineer hos Blueye Robotics.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/h%C3%A5vard-syslak-2956ab176/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/harald.jpg" alt="Harald Domås" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Harald'; this.onerror=null;">
+                    <h3>Harald Domås</h3>
+                    <p class="team-email"><a href="mailto:Harald@eldion.no">Harald@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som avioniker. Har erfaring som R&D Project Engineer hos ABB Robotics.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/harald-dom%C3%A5s-91b324205/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/aiken.jpg" alt="Aiken Midttveit" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Aiken'; this.onerror=null;">
+                    <h3>Aiken Midttveit</h3>
+                    <p class="team-email"><a href="mailto:Aiken@eldion.no">Aiken@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Sivilingeniør i robotteknologi og signalbehandling (UiS), med fagbrev som automatiker. Har erfaring som R&D-elektronikkutvikler hos ABB Robotics.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/aiken-midttveit-913b01264/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/kristoffer.jpg" alt="Kristoffer Tufta" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Kristoffer'; this.onerror=null;">
+                    <h3>Kristoffer Tufta</h3>
+                    <p class="team-email"><a href="mailto:Kristoffer@eldion.no">Kristoffer@eldion.no</a></p>
+                    <div class="team-info-content">
+                        <p>Siviløkonomstudent (HVL) innen Master of Business Administration - MBA, Regional Economics and Innovation. Har erfaring som labassistent fra Norsk Hydro.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/kristoffertufta/" target="_blank" rel="noopener noreferrer">
+                            <img src="images/linkedin.png" alt="LinkedIn Profil" class="social-icon" onerror="this.src='https://placehold.co/24x24/0A66C2/FFF?text=in'; this.onerror=null;">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 style="margin-top: 80px;">Våre mentorer</h2>
+            <div class="team-container mentors-grid-pc">
+                <div class="team-member fade-in">
+                    <img src="images/kristian.jpg" alt="Kristian Thorsen" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Kristian'; this.onerror=null;">
+                    <h3>Kristian Thorsen</h3>
+                    <p class="team-email" style="color: #00bfff; font-weight: bold;">Akademisk mentor</p>
+                    <div class="team-info-content" style="justify-content: flex-start;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">Førsteamanuensis ved Universitetet i Stavanger (UiS)</p>
+                        <p>Har dyptgående ekspertise innen elektronikkutvikling, robotikk og reguleringsteknikk.</p>
+                        <p>Bidrar med faglig tyngde og kvalitetssikring i utviklingen av de tekniske løsningene.</p>
+                    </div>
+                </div>
+
+                <div class="team-member fade-in">
+                    <img src="images/stig.jpg" alt="Stig Bruntveit" onerror="this.src='https://placehold.co/280x280/EEE/333?text=Stig'; this.onerror=null;">
+                    <h3>Stig Bruntveit</h3>
+                    <p class="team-email" style="color: #00bfff; font-weight: bold;">Kommersiell mentor</p>
+                    <div class="team-info-content" style="justify-content: flex-start;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">Direktør på Elkem Bjølvefossen</p>
+                        <p>Har lang operasjonell ledererfaring, med 14 års bakgrunn fra olje & gass, samt bred erfaring fra aluminiumsindustrien og maritim sektor.</p>
+                        <p>Bidrar med inngående forståelse for kundenes behov og åpner dører til relevante industrielle miljøer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="news-section fade-in">
+            <h2 style="font-family: 'Comfortaa', sans-serif; font-size: 2em; text-align: center; margin-bottom: 50px;">Vår tidslinje</h2>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">21. Apr 2026</span>
+                            <img src="images/logo2.png" alt="Eldion" class="news-logo" style="height: 50px; width:auto;">
+                            <h3>Betydelig styrking av teamet</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Vi har gleden av å ønske Håvard, Harald, Aiken og Kristoffer velkommen til Eldion. Denne utvidelsen gir oss et kraftig kapasitetsløft og tilfører kritisk spisskompetanse; både for å akselerere den tekniske utviklingen og for å styrke selskapets kommersielle fundament.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">02. Apr 2026</span>
+                            <img src="images/innovasjon_norge.png" alt="Innovasjon Norge" class="news-logo">
+                            <h3>Tildelt 1 million i STUD-ENT-midler</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Eldion mottar 1 million kroner i finansiell støtte gjennom Innovasjon Norges STUD-ENT-program. Tildelingen markerer en viktig milepæl i selskapets kommersialiseringsløp og sikrer kapital til videre teknologiutvikling. Midlene vil blant annet benyttes til å fasilitere og gjennomføre den kommende pilottestingen i samarbeid med Hydro Aluminium AS på Husnes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">04. Feb 2026</span>
+                            <img src="images/hydro.png" alt="Hydro" class="news-logo">
+                            <h3>Pilotavtale med Hydro Aluminium AS</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Eldion signerer samarbeidsavtale om et FoU-testprosjekt med Hydro Aluminium AS. Avtalen gir oss tilgang til å teste teknologien i full skala ved smelteverket på Husnes. Dette er en kritisk validering fra en global industriaktør og markerer starten på den industrielle utrullingen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">29. Jan 2026</span>
+                            <img src="images/uis.png" alt="UiS" class="news-logo">
+                            <h3>Samarbeidsavtale med UiS & Akademisk Mentor</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Vi inngår samarbeidsavtale med Universitetet i Stavanger som sikrer tilgang til avanserte elektronikk- og prosesslaboratorier samt ressurser ved Lyspæren innovasjonshus. Samtidig fornyes mentoravtalen med Førsteamanuensis Kristian Thorsen, en ekspert innen elektronikk og robotikk, som kvalitetssikrer den tekniske utviklingen.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">25. Nov 2025</span>
+                            <img src="images/elkem.png" alt="Elkem" class="news-logo">
+                            <h3>Industritung mentor ombord</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Stig Bruntveit, Direktør ved Elkem Bjølvefossen, engasjeres som kommersiell mentor. Med 14 års ledererfaring fra olje, gass og aluminiumsindustrien, bidrar han med dyp operasjonell innsikt og åpner dører til relevante industrielle miljøer og pilotkunder.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">31. Okt 2025</span>
+                            <img src="images/innovasjon_norge.png" alt="Innovasjon Norge" class="news-logo">
+                            <h3>Tilskudd fra Innovasjon Norge</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Eldion mottar oppstartstilskudd fra Innovasjon Norge. Tildelingen validerer at forretningsidéen har betydelig nasjonalt og internasjonalt markedspotensial. Midlene dedikeres til å kartlegge betalingsvilje og sikre de første pilotkundene.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">01. Sep 2025</span>
+                            <img src="images/logo2.png" alt="eldION" class="news-logo" style="height: 50px; width:auto;">
+                            <h3>Teamet utvides</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Joar Dale Landa trer inn som CFO og medeier. Med bakgrunn fra industriell økonomi og erfaring fra olje- og industrisektoren, tilfører han strategisk tyngde som ruster selskapet for kommersiell skalering.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">15. Jun 2025</span>
+                            <img src="images/chip_icon.png" alt="MVP" class="news-logo">
+                            <h3>Vellykket Proof of Concept</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Masteroppgaven leveres med en fungerende prototype (MVP) som beviser teknologiens kjernefunksjon. Gjennom omfattende tester demonstreres "energy positive" drift: Systemet høster mer energi fra spillvarme enn det forbruker, og bekrefter at en batteriløs fremtid is teknisk gjennomførbar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">07. Jan 2025</span>
+                            <img src="images/plogen.png" alt="Plogen" class="news-logo">
+                            <h3>Tildelt Plogen-midler</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Prosjektet mottar støtte fra Plogen-programmet, et initiativ fra Validé og UiS som finansierer forskningsbasert innovasjon med kommersielt potensial. Midlene finansierer materialer til utvikling av vår første prototype.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="news-card">
+                        <div class="news-visual">
+                            <span class="news-date">04. Nov 2024</span>
+                            <img src="images/logo2.png" alt="eldION" class="news-logo" style="height: 50px; width:auto;">
+                            <h3>Eldion AS stiftes</h3>
+                            <div class="mobile-hint"><span>Se mer</span></div>
+                        </div>
+                        <div class="news-details">
+                            <div class="news-content-inner">
+                                <p>Selskapet etableres formelt for å kommersialisere teknologien som utvikles gjennom en masteroppgave ved UiS. Visjonen er klar: Å digitalisere industrien ved å fjerne behovet for batterier og kabler.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-page">
+            <h1>Kontakt oss</h1>
+            <p class="intro-text">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</p>
+
+            <form action="https://formspree.io/f/xzzknewz" method="POST" class="fade-in">
+                <div>
+                    <label for="topic">Hva gjelder det?</label>
+                    <select id="topic" name="topic" required>
+                        <option value="">Velg kategori</option>
+                        <option value="investering">Investering</option>
+                        <option value="samarbeid">Samarbeid</option>
+                        <option value="pilotprosjekt">Pilotprosjekt</option>
+                        <option value="kundeforespørsel">Kundeforespørsel</option>
+                        <option value="teknisk">Teknisk henvendelse</option>
+                        <option value="annet">Annet</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="name">Hvem er du?</label>
+                    <input type="text" id="name" name="name" placeholder="Navn eller firmanavn" required>
+                </div>
+
+                <div>
+                    <label for="email">E-post</label>
+                    <input type="email" id="email" name="email" placeholder="Din e-postadresse" required>
+                </div>
+
+                <div>
+                    <label for="message">Melding</label>
+                    <textarea id="message" name="message" placeholder="Skriv meldingen din her..." required></textarea>
+                </div>
+
+                <button type="submit">Send</button>
+            </form>
+
+            <div class="contact-info">
+                <p>Du kan også nå oss på telefon: <strong>(+47) 482 04 754</strong></p>
+            </div>
+        </section>
+        </section> <section class="trust-section fade-in" style="text-align: center; padding: 80px 20px 40px; margin: 0 auto; max-width: 1000px;">
+            <h2 style="font-family: 'Comfortaa', sans-serif; font-size: 1.2rem; color: #aaa; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px;">Med tillit fra:</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(30px, 5vw, 60px);">
+                
+                <img src="images/innovasjon_norge.png" alt="Innovasjon Norge" style="max-height: 60px; width: auto; opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.6'; this.style.transform='scale(1)'">
+                
+                <img src="images/hydro.png" alt="Hydro Aluminium" style="max-height: 60px; width: auto; opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.6'; this.style.transform='scale(1)'">
+                
+                <img src="images/elkem.png" alt="Elkem" style="max-height: 50px; width: auto; opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.6'; this.style.transform='scale(1)'">
+                
+                <img src="images/Eramet.png" alt="Eramet" style="max-height: 50px; width: auto; opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.6'; this.style.transform='scale(1)'">
+                
+                <img src="images/uis.png" alt="Universitetet i Stavanger" style="max-height: 60px; width: auto; opacity: 0.6; transition: all 0.3s ease;" onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.6'; this.style.transform='scale(1)'">
+                
+            </div>
+        </section>
+        </main>
+
+    <footer class="site-footer">
+    </main>
+
+    <footer class="site-footer">
+        <p>eldION AS | Kontakt@eldion.no | +47 48204754</p>
+        <p>© 2025</p>
+    </footer>
+
+    <script>
+        // Start Lucide ikoner
+        lucide.createIcons();
+
+        // Skript for nyhetskort (ekspandering ved klikk på mobil)
+        const cards = document.querySelectorAll('.news-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if(e.target.tagName === 'A') return;
+                const isAlreadyActive = this.classList.contains('active');
+                cards.forEach(c => c.classList.remove('active'));
+                if (!isAlreadyActive) {
+                    this.classList.add('active');
+                    setTimeout(() => {
+                        this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

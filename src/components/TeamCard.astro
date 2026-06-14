@@ -1,0 +1,67 @@
+---
+interface Props {
+  name: string;
+  email: string;
+  image: string;
+  bio: string;
+  linkedin?: string;
+  roleLabel?: string;
+  roleColor?: string;
+  titleLine?: string;
+  extraLines?: string[];
+}
+
+const {
+  name,
+  email,
+  image,
+  bio,
+  linkedin,
+  roleLabel,
+  roleColor = '#00bfff',
+  titleLine,
+  extraLines = [],
+} = Astro.props;
+---
+<div class="bg-white/[0.04] rounded-xl p-5 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_8px_32px_rgba(0,0,0,0.38)] transition-all duration-300 hover:-translate-y-[6px] hover:shadow-[inset_0_1px_0_rgba(0,174,239,0.22),0_14px_44px_rgba(0,0,0,0.5)] flex flex-col justify-between">
+
+  <img
+    src={`/images/${image}`}
+    alt={name}
+    class="w-full h-auto rounded-lg mb-4"
+  />
+
+  <div class="flex-1 flex flex-col">
+    <h3 class="font-comfortaa text-[1.1rem] mt-[10px] mb-[5px]">{name}</h3>
+
+    {roleLabel ? (
+      <p class="font-bold mb-[10px] text-[0.9rem]" style={`color: ${roleColor};`}>{roleLabel}</p>
+    ) : (
+      <p class="text-[0.9rem] text-gray-400 italic mb-[10px] -mt-[5px]">
+        <a href={`mailto:${email}`} class="text-white no-underline transition-colors hover:text-cyan-bright hover:underline hover:[text-shadow:0_0_6px_rgba(0,191,255,0.6)]">
+          {email}
+        </a>
+      </p>
+    )}
+
+    <div class="flex-1 flex flex-col justify-end">
+      {titleLine && <p class="font-semibold mb-[10px]">{titleLine}</p>}
+      {extraLines.length > 0
+        ? extraLines.map((line) => <p class="text-[0.95rem] text-white mb-2">{line}</p>)
+        : <p class="text-[0.95rem] text-white">{bio}</p>
+      }
+    </div>
+  </div>
+
+  {linkedin && (
+    <div class="mt-5 text-center">
+      <a href={linkedin} target="_blank" rel="noopener noreferrer">
+        <img
+          src="/images/linkedin.png"
+          alt="LinkedIn profil"
+          class="w-6 h-6 rounded opacity-75 inline-block transition-all hover:opacity-100 hover:scale-110"
+        />
+      </a>
+    </div>
+  )}
+</div>

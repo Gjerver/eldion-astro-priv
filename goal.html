@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vårt Mål - eldION</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Din eksisterende CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo2.png" type="image/png">
+    
+    <!-- Lucide Ikoner -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Spesifikke farger fra LaTeX-designet (Tilpasset Dark Mode) */
+        :root {
+            --latex-cyan: #00AEEF;
+            --latex-orange: #E94E1B;
+            /* Endret fra mørkeblå til en lysere blå for lesbarhet på mørk bakgrunn */
+            --latex-tech-blue-light: #66b3ff; 
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Hovedbeholder for innholdet (to-kolonne) - Nå med Glassmorphism */
+        .latex-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            
+            /* Glassmorphism settings som matcher style.css */
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            
+            color: #eee; /* Lys tekst */
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            min-height: 800px;
+            overflow: hidden; /* For at border-radius skal funke på sidebar */
+        }
+
+        /* Venstre kolonne */
+        .latex-main {
+            padding: 40px;
+        }
+
+        .latex-main h3 {
+            color: var(--latex-cyan);
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--glass-border);
+            margin: 30px 0 15px;
+            padding-bottom: 5px;
+            font-family: 'Comfortaa', cursive;
+        }
+
+        .latex-main p {
+            color: #ccc;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* Høyre kolonne (Sidebar) */
+        .latex-sidebar {
+            background-color: rgba(0, 0, 0, 0.2); /* Litt mørkere for kontrast */
+            padding: 40px 30px;
+            border-left: 1px solid var(--glass-border);
+        }
+
+        /* Oransje boks */
+        .latex-cta {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--latex-orange);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(233, 78, 27, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .cta-title {
+            color: var(--latex-orange);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Ikon-liste */
+        .value-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .icon-circle {
+            min-width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--latex-cyan);
+            background: rgba(0, 174, 239, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--latex-cyan);
+        }
+        
+        .value-item strong {
+            color: white;
+            font-size: 1.05rem;
+        }
+
+        /* Tekniske data tabell-stil */
+        .tech-data {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .tech-data strong {
+            display: block;
+            margin-top: 15px;
+            color: var(--latex-tech-blue-light);
+        }
+        
+        .image-caption {
+            font-size: 0.8rem; 
+            color: #aaa; 
+            margin-top: 10px; 
+            font-style: italic;
+        }
+
+        /* Responsivitet */
+        @media (max-width: 900px) {
+            .latex-container {
+                grid-template-columns: 1fr;
+            }
+            .latex-sidebar {
+                border-left: none;
+                border-top: 1px solid var(--glass-border);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header class="navbar">
+        <div class="logo-section">
+            <a href="index.html" class="home-link">
+                <!-- Endret til ny logo-fil. Husk å oppdatere filnavnet hvis det er annerledes! -->
+                <img src="images/ny_logo.png" alt="eldION logo" class="logo">
+            </a>
+            <!-- Tekst-seksjonen (eldION + subtitle) er fjernet herfra -->
+        </div>
+<nav class="nav-links">
+    <a href="goal.html" class="active">Løsningen</a> <a href="team.html">Om oss</a>
+    <a href="news.html">Nyheter</a>
+    <a href="contact.html">Kontakt oss</a>
+</nav>
+    </header>
+
+    <main class="page-content fade-in">
+        
+        <!-- Selve "One-pager" dokumentet (Nå i Glass-design) -->
+        <div class="latex-container">
+            
+            <!-- Venstre kolonne -->
+            <article class="latex-main">
+                <h2 style="font-family: 'Comfortaa'; color: white; margin-bottom: 10px; margin-top:0;">Fremtidens Målinger</h2>
+                <p style="font-size: 1.1rem; color: #aaa; margin-bottom: 30px;"><i>Trådløs overvåking uten batterier – drevet av spillvarme.</i></p>
+
+                <h3>Utfordringen</h3>
+                <p><strong>En sentral målsetning for Industri 4.0</strong> er heldekkende trådløs overvåking, men infrastrukturen henger etter. Kabling er kostbart, miljøbelastende og en hyppig feilkilde.</p>
+                <p>Dagens trådløse alternativer er avhengige av batterier, noe som krever hyppige batteribytter eller store kompromisser: For å spare strøm reduseres sendefrekvensen, og man mister verdifull sanntidsinnsikt.</p>
+
+                <h3>Vår løsning:</h3>
+                <p>eldION utnytter tapt spillvarme til å generere strøm via termoelektrisk effekt. Enheten drifter og leser av data fra ethvert <strong>standard 2-wire 4-20mA HART-instrument</strong> – uavhengig av leverandør – og sender målingene trådløst videre.</p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="images/skisse3.png" alt="eldION skisse" style="max-width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);" onerror="this.src='https://via.placeholder.com/500x250?text=eldION+3D+Render'">
+                    <p class="image-caption">Plug & Play installasjon uten driftsstans.</p>
+                </div>
+
+                <h3>Hvorfor velge oss?</h3>
+                
+                <div class="value-item">
+                    <div class="icon-circle"><i data-lucide="coins"></i></div>
+                    <div>
+                        <strong>Reduser installasjonskostnader:</strong><br>
+                        Industriell kabling har ofte en kostnad på 800–1200 kr per meter. Med vår løsning fjerner du denne utgiften fullstendig.
+                    </div>
+                </div>
+
+                <div class="value-item">
+                    <div class="icon-circle"><i data-lucide="leaf"></i></div>
+                    <div>
+                        <strong>Redusert karbonavtrykk:</strong><br>
+                        Ved å unngå en enkel kabelinstallasjon på 40 meter, sparer vi miljøet for 100 kg CO<sub>2</sub>.
+                    </div>
+                </div>
+
+                <div class="value-item">
+                    <div class="icon-circle"><i data-lucide="timer"></i></div>
+                    <div>
+                        <strong>Trådløst i sanntid:</strong><br>
+                        Vi leverer ekte sanntidsdata med mulighet for sub-sekund oppdateringer, der andre må spare på batteriet.
+                    </div>
+                </div>
+            </article>
+
+            <!-- Høyre kolonne -->
+            <aside class="latex-sidebar">
+                
+                <div class="latex-cta">
+                    <div class="cta-title">
+                        <i data-lucide="rocket"></i> Forme fremtiden?
+                    </div>
+                    <p style="font-size: 0.9rem; color: #ddd;">Vi søker innovative partnere for <strong>pilottesting</strong>. Alt vi trenger er en ΔT på >30°C.</p>
+                    <p style="font-size: 0.9rem; color: #ddd;"><strong>Vi tilbyr:</strong> Gratis installasjon og utstyr.</p>
+                    <p style="text-align: center; font-weight: bold; color: var(--latex-orange); margin-top: 15px;">Ta kontakt for en prat!</p>
+                </div>
+
+                <h4 style="color: var(--latex-cyan); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;">Tekniske Data</h4>
+                <div class="tech-data">
+                    <strong>Temperaturområde:</strong>
+                    Overflate: 30°C – 250°C<br>
+                    Omgivelse: -20°C – 50°C
+
+                    <strong>Effekt ut:</strong>
+                    Testet opp til 868 mW
+
+                    <strong>Kommunikasjon:</strong>
+                    LoRaWAN, WirelessHART, ISA100.11a, BLE
+
+                    <strong>Montering:</strong>
+                    Clamp-on eller magnetisk. Ingen inngrep i prosessen.
+                </div>
+
+                <h4 style="color: var(--latex-cyan); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-top: 40px;">Fleksibel montering</h4>
+                <div style="text-align: center; margin-top: 15px;">
+                    <img src="images/montering.png" alt="Montering" style="max-width: 100%; opacity: 0.9;" onerror="this.src='https://via.placeholder.com/200x150?text=Skisse'">
+                    <p class="image-caption">Overflatemontering</p>
+                </div>
+
+            </aside>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>eldION AS | Kontakt@eldion.no | +47 48204754</p>
+        <p>© 2025</p>
+    </footer>
+
+    <script>
+        // Start Lucide ikoner
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

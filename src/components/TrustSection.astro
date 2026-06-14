@@ -1,0 +1,32 @@
+---
+const partners = [
+  { src: 'innovasjon_norge.png', alt: 'Innovasjon Norge', height: 60 },
+  { src: 'hydro.png',            alt: 'Hydro Aluminium',  height: 60 },
+  { src: 'elkem.png',            alt: 'Elkem',            height: 50 },
+  { src: 'Eramet.png',           alt: 'Eramet',           height: 50 },
+  { src: 'uis.png',              alt: 'Universitetet i Stavanger', height: 60 },
+];
+---
+<section data-animate class="text-center py-[80px] px-5 mx-auto max-w-[1000px]">
+
+  <h2 class="font-comfortaa text-[1.2rem] text-gray-400 mb-[40px] uppercase tracking-[2px]">Med tillit fra:</h2>
+
+  <div class="flex flex-wrap justify-center items-center gap-[clamp(24px,4vw,50px)]">
+    {partners.map(({ src, alt, height }) => (
+      <div
+        class="group flex items-center justify-center px-6 py-4 rounded-xl transition-all duration-300 hover:scale-[1.05]"
+        style="background: radial-gradient(ellipse at center, rgba(200,240,255,0.05) 0%, transparent 65%);"
+      >
+        <img
+          src={`/images/${src}`}
+          alt={alt}
+          style={`max-height: ${height}px; opacity: 0.82;
+                  filter: drop-shadow(0 0 10px rgba(255,255,255,0.55)) drop-shadow(0 0 24px rgba(0,180,255,0.28));
+                  transition: opacity 0.3s ease, filter 0.3s ease;`}
+          class="w-auto group-hover:opacity-100"
+        />
+      </div>
+    ))}
+  </div>
+
+</section>

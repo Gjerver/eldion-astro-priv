@@ -1,0 +1,236 @@
+---
+---
+<!-- WebGL fluid shader canvas (behind everything) -->
+<canvas id="webgl-bg" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;"></canvas>
+<!-- Cursor trail canvas (above everything) -->
+<canvas id="cursor-canvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:9998;pointer-events:none;"></canvas>
+
+<script>
+  /* ════════════════════════════════════════════════════════════════
+     GLSL FRAGMENT SHADER
+     – Domain-warped FBM for organic fluid motion
+     – Base: dark arctic teal/blue (noticeably lighter than black)
+     – Mouse: warm amber/orange heat distortion
+     ════════════════════════════════════════════════════════════════ */
+  const VS = `attribute vec2 a; void main(){gl_Position=vec4(a,0,1);}`;
+
+  const FS = `
+    precision highp float;
+    uniform vec2  u_res;
+    uniform float u_time;
+    uniform vec2  u_mouse;
+
+    /* ── Gradient noise ───────────────────────────────────────── */
+    vec2 h2(vec2 p){
+      p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));
+      return -1.0+2.0*fract(sin(p)*43758.5453);
+    }
+    float gn(vec2 p){
+      vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);
+      return mix(
+        mix(dot(h2(i+vec2(0,0)),f-vec2(0,0)),dot(h2(i+vec2(1,0)),f-vec2(1,0)),u.x),
+        mix(dot(h2(i+vec2(0,1)),f-vec2(0,1)),dot(h2(i+vec2(1,1)),f-vec2(1,1)),u.x),u.y);
+    }
+    /* 4-octave FBM */
+    float fbm(vec2 p){
+      float v=0.0,a=0.5;
+      for(int i=0;i<4;i++){v+=a*gn(p);p=p*2.1+vec2(1.7,9.2);a*=0.5;}
+      return v;
+    }
+
+    void main(){
+      vec2 uv = gl_FragCoord.xy / u_res;
+      /* Flip mouse Y so origin matches screen top-left */
+      vec2 mu = vec2(u_mouse.x, u_res.y - u_mouse.y) / u_res;
+      float t  = u_time * 0.085;
+
+      /* ── Domain-warped FBM for extra organic shape ─────────── */
+      vec2 q = vec2(fbm(uv*2.8 + vec2(t,     t*0.72)),
+                    fbm(uv*2.8 + vec2(t*0.8,  t*1.1 )));
+      float f = fbm(uv*2.1 + q*0.7 + t*0.2);
+
+      /* ── Icy arctic palette (noticeably dark teal, not black) ─ */
+      vec3 c0 = vec3(0.018, 0.065, 0.150);  /* deep ocean navy      */
+      vec3 c1 = vec3(0.045, 0.140, 0.270);  /* arctic teal          */
+      vec3 c2 = vec3(0.085, 0.230, 0.400);  /* glacier blue         */
+      vec3 c3 = vec3(0.110, 0.290, 0.460);  /* bright ice highlight */
+
+      float b  = f * 0.5 + 0.5;
+      float yB = uv.y * 0.35;
+      vec3 base = mix(c0, c1, smoothstep(0.0, 0.5,  b + yB));
+      base       = mix(base, c2, smoothstep(0.4, 0.8,  b + yB) * 0.6);
+      base       = mix(base, c3, smoothstep(0.72, 1.0, b) * 0.25);
+
+      /* ── Mouse heat – noise-warped distance for organic blob ── */
+      vec2 wo  = vec2(fbm(uv*5.0 + t*0.6),
+                      fbm(uv*5.0 + t*0.6 + 3.7)) * 0.055;
+      float md = distance(uv + wo, mu);
+      float ht = pow(smoothstep(0.52, 0.0, md), 1.6);
+
+      /* Amber core → deep orange rim */
+      vec3 hCore = vec3(1.00, 0.65, 0.18);
+      vec3 hRim  = vec3(0.85, 0.22, 0.04);
+      vec3 hCol  = mix(hRim, hCore, pow(ht, 2.0));
+
+      vec3 col = mix(base, hCol, ht * 0.82);
+
+      /* ── Radial vignette (slightly darker edges) ──────────── */
+      float vig = smoothstep(1.55, 0.25, length((uv - 0.5) * vec2(1.9, 2.1)));
+      col = mix(col * 0.72, col, vig);
+
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  /* ════════════════════════════════════════════════════════════════
+     SETUP
+     ════════════════════════════════════════════════════════════════ */
+  const bgEl  = document.getElementById('webgl-bg')     as HTMLCanvasElement;
+  const curEl = document.getElementById('cursor-canvas') as HTMLCanvasElement;
+  const curCtx = curEl.getContext('2d')!;
+
+  const isTouch   = window.matchMedia('(hover:none) and (pointer:coarse)').matches;
+  const isReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const PR        = Math.min(window.devicePixelRatio ?? 1, 1.5); // cap resolution
+
+  let W = 0, H = 0, mouseX = 0, mouseY = 0;
+
+  if (!isTouch) {
+    window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; }, { passive: true });
+  }
+
+  /* ── WebGL init ─────────────────────────────────────────────── */
+  const gl = !isReduced ? bgEl.getContext('webgl', { antialias: false, alpha: false }) : null;
+
+  let uRes:   WebGLUniformLocation | null = null;
+  let uTime:  WebGLUniformLocation | null = null;
+  let uMouse: WebGLUniformLocation | null = null;
+
+  function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    bgEl.style.width  = curEl.style.width  = W + 'px';
+    bgEl.style.height = curEl.style.height = H + 'px';
+    curEl.width  = W;
+    curEl.height = H;
+    if (gl) {
+      bgEl.width  = Math.round(W * PR);
+      bgEl.height = Math.round(H * PR);
+      gl.viewport(0, 0, bgEl.width, bgEl.height);
+      if (uRes) gl.uniform2f(uRes, bgEl.width, bgEl.height);
+    }
+  }
+  window.addEventListener('resize', resize, { passive: true });
+
+  if (gl) {
+    /* Compile helper */
+    const mkShader = (type: number, src: string) => {
+      const s = gl.createShader(type)!;
+      gl.shaderSource(s, src.trim());
+      gl.compileShader(s);
+      return s;
+    };
+
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, mkShader(gl.VERTEX_SHADER,   VS));
+    gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    /* Full-screen triangle pair */
+    const vbo = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.bufferData(gl.ARRAY_BUFFER,
+      new Float32Array([-1,-1, 1,-1, -1,1, 1,-1, 1,1, -1,1]),
+      gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    uRes   = gl.getUniformLocation(prog, 'u_res');
+    uTime  = gl.getUniformLocation(prog, 'u_time');
+    uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+    resize();
+
+    /* ── Cursor trail state ──────────────────────────────────── */
+    interface Pt { x: number; y: number; life: number; sz: number; }
+    const trail: Pt[] = [];
+    if (!isTouch) {
+      window.addEventListener('mousemove', (e) => {
+        trail.push({ x: e.clientX, y: e.clientY, life: 1, sz: 5 + Math.random() * 3 });
+        if (trail.length > 52) trail.shift();
+      }, { passive: true });
+    }
+
+    /* ── Render loop ─────────────────────────────────────────── */
+    const t0 = performance.now();
+
+    (function loop() {
+      const t = (performance.now() - t0) * 0.001;
+
+      /* WebGL shader draw */
+      gl.uniform1f(uTime,  t);
+      gl.uniform2f(uMouse, mouseX * PR, mouseY * PR);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      /* Cursor canvas */
+      curCtx.clearRect(0, 0, W, H);
+
+      if (!isTouch) {
+        /* Trail fade */
+        for (let i = trail.length - 1; i >= 0; i--) {
+          const p = trail[i];
+          p.life -= 0.044;
+          if (p.life <= 0) { trail.splice(i, 1); continue; }
+
+          const r   = Math.round(233 * p.life);
+          const g   = Math.round(78  * p.life + 174 * (1 - p.life));
+          const b   = Math.round(27  * p.life + 239 * (1 - p.life));
+          const rad = p.sz * (1 + (1 - p.life) * 1.6);
+          const grd = curCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad);
+          grd.addColorStop(0, `rgba(${r},${g},${b},${p.life * 0.55})`);
+          grd.addColorStop(1, 'transparent');
+          curCtx.beginPath();
+          curCtx.arc(p.x, p.y, rad, 0, Math.PI * 2);
+          curCtx.fillStyle = grd;
+          curCtx.fill();
+        }
+
+        /* Main cursor */
+        if (mouseX > 0 || mouseY > 0) {
+          const grd = curCtx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 18);
+          grd.addColorStop(0,    'rgba(255,148,65,0.92)');
+          grd.addColorStop(0.38, 'rgba(233,78,27,0.50)');
+          grd.addColorStop(1,    'transparent');
+          curCtx.beginPath();
+          curCtx.arc(mouseX, mouseY, 18, 0, Math.PI * 2);
+          curCtx.fillStyle = grd;
+          curCtx.fill();
+
+          curCtx.beginPath();
+          curCtx.arc(mouseX, mouseY, 3, 0, Math.PI * 2);
+          curCtx.fillStyle = 'rgba(255,212,162,0.98)';
+          curCtx.fill();
+        }
+      }
+
+      requestAnimationFrame(loop);
+    })();
+
+  } else {
+    /* Fallback if WebGL unavailable or reduced-motion */
+    resize();
+    const ctx2 = bgEl.getContext('2d');
+    if (ctx2) {
+      bgEl.width  = W;
+      bgEl.height = H;
+      const g = ctx2.createLinearGradient(0, 0, W, H);
+      g.addColorStop(0,   '#030e1c');
+      g.addColorStop(0.5, '#061b2e');
+      g.addColorStop(1,   '#082038');
+      ctx2.fillStyle = g;
+      ctx2.fillRect(0, 0, W, H);
+    }
+  }
+</script>

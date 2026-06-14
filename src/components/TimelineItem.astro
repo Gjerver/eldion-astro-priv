@@ -1,0 +1,24 @@
+---
+interface Props {
+  date: string;
+  logo: string;
+  logoAlt: string;
+  title: string;
+  content: string;
+  logoStyle?: string;
+  side?: 'left' | 'right';
+}
+const { date, logo, logoAlt, title, content, logoStyle = '', side = 'left' } = Astro.props;
+---
+<div class={`timeline-item tl-${side}`}>
+  <div class="tl-card">
+    <img
+      src={`/images/${logo}`}
+      alt={logoAlt}
+      class={`tl-logo ${logoStyle}`}
+    />
+    <span class="tl-date">{date}</span>
+    <h3 class="tl-title">{title}</h3>
+    <p class="tl-content">{content}</p>
+  </div>
+</div>

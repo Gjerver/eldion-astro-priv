@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt oss - eldION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo2.png" type="image/png">
+    </head>
+<body>
+    
+    <header class="navbar">
+        <div class="logo-section">
+            <a href="index.html" class="home-link">
+                <!-- Endret til ny logo-fil. Husk å oppdatere filnavnet hvis det er annerledes! -->
+                <img src="images/ny_logo.png" alt="eldION logo" class="logo">
+            </a>
+            <!-- Tekst-seksjonen (eldION + subtitle) er fjernet herfra -->
+        </div>
+<nav class="nav-links">
+    <a href="goal.html">Løsningen</a>
+    <a href="team.html">Om oss</a>
+    <a href="news.html">Nyheter</a>
+    <a href="contact.html" class="active">Kontakt oss</a> </nav>
+    </header>
+
+    <main class="contact-page">
+        <h1>Kontakt oss</h1>
+        <p class="intro-text">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</p>
+
+        <form action="https://formspree.io/f/xzzknewz" method="POST" class="fade-in">
+            <div>
+                <label for="topic">Hva gjelder det?</label>
+                <select id="topic" name="topic" required>
+                    <option value="">Velg kategori</option>
+                    <option value="investering">Investering</option>
+                    <option value="samarbeid">Samarbeid</option>
+                    <option value="pilotprosjekt">Pilotprosjekt</option>
+                    <option value="kundeforespørsel">Kundeforespørsel</option>
+                    <option value="teknisk">Teknisk henvendelse</option>
+                    <option value="annet">Annet</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="name">Hvem er du?</label>
+                <input type="text" id="name" name="name" placeholder="Navn eller firmanavn" required>
+            </div>
+
+            <div>
+                <label for="email">E-post</label>
+                <input type="email" id="email" name="email" placeholder="Din e-postadresse" required>
+            </div>
+
+            <div>
+                <label for="message">Melding</label>
+                <textarea id="message" name="message" placeholder="Skriv meldingen din her..." required></textarea>
+            </div>
+
+            <button type="submit">Send</button>
+        </form>
+
+        <div class="contact-info">
+            <p>Du kan også nå oss på telefon: <strong>(+47) 482 04 754</strong></p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>eldION AS | Kontakt@eldion.no | +47 48204754</p>
+        <p>© 2025</p>
+    </footer>
+
+    </body>
+</html>

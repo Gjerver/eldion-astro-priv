@@ -1,0 +1,108 @@
+---
+import { teamMembers, mentors } from '../data/team';
+---
+<section id="team" class="pt-28 pb-20 px-4 md:px-[5vw]">
+  <div class="max-w-[1100px] mx-auto">
+
+    <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
+      Menneskene bak
+    </p>
+    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-14">Teamet bak eldION</h2>
+
+    <!-- ── 3-column uniform grid ─────────────────────────────── -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 mb-24">
+      {teamMembers.map((m) => (
+        <div class="gsap-card group cursor-default">
+
+          <!-- Photo: grayscale → colour on hover, slight zoom -->
+          <div class="relative overflow-hidden rounded-2xl mb-4">
+            <img
+              src={`/images/${m.image}`}
+              alt={m.name}
+              class="team-img w-full aspect-[3/4] object-cover object-top
+                     grayscale group-hover:grayscale-0 group-hover:scale-[1.04]"
+            />
+
+            <!-- Hover overlay: fades in and text slides up from bottom -->
+            <div class="absolute inset-0
+                        bg-gradient-to-t from-black/75 via-black/10 to-transparent
+                        opacity-0 group-hover:opacity-100
+                        transition-opacity duration-500 ease-out">
+              <div class="absolute bottom-0 left-0 right-0 p-5
+                          translate-y-3 group-hover:translate-y-0
+                          transition-transform duration-500 ease-out">
+                <p class="text-white font-comfortaa font-bold text-[0.95rem]">{m.name}</p>
+                <p class="text-eldion-cyan text-[0.7rem] mt-0.5">{m.email}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static info below image -->
+          <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-1 mt-0">{m.name}</h3>
+          <p class="text-white/32 text-[0.76rem] leading-relaxed line-clamp-3">{m.bio}</p>
+
+          {m.linkedin && (
+            <a
+              href={m.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="magnetic mt-3 inline-flex items-center gap-1.5 text-white/25 text-[0.7rem]
+                     hover:text-eldion-cyan transition-colors duration-200"
+              aria-label={`${m.name} på LinkedIn`}
+            >
+              <img src="/images/linkedin.png" alt="" class="w-3.5 h-3.5 opacity-35" />
+              LinkedIn
+            </a>
+          )}
+
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Mentors: 2-column ─────────────────────────────────── -->
+    <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
+      Faglig støtte
+    </p>
+    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-12">Våre mentorer</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 max-w-[740px]">
+      {mentors.map((m) => (
+        <div class="gsap-card group cursor-default">
+
+          <div class="relative overflow-hidden rounded-2xl mb-4">
+            <img
+              src={`/images/${m.image}`}
+              alt={m.name}
+              class="team-img w-full aspect-[3/4] object-cover object-top
+                     grayscale group-hover:grayscale-0 group-hover:scale-[1.04]"
+            />
+            <div class="absolute inset-0
+                        bg-gradient-to-t from-black/75 via-black/10 to-transparent
+                        opacity-0 group-hover:opacity-100
+                        transition-opacity duration-500 ease-out">
+              <div class="absolute bottom-0 left-0 right-0 p-5
+                          translate-y-3 group-hover:translate-y-0
+                          transition-transform duration-500 ease-out">
+                <p class="text-white font-comfortaa font-bold text-[0.95rem]">{m.name}</p>
+                <p class="text-eldion-cyan text-[0.7rem] mt-0.5">{m.role}</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-0.5 mt-0">{m.name}</h3>
+          <p class="text-white/30 text-[0.72rem] mb-3 italic">{m.title}</p>
+          <ul class="space-y-2 m-0 p-0 list-none">
+            {m.description.map((d) => (
+              <li class="flex gap-2 text-white/30 text-[0.76rem] leading-relaxed">
+                <span class="text-eldion-cyan/40 mt-0.5 flex-shrink-0">·</span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
