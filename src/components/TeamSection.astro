@@ -39,7 +39,11 @@ import { teamMembers, mentors } from '../data/team';
           </div>
 
           <!-- Static info below image -->
-          <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-1 mt-0">{m.name}</h3>
+          <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-0.5 mt-0">{m.name}</h3>
+          <a href={`mailto:${m.email}`}
+             class="text-eldion-cyan text-[0.7rem] mb-2 block hover:underline">
+            {m.email}
+          </a>
           <p class="text-white/32 text-[0.76rem] leading-relaxed">{m.bio}</p>
 
           {m.linkedin && (
