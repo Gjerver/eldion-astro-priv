@@ -24,18 +24,6 @@ import { teamMembers, mentors } from '../data/team';
               loading="lazy"
             />
 
-            <!-- Hover overlay: fades in and text slides up from bottom -->
-            <div class="absolute inset-0
-                        bg-gradient-to-t from-black/75 via-black/10 to-transparent
-                        opacity-0 group-hover:opacity-100
-                        transition-opacity duration-500 ease-out">
-              <div class="absolute bottom-0 left-0 right-0 p-5
-                          translate-y-3 group-hover:translate-y-0
-                          transition-transform duration-500 ease-out">
-                <p class="text-white font-comfortaa font-bold text-[0.95rem]">{m.name}</p>
-                <p class="text-eldion-cyan text-[0.7rem] mt-0.5">{m.email}</p>
-              </div>
-            </div>
           </div>
 
           <!-- Static info below image -->
@@ -82,17 +70,6 @@ import { teamMembers, mentors } from '../data/team';
                      grayscale group-hover:grayscale-0 group-hover:scale-[1.04]"
               loading="lazy"
             />
-            <div class="absolute inset-0
-                        bg-gradient-to-t from-black/75 via-black/10 to-transparent
-                        opacity-0 group-hover:opacity-100
-                        transition-opacity duration-500 ease-out">
-              <div class="absolute bottom-0 left-0 right-0 p-5
-                          translate-y-3 group-hover:translate-y-0
-                          transition-transform duration-500 ease-out">
-                <p class="text-white font-comfortaa font-bold text-[0.95rem]">{m.name}</p>
-                <p class="text-eldion-cyan text-[0.7rem] mt-0.5">{m.role}</p>
-              </div>
-            </div>
           </div>
 
           <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-0.5 mt-0">{m.name}</h3>
