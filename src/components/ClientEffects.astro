@@ -413,4 +413,108 @@
     el.dataset.decrypt = el.textContent ?? '';
     decryptObs.observe(el);
   });
+
+  /* ══════════════════════════════════════════════════════════════
+     9. LANGUAGE SWITCH — scramble transition NO ↔ EN
+        Current language dissolves into noise, language flips, the new
+        language resolves out of noise. Operates on text nodes only, so
+        inline markup (<strong>, <br>) is preserved. Viewport-filtered
+        for performance; reuses GLYPHS + decryptObs from section 8.
+     ══════════════════════════════════════════════════════════════ */
+  {
+    const root = document.documentElement;
+
+    function applyLang(lang: string) {
+      root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang);
+      document.querySelectorAll<HTMLElement>('[data-ph-no]').forEach((el) => {
+        const v = lang === 'en' ? el.dataset.phEn : el.dataset.phNo;
+        if (v != null) (el as HTMLInputElement).placeholder = v;
+      });
+      document.querySelectorAll<HTMLElement>('[data-opt-no]').forEach((el) => {
+        const v = lang === 'en' ? el.dataset.optEn : el.dataset.optNo;
+        if (v != null) el.textContent = v;
+      });
+    }
+
+    const inView = (el: Element) => {
+      const r = el.getBoundingClientRect();
+      return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
+    };
+
+    interface TextTarget { node: Text; text: string; }
+    function collectTargets(els: Element[]): TextTarget[] {
+      const out: TextTarget[] = [];
+      els.forEach((el) => {
+        const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let n: Node | null;
+        while ((n = w.nextNode())) {
+          const t = n.nodeValue ?? '';
+          if (t.trim().length) out.push({ node: n as Text, text: t });
+        }
+      });
+      return out;
+    }
+
+    function paint(targets: TextTarget[], lockFrac: number) {
+      const f = lockFrac < 0 ? 0 : lockFrac > 1 ? 1 : lockFrac;
+      for (const t of targets) {
+        const s = t.text;
+        const locked = Math.floor(f * s.length);
+        let o = '';
+        for (let i = 0; i < s.length; i++) {
+          const ch = s[i];
+          const code = s.charCodeAt(i);
+          /* preserve all whitespace incl. tab/newline/non-breaking space */
+          if (code === 32 || code === 9 || code === 10 || code === 160) { o += ch; continue; }
+          o += i < locked ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        }
+        t.node.nodeValue = o;
+      }
+    }
+    const restore = (targets: TextTarget[]) => { for (const t of targets) t.node.nodeValue = t.text; };
+
+    let busy = false;
+    const OUT_MS = 120, IN_MS = 240;
+
+    function switchLang(lang: string) {
+      const cur = root.getAttribute('data-lang') || 'no';
+      if (lang === cur || busy) return;
+
+      if (isReduced) { applyLang(lang); return; }
+
+      busy = true;
+      const outTargets = collectTargets(
+        Array.from(document.querySelectorAll(`[data-i18n="${cur}"]`)).filter(inView)
+      );
+
+      const t0 = performance.now();
+      function out(now: number) {
+        const p = (now - t0) / OUT_MS;
+        if (p < 1) { paint(outTargets, 1 - p); requestAnimationFrame(out); return; }
+
+        restore(outTargets);
+        applyLang(lang);
+
+        const inEls = Array.from(document.querySelectorAll(`[data-i18n="${lang}"]`)).filter(inView);
+        /* avoid double-scramble: take over any decrypt spans we're animating */
+        inEls.forEach((el) => { if (el.hasAttribute('data-decrypt')) decryptObs.unobserve(el); });
+        const inTargets = collectTargets(inEls);
+
+        const t1 = performance.now();
+        function inn(now2: number) {
+          const q = (now2 - t1) / IN_MS;
+          if (q < 1) { paint(inTargets, q); requestAnimationFrame(inn); return; }
+          restore(inTargets);
+          busy = false;
+        }
+        requestAnimationFrame(inn);
+      }
+      requestAnimationFrame(out);
+    }
+
+    document.querySelectorAll<HTMLElement>('[data-set-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => switchLang(btn.dataset.setLang ?? 'no'));
+    });
+  }
 </script>
