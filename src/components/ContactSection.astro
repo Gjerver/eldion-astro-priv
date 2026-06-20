@@ -1,17 +1,21 @@
 ---
 const topics = [
-  { value: 'investering',        label: 'Investering' },
-  { value: 'samarbeid',          label: 'Samarbeid' },
-  { value: 'pilotprosjekt',      label: 'Pilotprosjekt' },
-  { value: 'kundeforespørsel',   label: 'Kundeforespørsel' },
-  { value: 'teknisk',            label: 'Teknisk henvendelse' },
-  { value: 'annet',              label: 'Annet' },
+  { value: 'investering',      no: 'Investering',        en: 'Investment' },
+  { value: 'samarbeid',        no: 'Samarbeid',          en: 'Partnership' },
+  { value: 'pilotprosjekt',    no: 'Pilotprosjekt',      en: 'Pilot project' },
+  { value: 'kundeforespørsel', no: 'Kundeforespørsel',   en: 'Customer enquiry' },
+  { value: 'teknisk',          no: 'Teknisk henvendelse', en: 'Technical enquiry' },
+  { value: 'annet',            no: 'Annet',              en: 'Other' },
 ];
 ---
 <section id="contact" class="max-w-[700px] pt-[120px] pb-[40px] px-5 mx-auto text-center max-[900px]:pt-[170px]">
 
-  <h1 data-animate class="font-comfortaa text-[2.8rem] mb-[15px]">Kontakt oss</h1>
-  <p data-animate data-delay="1" class="text-[1.2rem] text-white mb-[40px]">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</p>
+  <h1 data-animate class="font-comfortaa text-[2.8rem] mb-[15px]">
+    <span data-i18n="no">Kontakt oss</span><span data-i18n="en">Contact us</span>
+  </h1>
+  <p data-animate data-delay="1" class="text-[1.2rem] text-white mb-[40px]">
+    <span data-i18n="no">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</span><span data-i18n="en">We'd love to hear from you — whether you have questions, ideas or want to collaborate.</span>
+  </p>
 
   <!-- Form-level error (shown by @formspree/ajax on submission failure) -->
   <div data-fs-error
@@ -24,8 +28,12 @@ const topics = [
        class="hidden mb-6 px-6 py-10 rounded-2xl bg-white/5 border border-white/10
               backdrop-blur-lg text-center">
     <div class="text-5xl mb-4 text-eldion-cyan">✓</div>
-    <p class="text-xl font-semibold text-white mb-2 font-comfortaa">Takk for meldingen!</p>
-    <p class="text-white/55 text-sm">Vi tar kontakt med deg så snart som mulig.</p>
+    <p class="text-xl font-semibold text-white mb-2 font-comfortaa">
+      <span data-i18n="no">Takk for meldingen!</span><span data-i18n="en">Thank you for your message!</span>
+    </p>
+    <p class="text-white/55 text-sm">
+      <span data-i18n="no">Vi tar kontakt med deg så snart som mulig.</span><span data-i18n="en">We'll get back to you as soon as possible.</span>
+    </p>
   </div>
 
   <form
@@ -35,25 +43,30 @@ const topics = [
     class="flex flex-col gap-[25px] bg-white/5 p-[40px] rounded-[20px] shadow-[0_0_20px_rgba(0,0,0,0.3)] backdrop-blur-lg border border-white/10"
   >
     <div>
-      <label for="topic" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hva gjelder det?</label>
+      <label for="topic" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+        <span data-i18n="no">Hva gjelder det?</span><span data-i18n="en">What is it about?</span>
+      </label>
       <select id="topic" name="topic" required data-fs-field
               class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
                      focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
                      [&>option]:text-black [&>option]:bg-white
                      aria-invalid:border aria-invalid:border-red-500/60">
-        <option value="">Velg kategori</option>
-        {topics.map(({ value, label }) => (
-          <option value={value}>{label}</option>
+        <option value="" data-opt-no="Velg kategori" data-opt-en="Select a category">Velg kategori</option>
+        {topics.map(({ value, no, en }) => (
+          <option value={value} data-opt-no={no} data-opt-en={en}>{no}</option>
         ))}
       </select>
       <span data-fs-error="topic" class="block mt-1 text-xs text-red-400 text-left"></span>
     </div>
 
     <div>
-      <label for="name" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Hvem er du?</label>
+      <label for="name" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+        <span data-i18n="no">Hvem er du?</span><span data-i18n="en">Who are you?</span>
+      </label>
       <input
         type="text" id="name" name="name"
-        placeholder="Navn eller firmanavn" required data-fs-field
+        placeholder="Navn eller firmanavn" data-ph-no="Navn eller firmanavn" data-ph-en="Name or company name"
+        required data-fs-field
         class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
                focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
                aria-invalid:border aria-invalid:border-red-500/60"
@@ -62,10 +75,13 @@ const topics = [
     </div>
 
     <div>
-      <label for="email" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">E-post</label>
+      <label for="email" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+        <span data-i18n="no">E-post</span><span data-i18n="en">Email</span>
+      </label>
       <input
         type="email" id="email" name="email"
-        placeholder="Din e-postadresse" required data-fs-field
+        placeholder="Din e-postadresse" data-ph-no="Din e-postadresse" data-ph-en="Your email address"
+        required data-fs-field
         class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
                focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
                aria-invalid:border aria-invalid:border-red-500/60"
@@ -74,10 +90,13 @@ const topics = [
     </div>
 
     <div>
-      <label for="message" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">Melding</label>
+      <label for="message" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+        <span data-i18n="no">Melding</span><span data-i18n="en">Message</span>
+      </label>
       <textarea
         id="message" name="message"
-        placeholder="Skriv meldingen din her..." required data-fs-field
+        placeholder="Skriv meldingen din her..." data-ph-no="Skriv meldingen din her..." data-ph-en="Write your message here..."
+        required data-fs-field
         class="w-full h-[120px] resize-none bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
                focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
                aria-invalid:border aria-invalid:border-red-500/60"
@@ -93,12 +112,15 @@ const topics = [
              hover:from-[#00a0d1] hover:to-[#00c3ff] hover:scale-[1.03]
              disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
     >
-      Send
+      <span data-i18n="no">Send</span><span data-i18n="en">Send</span>
     </button>
   </form>
 
   <div class="mt-[40px] text-[1.1rem] text-[#ccc]">
-    <p>Du kan også nå oss på telefon: <strong class="text-cyan-bright">(+47) 482 04 754</strong></p>
+    <p>
+      <span data-i18n="no">Du kan også nå oss på telefon:</span><span data-i18n="en">You can also reach us by phone:</span>
+      <strong class="text-cyan-bright">(+47) 482 04 754</strong>
+    </p>
   </div>
 
 </section>

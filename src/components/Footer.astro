@@ -1,9 +1,9 @@
 ---
 const navLinks = [
-  { href: '#home',    label: 'Hjem' },
-  { href: '#goal',    label: 'Løsning' },
-  { href: '#team',    label: 'Team' },
-  { href: '#contact', label: 'Kontakt' },
+  { href: '#home',    no: 'Hjem',    en: 'Home' },
+  { href: '#goal',    no: 'Løsning', en: 'Solution' },
+  { href: '#team',    no: 'Team',    en: 'Team' },
+  { href: '#contact', no: 'Kontakt', en: 'Contact' },
 ];
 ---
 <footer class="w-full mt-[50px] bg-[rgba(10,10,10,0.7)] backdrop-blur-sm border-t border-white/10">
@@ -12,13 +12,13 @@ const navLinks = [
 
     <!-- Nav links -->
     <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
-      {navLinks.map(({ href, label }) => (
+      {navLinks.map(({ href, no, en }) => (
         <a
           href={href}
           class="text-[0.82rem] text-white/45 uppercase tracking-[0.18em] no-underline
                  transition-colors duration-200 hover:text-eldion-cyan"
         >
-          {label}
+          <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
         </a>
       ))}
     </nav>
@@ -46,7 +46,7 @@ const navLinks = [
 
     <!-- Legal -->
     <p class="text-[0.75rem] text-white/22 text-center m-0 leading-relaxed">
-      eldION AS &nbsp;·&nbsp; Org.nr. 934 839 080 &nbsp;·&nbsp; © 2026
+      <span data-i18n="no">eldION AS &nbsp;·&nbsp; Org.nr. 934 839 080 &nbsp;·&nbsp; © 2026</span><span data-i18n="en">eldION AS &nbsp;·&nbsp; Company no. 934 839 080 &nbsp;·&nbsp; © 2026</span>
     </p>
 
   </div>

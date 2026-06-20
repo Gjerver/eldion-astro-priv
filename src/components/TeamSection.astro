@@ -5,9 +5,11 @@ import { teamMembers, mentors } from '../data/team';
   <div class="max-w-[1100px] mx-auto">
 
     <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
-      Menneskene bak
+      <span data-i18n="no">Menneskene bak</span><span data-i18n="en">The people behind</span>
     </p>
-    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-14">Teamet bak eldION</h2>
+    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-14">
+      <span data-i18n="no">Teamet bak eldION</span><span data-i18n="en">The team behind eldION</span>
+    </h2>
 
     <!-- ── 3-column uniform grid ─────────────────────────────── -->
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-10 mb-24">
@@ -32,7 +34,7 @@ import { teamMembers, mentors } from '../data/team';
              class="text-eldion-cyan text-[0.7rem] mb-2 block hover:underline">
             {m.email}
           </a>
-          <p class="text-white/32 text-[0.76rem] leading-relaxed">{m.bio}</p>
+          <p class="text-white/32 text-[0.76rem] leading-relaxed"><span data-i18n="no">{m.bio}</span><span data-i18n="en">{m.bioEn}</span></p>
 
           {m.linkedin && (
             <a
@@ -54,9 +56,11 @@ import { teamMembers, mentors } from '../data/team';
 
     <!-- ── Mentors: 2-column ─────────────────────────────────── -->
     <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
-      Faglig støtte
+      <span data-i18n="no">Faglig støtte</span><span data-i18n="en">Advisory support</span>
     </p>
-    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-12">Våre mentorer</h2>
+    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-12">
+      <span data-i18n="no">Våre mentorer</span><span data-i18n="en">Our mentors</span>
+    </h2>
 
     <div class="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-8 sm:gap-y-10 max-w-[740px]">
       {mentors.map((m) => (
@@ -73,13 +77,13 @@ import { teamMembers, mentors } from '../data/team';
           </div>
 
           <h3 class="font-comfortaa text-white/82 text-[0.93rem] font-bold mb-0.5 mt-0">{m.name}</h3>
-          <p class="text-eldion-cyan text-[0.7rem] mb-1">{m.role}</p>
-          <p class="text-white/30 text-[0.72rem] mb-3 italic">{m.title}</p>
+          <p class="text-eldion-cyan text-[0.7rem] mb-1"><span data-i18n="no">{m.role}</span><span data-i18n="en">{m.roleEn}</span></p>
+          <p class="text-white/30 text-[0.72rem] mb-3 italic"><span data-i18n="no">{m.title}</span><span data-i18n="en">{m.titleEn}</span></p>
           <ul class="space-y-2 m-0 p-0 list-none">
-            {m.description.map((d) => (
+            {m.description.map((d, i) => (
               <li class="flex gap-2 text-white/30 text-[0.76rem] leading-relaxed">
                 <span class="text-eldion-cyan/40 mt-0.5 flex-shrink-0">·</span>
-                <span>{d}</span>
+                <span><span data-i18n="no">{d}</span><span data-i18n="en">{m.descriptionEn[i]}</span></span>
               </li>
             ))}
           </ul>

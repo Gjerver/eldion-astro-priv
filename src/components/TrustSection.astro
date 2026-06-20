@@ -9,7 +9,9 @@ const partners = [
 ---
 <section data-animate class="text-center py-[80px] px-5 mx-auto max-w-[1000px]">
 
-  <h2 class="font-comfortaa text-[1.2rem] text-gray-400 mb-[40px] uppercase tracking-[2px]">Med tillit fra:</h2>
+  <h2 class="font-comfortaa text-[1.2rem] text-gray-400 mb-[40px] uppercase tracking-[2px]">
+    <span data-i18n="no">Med tillit fra:</span><span data-i18n="en">Trusted by:</span>
+  </h2>
 
   <div class="flex flex-wrap justify-center items-center gap-[clamp(24px,4vw,50px)]">
     {partners.map(({ src, alt, height }) => (

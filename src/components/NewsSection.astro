@@ -15,9 +15,11 @@ import { events } from '../data/timeline';
   <!-- All content above bg + canvas -->
   <div style="position:relative;z-index:2;">
 
-    <h2 data-animate class="font-comfortaa text-[2em] text-center mb-3">Vår tidslinje</h2>
+    <h2 data-animate class="font-comfortaa text-[2em] text-center mb-3">
+      <span data-i18n="no">Vår tidslinje</span><span data-i18n="en">Our timeline</span>
+    </h2>
     <p data-animate class="text-center text-white/35 text-sm mb-[60px] tracking-wide">
-      Scroll ned for å gå tilbake i tid ↓
+      <span data-i18n="no">Scroll ned for å gå tilbake i tid ↓</span><span data-i18n="en">Scroll down to travel back in time ↓</span>
     </p>
 
     <div class="timeline-container">
@@ -26,10 +28,13 @@ import { events } from '../data/timeline';
       {events.map((event, index) => (
         <TimelineItem
           date={event.date}
+          dateEn={event.dateEn}
           logo={event.logo}
           logoAlt={event.logoAlt}
           title={event.title}
+          titleEn={event.titleEn}
           content={event.content}
+          contentEn={event.contentEn}
           logoStyle={event.logoStyle}
           side={index % 2 === 0 ? 'left' : 'right'}
         />

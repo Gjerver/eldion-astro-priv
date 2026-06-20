@@ -9,7 +9,7 @@ interface Props {
 const { title = 'eldION' } = Astro.props;
 ---
 <!doctype html>
-<html lang="no">
+<html lang="no" data-lang="no">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,6 +47,32 @@ const { title = 'eldION' } = Astro.props;
     <!-- Lucide icons init (is:inline runs synchronously) -->
     <script is:inline>
       lucide.createIcons();
+    </script>
+
+    <!-- Language switch (NO default). Toggles <html data-lang> + form attrs. -->
+    <script is:inline>
+      (function () {
+        function setLang(lang) {
+          var root = document.documentElement;
+          root.setAttribute('data-lang', lang);
+          root.setAttribute('lang', lang);
+          document.querySelectorAll('[data-ph-no]').forEach(function (el) {
+            var v = lang === 'en' ? el.getAttribute('data-ph-en') : el.getAttribute('data-ph-no');
+            if (v !== null) el.setAttribute('placeholder', v);
+          });
+          document.querySelectorAll('[data-opt-no]').forEach(function (el) {
+            var v = lang === 'en' ? el.getAttribute('data-opt-en') : el.getAttribute('data-opt-no');
+            if (v !== null) el.textContent = v;
+          });
+        }
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('[data-set-lang]');
+          if (!btn) return;
+          setLang(btn.getAttribute('data-set-lang'));
+        });
+        // Always default to Norwegian on entry.
+        setLang('no');
+      })();
     </script>
 
     <!-- CSS Intersection Observer scroll-reveal (data-animate elements) -->

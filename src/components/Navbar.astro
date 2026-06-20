@@ -1,9 +1,11 @@
 ---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
 const links = [
-  { href: '#goal',    label: 'Løsningen' },
-  { href: '#team',    label: 'Om oss' },
-  { href: '#news',    label: 'Nyheter' },
-  { href: '#contact', label: 'Kontakt oss' },
+  { href: '#goal',    no: 'Løsningen',   en: 'Solution' },
+  { href: '#team',    no: 'Om oss',      en: 'About us' },
+  { href: '#news',    no: 'Nyheter',     en: 'News' },
+  { href: '#contact', no: 'Kontakt oss', en: 'Contact' },
 ];
 ---
 <header
@@ -26,16 +28,21 @@ const links = [
     </a>
   </div>
 
-  <nav class="flex flex-wrap justify-end gap-[clamp(10px,2vw,30px)] flex-1 min-w-[200px] text-right max-[900px]:justify-center max-[900px]:w-full max-[900px]:mt-[10px]">
-    {links.map(({ href, label }) => (
-      <a
-        href={href}
-        class="text-white no-underline font-medium whitespace-nowrap inline-block transition-all duration-200 hover:text-cyan-bright hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-bright focus-visible:outline-offset-2 focus-visible:rounded focus-visible:text-cyan-bright"
-      >
-        {label}
-      </a>
-    ))}
-  </nav>
+  <div class="flex items-center gap-[clamp(10px,2vw,26px)] flex-1 justify-end
+              max-[900px]:w-full max-[900px]:justify-center max-[900px]:mt-[10px]">
+    <nav class="flex flex-wrap justify-end items-center gap-[clamp(10px,2vw,30px)] text-right max-[900px]:justify-center">
+      {links.map(({ href, no, en }) => (
+        <a
+          href={href}
+          class="text-white no-underline font-medium whitespace-nowrap inline-block transition-all duration-200 hover:text-cyan-bright hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-bright focus-visible:outline-offset-2 focus-visible:rounded focus-visible:text-cyan-bright"
+        >
+          <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
+        </a>
+      ))}
+    </nav>
+
+    <LanguageSwitcher />
+  </div>
 </header>
 
 <script>
