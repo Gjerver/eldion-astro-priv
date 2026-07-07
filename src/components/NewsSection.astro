@@ -10,8 +10,6 @@ for (const e of events) {
   if (last && last.year === year) last.items.push(e);
   else groups.push({ year, items: [e] });
 }
-const countNo = (n: number) => `${n} hendelse${n === 1 ? '' : 'r'}`;
-const countEn = (n: number) => `${n} event${n === 1 ? '' : 's'}`;
 ---
 <!-- Editorial milestone log — flat, annual-report register -->
 <section id="news" class="px-4 py-28 md:px-[5vw] max-[768px]:py-20">
@@ -34,9 +32,6 @@ const countEn = (n: number) => `${n} event${n === 1 ? '' : 's'}`;
               {year}
             </p>
             <div class="mt-4 h-px w-9 bg-brand-sky/60 max-[820px]:hidden"></div>
-            <p class="m-0 mt-4 text-[0.68rem] uppercase tracking-[0.2em] text-white/30 max-[820px]:hidden">
-              <span data-i18n="no">{countNo(items.length)}</span><span data-i18n="en">{countEn(items.length)}</span>
-            </p>
           </div>
         </div>
 
@@ -58,8 +53,9 @@ const countEn = (n: number) => `${n} event${n === 1 ? '' : 's'}`;
                   src={`/images/${ev.logo}`}
                   alt={ev.logoAlt}
                   loading="lazy"
-                  style="filter:brightness(0) invert(1);"
-                  class="mt-4 h-6 w-auto opacity-35 transition-opacity duration-300 group-hover:opacity-65 max-[640px]:mt-2.5 max-[640px]:h-5"
+                  class="mt-4 h-10 w-auto max-w-[112px] object-contain object-left opacity-85
+                         transition-opacity duration-300 group-hover:opacity-100
+                         max-[640px]:mt-2.5 max-[640px]:h-8"
                 />
               </div>
               <div>
