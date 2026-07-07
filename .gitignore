@@ -24,3 +24,6 @@ Thumbs.db
 
 # GitHub Pages custom domain (håndteres separat)
 CNAME
+
+# Raw brand source files (AI/EPS/PDF) — site uses optimized copies in public/images/brand/
+public/images/Logo 2026/

@@ -2,60 +2,79 @@
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const links = [
-  { href: '#goal',    no: 'Løsningen',   en: 'Solution' },
-  { href: '#team',    no: 'Om oss',      en: 'About us' },
-  { href: '#news',    no: 'Nyheter',     en: 'News' },
-  { href: '#contact', no: 'Kontakt oss', en: 'Contact' },
+  { href: '#goal', no: 'Løsningen', en: 'Solution' },
+  { href: '#team', no: 'Om oss',    en: 'About us' },
+  { href: '#news', no: 'Nyheter',   en: 'News' },
 ];
 ---
 <header
   id="site-header"
-  class="fixed top-0 w-full z-50 flex flex-wrap items-center justify-between
-         bg-black/45 backdrop-blur-md shadow-[0_2px_5px_rgba(0,0,0,0.4)]
-         box-border px-[clamp(10px,4vw,60px)] py-[10px]
-         transition-all duration-300
-         max-[900px]:flex-col max-[900px]:items-start"
+  class="fixed top-0 w-full z-50 box-border
+         border-b border-transparent
+         transition-all duration-300"
 >
-  <div class="flex items-center gap-2 flex-none min-w-[200px]">
-    <a href="#home">
+  <div class="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-y-2
+              px-[clamp(16px,4vw,48px)] py-[18px] transition-all duration-300
+              max-[900px]:flex-col max-[900px]:items-center"
+       id="site-header-inner">
+
+    <a href="#home" class="flex-none" aria-label="Eldion – til toppen">
       <img
         id="nav-logo"
-        src="/images/ny_logo.png"
-        alt="eldION logo"
-        style="width:250px;height:auto;transition:width 0.3s ease;
-               filter:drop-shadow(0 6px 28px rgba(0,0,0,0.95)) drop-shadow(0 2px 10px rgba(0,0,0,0.8));"
+        src="/images/brand/logo-white.png"
+        alt="Eldion"
+        style="width:132px;height:auto;transition:width 0.3s ease;"
       />
     </a>
-  </div>
 
-  <div class="flex items-center gap-[clamp(10px,2vw,26px)] flex-1 justify-end
-              max-[900px]:w-full max-[900px]:justify-center max-[900px]:mt-[10px]">
-    <nav class="flex flex-wrap justify-end items-center gap-[clamp(10px,2vw,30px)] text-right max-[900px]:justify-center">
-      {links.map(({ href, no, en }) => (
-        <a
-          href={href}
-          class="text-white no-underline font-medium whitespace-nowrap inline-block transition-all duration-200 hover:text-cyan-bright hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-bright focus-visible:outline-offset-2 focus-visible:rounded focus-visible:text-cyan-bright"
-        >
-          <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
-        </a>
-      ))}
-    </nav>
+    <div class="flex items-center gap-[clamp(14px,2.4vw,36px)]
+                max-[900px]:mt-1 max-[900px]:flex-wrap max-[900px]:justify-center">
+      <nav class="flex items-center gap-[clamp(14px,2.2vw,32px)] max-[900px]:flex-wrap max-[900px]:justify-center">
+        {links.map(({ href, no, en }) => (
+          <a
+            href={href}
+            class="relative text-[0.9rem] font-medium text-white/65 no-underline whitespace-nowrap
+                   transition-colors duration-200 hover:text-white
+                   after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0
+                   after:bg-brand-sky after:transition-all after:duration-300 hover:after:w-full
+                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-sky
+                   focus-visible:outline-offset-4 focus-visible:rounded-sm"
+          >
+            <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
+          </a>
+        ))}
+      </nav>
 
-    <LanguageSwitcher />
+      <a
+        href="#contact"
+        class="inline-flex items-center whitespace-nowrap rounded-lg bg-brand-orange
+               px-5 py-[9px] text-[0.88rem] font-semibold text-white no-underline
+               transition-all duration-250
+               hover:bg-brand-orange-deep hover:-translate-y-px
+               hover:shadow-[0_6px_20px_rgba(234,113,19,0.28)]"
+      >
+        <span data-i18n="no">Kontakt oss</span><span data-i18n="en">Contact us</span>
+      </a>
+
+      <LanguageSwitcher />
+    </div>
   </div>
 </header>
 
 <script>
-  const hdr  = document.getElementById('site-header') as HTMLElement | null;
-  const logo = document.getElementById('nav-logo')    as HTMLImageElement | null;
+  const hdr  = document.getElementById('site-header')       as HTMLElement | null;
+  const innr = document.getElementById('site-header-inner') as HTMLElement | null;
+  const logo = document.getElementById('nav-logo')          as HTMLImageElement | null;
 
   function updateNav() {
-    const scrolled = window.scrollY > 60;
-    if (!hdr || !logo) return;
-    hdr.style.paddingTop      = scrolled ? '5px'              : '';
-    hdr.style.paddingBottom   = scrolled ? '5px'              : '';
-    hdr.style.backgroundColor = scrolled ? 'rgba(0,0,0,0.75)' : '';
-    logo.style.width          = scrolled ? '175px'            : '250px';
+    if (!hdr || !innr || !logo) return;
+    const scrolled = window.scrollY > 40;
+    hdr.style.backgroundColor  = scrolled ? 'rgba(0,23,40,0.88)'        : '';
+    hdr.style.backdropFilter   = scrolled ? 'blur(12px)'                : '';
+    hdr.style.borderBottomColor = scrolled ? 'rgba(255,255,255,0.08)'   : 'transparent';
+    innr.style.paddingTop      = scrolled ? '11px' : '';
+    innr.style.paddingBottom   = scrolled ? '11px' : '';
+    logo.style.width           = scrolled ? '112px' : '132px';
   }
 
   window.addEventListener('scroll', updateNav, { passive: true });

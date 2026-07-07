@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2670.45 882.34">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: InterTight-Bold, 'Inter Tight';
+        font-size: 604.09px;
+        font-variation-settings: 'wght' 700;
+        font-weight: 700;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g>
+    <path class="cls-2" d="M676.06,69.08l-217.21,472.41,150.98,81.43-276.4,246.15c34.48,8.66,70.57,13.26,107.74,13.26,243.65,0,441.17-197.52,441.17-441.17,0-160.94-77.55-295.03-206.28-372.09Z"/>
+    <path class="cls-2" d="M659.76,57.88C595.32,21.05,520.71,0,441.17,0,197.52,0,0,197.52,0,441.17c0,200.92,127.94,369.65,311.68,422.94l147.17-322.61-148.4-80.5L659.76,57.88Z"/>
+  </g>
+  <text class="cls-1" transform="translate(971.45 605.61)"><tspan x="0" y="0">eldion</tspan></text>
+</svg>

@@ -1,11 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-eldion-cyan: #00AEEF;
-  --color-eldion-orange: #E94E1B;
-  --color-cyan-bright: #00bfff;
-  --font-comfortaa: 'Comfortaa', cursive;
-  --font-inter: 'Inter', sans-serif;
+  /* ── Eldion brand palette 2026 (from branding presentation) ── */
+  --color-brand-navy:        #002440;  /* Dark blue — primary canvas */
+  --color-brand-navy-2:      #032f52;  /* derived: raised panel tone  */
+  --color-brand-navy-3:      #001728;  /* derived: deepest (footer)   */
+  --color-brand-blue:        #0a6fb6;  /* Blue                        */
+  --color-brand-sky:         #23a5de;  /* Light blue — accents        */
+  --color-brand-orange:      #ea7113;  /* Orange — primary CTA        */
+  --color-brand-orange-deep: #ea5b1b;  /* Dark orange — hover/detail  */
+  --color-brand-yellow:      #f7a723;  /* Yellow — sparing use        */
+  --color-brand-white:       #f2f1f1;  /* Off-white                   */
+
+  /* Legacy aliases — old token names remapped to the 2026 palette so
+     existing components pick up the new colours without renaming */
+  --color-eldion-cyan: #23a5de;
+  --color-eldion-orange: #ea5b1b;
+  --color-cyan-bright: #23a5de;
+
+  /* ── Typography: Inter Tight (display) / DM Sans (UI + body) ── */
+  --font-display: 'Inter Tight', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
+  /* Legacy aliases */
+  --font-comfortaa: 'Inter Tight', sans-serif;
+  --font-inter: 'DM Sans', sans-serif;
 }
 
 html {
@@ -29,28 +47,25 @@ html[data-lang="en"] [data-i18n="no"] {
   align-items: center;
   gap: 4px;
   padding: 4px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   flex: none;
 }
 .lang-btn {
-  width: 29px;
-  height: 21px;
+  width: 28px;
+  height: 20px;
   padding: 0;
   border: 0;
   margin: 0;
   background: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
   overflow: hidden;
   display: flex;
-  opacity: 0.5;
-  filter: grayscale(0.65) saturate(0.85);
-  transition: opacity 0.25s ease, filter 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  opacity: 0.42;
+  filter: grayscale(0.7) saturate(0.85);
+  transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
 }
 .lang-btn svg {
   display: block;
@@ -59,16 +74,19 @@ html[data-lang="en"] [data-i18n="no"] {
 }
 .lang-btn:hover {
   opacity: 0.85;
-  transform: translateY(-1px);
 }
 html[data-lang="no"] .lang-btn[data-set-lang="no"],
 html[data-lang="en"] .lang-btn[data-set-lang="en"] {
   opacity: 1;
   filter: none;
-  box-shadow: 0 0 0 1.5px rgba(0, 174, 239, 0.85), 0 0 10px rgba(0, 174, 239, 0.35);
+  box-shadow: 0 0 0 1.5px rgba(35, 165, 222, 0.8);
 }
 
-/* Background: video (z:-2) + radial vignette overlay (z:-1) */
+/* Flat brand canvas — no video background (2026 revamp) */
+body {
+  background-color: var(--color-brand-navy);
+  color: var(--color-brand-white);
+}
 
 /* GSAP-managed cards start invisible */
 .gsap-card   { opacity: 0; }
@@ -128,9 +146,9 @@ section {
   opacity: 0;
 }
 
-/* Cyan → white gradient for the key line in the subtitle */
+/* Sky-blue → white gradient for the key line in the subtitle */
 .hero-gradient-text {
-  background: linear-gradient(90deg, #00AEEF 0%, rgba(255,255,255,0.88) 100%);
+  background: linear-gradient(90deg, #23a5de 0%, rgba(242,241,241,0.92) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

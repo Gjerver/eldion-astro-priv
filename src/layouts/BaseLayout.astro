@@ -1,12 +1,11 @@
 ---
 import '../styles/global.css';
-import VideoBackground from '../components/VideoBackground.astro';
 import ClientEffects from '../components/ClientEffects.astro';
 
 interface Props {
   title?: string;
 }
-const { title = 'eldION' } = Astro.props;
+const { title = 'Eldion – Batteriløs industriell IoT' } = Astro.props;
 ---
 <!doctype html>
 <html lang="no" data-lang="no">
@@ -14,34 +13,35 @@ const { title = 'eldION' } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <meta name="description" content="eldION leverer batteriløse, trådløse sensorsystemer drevet av industriell spillvarme – ingen batterier, ingen kabler. Neste generasjons industriell IoT." />
+    <meta name="description" content="Eldion leverer batteriløse, trådløse sensorsystemer drevet av industriell spillvarme – ingen batterier, ingen kabler. Neste generasjons industriell IoT." />
 
     <!-- Open Graph / LinkedIn / Facebook -->
     <meta property="og:type"        content="website" />
     <meta property="og:locale"      content="nb_NO" />
     <meta property="og:url"         content={Astro.site?.href ?? '/'} />
-    <meta property="og:title"       content="eldION – Batteriløs industriell IoT" />
+    <meta property="og:title"       content="Eldion – Batteriløs industriell IoT" />
     <meta property="og:description" content="Trådløs data drevet av spillvarme. Ingen batterier. Ingen kabler." />
-    <meta property="og:image"       content={`${Astro.site}images/ny_logo.png`} />
-    <meta property="og:image:alt"   content="eldION logo" />
+    <meta property="og:image"       content={`${Astro.site}images/brand/og-image.png`} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"   content="Eldion logo" />
 
     <!-- Twitter / X card -->
-    <meta name="twitter:card"        content="summary" />
-    <meta name="twitter:title"       content="eldION – Batteriløs industriell IoT" />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Eldion – Batteriløs industriell IoT" />
     <meta name="twitter:description" content="Trådløs data drevet av spillvarme. Ingen batterier. Ingen kabler." />
-    <meta name="twitter:image"       content={`${Astro.site}images/ny_logo.png`} />
+    <meta name="twitter:image"       content={`${Astro.site}images/brand/og-image.png`} />
 
-    <link rel="icon" href="/images/logo2.png" type="image/png" />
+    <link rel="icon" href="/images/brand/logomark.svg" type="image/svg+xml" />
+    <link rel="icon" href="/images/brand/logomark-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/images/brand/logomark-192.png" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <script src="https://unpkg.com/lucide@latest" is:inline></script>
   </head>
-  <body class="min-h-screen flex flex-col text-white font-inter">
-    <!-- Video background + thermodynamic particles + cursor trail -->
-    <VideoBackground />
-
+  <body class="min-h-screen flex flex-col font-sans">
     <slot />
 
     <!-- Lucide icons init (is:inline runs synchronously) -->
