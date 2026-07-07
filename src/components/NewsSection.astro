@@ -35,37 +35,33 @@ for (const e of events) {
           </div>
         </div>
 
-        <!-- Event rows -->
-        <div class="border-b border-l border-white/[0.06] max-[820px]:border-l-0">
+        <!-- Event cards — flat off-white panels, colour-blocked like the solution section -->
+        <div class="flex flex-col gap-5">
           {items.map((ev) => (
             <article
               data-animate
-              class="group grid grid-cols-[128px_1fr] gap-8 border-t border-white/[0.06]
-                     py-9 pl-10 pr-3 transition-colors duration-300
-                     hover:bg-white/[0.02]
-                     max-[820px]:pl-5 max-[640px]:grid-cols-1 max-[640px]:gap-4 max-[640px]:py-7"
+              class="group grid grid-cols-[128px_1fr] gap-8 rounded-xl bg-brand-white
+                     px-9 py-8 transition-all duration-300
+                     hover:-translate-y-0.5 hover:shadow-[0_16px_44px_rgba(0,0,0,0.32)]
+                     max-[820px]:px-6 max-[640px]:grid-cols-1 max-[640px]:gap-4 max-[640px]:py-6"
             >
               <div>
-                <p class="m-0 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/40">
+                <p class="m-0 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-brand-blue">
                   <span data-i18n="no">{ev.date}</span><span data-i18n="en">{ev.dateEn}</span>
                 </p>
-                <div class="mt-4 inline-flex h-[46px] w-[104px] items-center justify-center
-                            rounded-lg bg-brand-white px-2.5
-                            opacity-90 transition-opacity duration-300 group-hover:opacity-100
-                            max-[640px]:mt-2.5 max-[640px]:h-[40px] max-[640px]:w-[92px]">
-                  <img
-                    src={`/images/${ev.logo}`}
-                    alt={ev.logoAlt}
-                    loading="lazy"
-                    class="max-h-[30px] max-w-full object-contain max-[640px]:max-h-[26px]"
-                  />
-                </div>
+                <img
+                  src={`/images/${ev.logo}`}
+                  alt={ev.logoAlt}
+                  loading="lazy"
+                  class="mt-5 h-9 w-auto max-w-[108px] object-contain object-left
+                         max-[640px]:mt-3 max-[640px]:h-8"
+                />
               </div>
               <div>
-                <h3 class="m-0 mb-2.5 font-display text-[1.08rem] font-semibold leading-snug tracking-tight text-white/95">
+                <h3 class="m-0 mb-2.5 font-display text-[1.08rem] font-semibold leading-snug tracking-tight text-brand-navy">
                   <span data-i18n="no">{ev.title}</span><span data-i18n="en">{ev.titleEn}</span>
                 </h3>
-                <p class="m-0 max-w-[640px] text-[0.88rem] leading-[1.75] text-white/48">
+                <p class="m-0 max-w-[640px] text-[0.88rem] leading-[1.75] text-brand-navy/65">
                   <span data-i18n="no">{ev.content}</span><span data-i18n="en">{ev.contentEn}</span>
                 </p>
               </div>
