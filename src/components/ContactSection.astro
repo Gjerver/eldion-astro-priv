@@ -7,31 +7,43 @@ const topics = [
   { value: 'teknisk',          no: 'Teknisk henvendelse', en: 'Technical enquiry' },
   { value: 'annet',            no: 'Annet',              en: 'Other' },
 ];
----
-<section id="contact" class="max-w-[700px] pt-[120px] pb-[40px] px-5 mx-auto text-center max-[900px]:pt-[170px]">
 
-  <h1 data-animate class="font-comfortaa text-[2.8rem] mb-[15px]">
-    <span data-i18n="no">Kontakt oss</span><span data-i18n="en">Contact us</span>
-  </h1>
-  <p data-animate data-delay="1" class="text-[1.2rem] text-white mb-[40px]">
+const inputClasses = `w-full box-border rounded-lg border border-white/10 bg-white/[0.05]
+  px-4 py-3.5 text-[0.95rem] text-white placeholder:text-white/30
+  transition-colors duration-200
+  focus:border-brand-sky focus:bg-white/[0.07] focus:outline-none
+  aria-invalid:border-red-400/60`;
+---
+<section id="contact" class="mx-auto max-w-[720px] px-5 pb-16 pt-28 max-[900px]:pt-[170px]">
+
+  <!-- Header — same rhythm as the other sections -->
+  <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
+    <span data-i18n="no">Kontakt</span><span data-i18n="en">Contact</span>
+  </p>
+  <h2 data-animate class="m-0 mb-5 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white">
+    <span data-i18n="no">Snakk med oss</span><span data-i18n="en">Talk to us</span>
+  </h2>
+  <p data-animate data-delay="1" class="mb-12 max-w-[520px] text-[1.02rem] leading-[1.7] text-white/55">
     <span data-i18n="no">Vi vil gjerne høre fra deg – enten du har spørsmål, forslag eller ønsker samarbeid.</span><span data-i18n="en">We'd love to hear from you — whether you have questions, ideas or want to collaborate.</span>
   </p>
 
   <!-- Form-level error (shown by @formspree/ajax on submission failure) -->
   <div data-fs-error
-       class="hidden mb-6 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20
-              text-red-400 text-sm text-left">
+       class="hidden mb-6 rounded-lg border border-red-400/25 bg-red-500/10
+              px-4 py-3 text-left text-sm text-red-300">
   </div>
 
   <!-- Success message (shown by @formspree/ajax on success) -->
   <div data-fs-success
-       class="hidden mb-6 px-6 py-10 rounded-2xl bg-white/5 border border-white/10
-              backdrop-blur-lg text-center">
-    <div class="text-5xl mb-4 text-eldion-cyan">✓</div>
-    <p class="text-xl font-semibold text-white mb-2 font-comfortaa">
+       class="hidden mb-6 rounded-xl border border-white/10 bg-brand-navy-2
+              px-6 py-12 text-center">
+    <div class="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange/15">
+      <span class="text-2xl font-bold text-brand-orange">✓</span>
+    </div>
+    <p class="m-0 mb-2 font-display text-xl font-semibold text-white">
       <span data-i18n="no">Takk for meldingen!</span><span data-i18n="en">Thank you for your message!</span>
     </p>
-    <p class="text-white/55 text-sm">
+    <p class="m-0 text-sm text-white/55">
       <span data-i18n="no">Vi tar kontakt med deg så snart som mulig.</span><span data-i18n="en">We'll get back to you as soon as possible.</span>
     </p>
   </div>
@@ -40,88 +52,80 @@ const topics = [
     id="contact-form"
     data-animate
     data-delay="2"
-    class="flex flex-col gap-[25px] bg-white/5 p-[40px] rounded-[20px] shadow-[0_0_20px_rgba(0,0,0,0.3)] backdrop-blur-lg border border-white/10"
+    class="flex flex-col gap-6 rounded-xl border border-white/[0.08] bg-brand-navy-2
+           p-9 shadow-[0_16px_48px_rgba(0,0,0,0.28)] max-[600px]:p-6"
   >
     <div>
-      <label for="topic" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+      <label for="topic" class="mb-2 block text-left text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-white/55">
         <span data-i18n="no">Hva gjelder det?</span><span data-i18n="en">What is it about?</span>
       </label>
       <select id="topic" name="topic" required data-fs-field
-              class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
-                     focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
-                     [&>option]:text-black [&>option]:bg-white
-                     aria-invalid:border aria-invalid:border-red-500/60">
+              class={`${inputClasses} [&>option]:bg-white [&>option]:text-brand-navy`}>
         <option value="" data-opt-no="Velg kategori" data-opt-en="Select a category">Velg kategori</option>
         {topics.map(({ value, no, en }) => (
           <option value={value} data-opt-no={no} data-opt-en={en}>{no}</option>
         ))}
       </select>
-      <span data-fs-error="topic" class="block mt-1 text-xs text-red-400 text-left"></span>
+      <span data-fs-error="topic" class="mt-1.5 block text-left text-xs text-red-300"></span>
     </div>
 
     <div>
-      <label for="name" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+      <label for="name" class="mb-2 block text-left text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-white/55">
         <span data-i18n="no">Hvem er du?</span><span data-i18n="en">Who are you?</span>
       </label>
       <input
         type="text" id="name" name="name"
         placeholder="Navn eller firmanavn" data-ph-no="Navn eller firmanavn" data-ph-en="Name or company name"
         required data-fs-field
-        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
-               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
-               aria-invalid:border aria-invalid:border-red-500/60"
+        class={inputClasses}
       />
-      <span data-fs-error="name" class="block mt-1 text-xs text-red-400 text-left"></span>
+      <span data-fs-error="name" class="mt-1.5 block text-left text-xs text-red-300"></span>
     </div>
 
     <div>
-      <label for="email" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+      <label for="email" class="mb-2 block text-left text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-white/55">
         <span data-i18n="no">E-post</span><span data-i18n="en">Email</span>
       </label>
       <input
         type="email" id="email" name="email"
         placeholder="Din e-postadresse" data-ph-no="Din e-postadresse" data-ph-en="Your email address"
         required data-fs-field
-        class="w-full bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
-               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
-               aria-invalid:border aria-invalid:border-red-500/60"
+        class={inputClasses}
       />
-      <span data-fs-error="email" class="block mt-1 text-xs text-red-400 text-left"></span>
+      <span data-fs-error="email" class="mt-1.5 block text-left text-xs text-red-300"></span>
     </div>
 
     <div>
-      <label for="message" class="text-left font-medium text-[1.1rem] tracking-[0.5px] block mb-[5px]">
+      <label for="message" class="mb-2 block text-left text-[0.78rem] font-semibold uppercase tracking-[0.12em] text-white/55">
         <span data-i18n="no">Melding</span><span data-i18n="en">Message</span>
       </label>
       <textarea
         id="message" name="message"
         placeholder="Skriv meldingen din her..." data-ph-no="Skriv meldingen din her..." data-ph-en="Write your message here..."
         required data-fs-field
-        class="w-full h-[120px] resize-none bg-white/15 border-none rounded-[10px] px-[15px] py-[15px] text-[1rem] text-white box-border
-               focus:outline-[2px] focus:outline-cyan-bright focus:bg-white/25
-               aria-invalid:border aria-invalid:border-red-500/60"
+        class={`${inputClasses} h-[130px] resize-none`}
       ></textarea>
-      <span data-fs-error="message" class="block mt-1 text-xs text-red-400 text-left"></span>
+      <span data-fs-error="message" class="mt-1.5 block text-left text-xs text-red-300"></span>
     </div>
 
     <button
       type="submit"
       data-fs-submit-btn
-      class="magnetic bg-gradient-to-br from-cyan-bright to-[#0099cc] border-none text-white font-bold
-             rounded-xl py-[15px] text-[1.2rem] cursor-pointer transition-all duration-300
-             hover:from-[#00a0d1] hover:to-[#00c3ff] hover:scale-[1.03]
-             disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
+      class="mt-1 cursor-pointer rounded-lg border-none bg-brand-orange py-4
+             text-[1rem] font-semibold text-white
+             transition-all duration-250
+             hover:bg-brand-orange-deep hover:-translate-y-px
+             hover:shadow-[0_10px_28px_rgba(234,113,19,0.28)]
+             disabled:cursor-not-allowed disabled:opacity-50 disabled:translate-y-0 disabled:shadow-none"
     >
-      <span data-i18n="no">Send</span><span data-i18n="en">Send</span>
+      <span data-i18n="no">Send melding</span><span data-i18n="en">Send message</span>
     </button>
   </form>
 
-  <div class="mt-[40px] text-[1.1rem] text-[#ccc]">
-    <p>
-      <span data-i18n="no">Du kan også nå oss på telefon:</span><span data-i18n="en">You can also reach us by phone:</span>
-      <strong class="text-cyan-bright">(+47) 482 04 754</strong>
-    </p>
-  </div>
+  <p class="mt-10 text-center text-[0.95rem] text-white/45">
+    <span data-i18n="no">Du kan også nå oss på telefon:</span><span data-i18n="en">You can also reach us by phone:</span>
+    <a href="tel:+4748204754" class="font-semibold text-brand-sky no-underline hover:underline">(+47) 482 04 754</a>
+  </p>
 
 </section>
 

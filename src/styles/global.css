@@ -30,6 +30,32 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Brand text selection */
+::selection {
+  background: #ea7113;
+  color: #fff;
+}
+
+/* Slim custom scrollbar — machined detail */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242, 241, 241, 0.22) #001728;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001728;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 241, 241, 0.18);
+  border-radius: 5px;
+  border: 2px solid #001728;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 241, 241, 0.32);
+}
+
 /* ================================================
    I18N — show only the active language
    <html data-lang="no"> (default) / "en"
@@ -174,7 +200,7 @@ section {
   padding: 20px 40px 60px;
 }
 
-/* Static center line */
+/* Static center line — 2026 palette */
 .timeline-track {
   position: absolute;
   left: 50%;
@@ -186,10 +212,10 @@ section {
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 174, 239, 0.55) 0%,
-    rgba(0, 174, 239, 0.28) 35%,
-    rgba(0, 100, 160, 0.14) 70%,
-    rgba(0,  60, 100, 0.05) 100%
+    rgba(35, 165, 222, 0.55) 0%,
+    rgba(35, 165, 222, 0.28) 35%,
+    rgba(10, 111, 182, 0.14) 70%,
+    rgba(10, 111, 182, 0.05) 100%
   );
 }
 
@@ -203,31 +229,29 @@ section {
 .timeline-item.tl-left  { margin-right: calc(50% + 44px); }
 .timeline-item.tl-right { margin-left:  calc(50% + 44px); }
 
-/* Glowing center dot with slow pulse */
+/* Center dot with restrained pulse — 2026 palette */
 .timeline-item::after {
   content: '';
   position: absolute;
   top: 30px;
-  width: 12px;
-  height: 12px;
-  background: rgba(0, 174, 239, 0.9);
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  width: 11px;
+  height: 11px;
+  background: #23a5de;
+  border: 2px solid rgba(242, 241, 241, 0.14);
   border-radius: 50%;
-  box-shadow:
-    0 0 10px rgba(0, 174, 239, 0.6),
-    0 0  4px rgba(0, 191, 255, 0.8);
+  box-shadow: 0 0 8px rgba(35, 165, 222, 0.45);
   z-index: 2;
-  animation: dotPulse 3.5s ease-in-out infinite;
+  animation: dotPulse 4s ease-in-out infinite;
 }
 .timeline-item.tl-left::after  { right: -50px; }
 .timeline-item.tl-right::after { left:  -50px; }
 
 @keyframes dotPulse {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(0,174,239,0.6), 0 0 4px rgba(0,191,255,0.8);
+    box-shadow: 0 0 8px rgba(35, 165, 222, 0.45);
   }
   50% {
-    box-shadow: 0 0 22px rgba(0,174,239,0.95), 0 0 8px rgba(0,191,255,1), 0 0 40px rgba(0,174,239,0.28);
+    box-shadow: 0 0 16px rgba(35, 165, 222, 0.75), 0 0 30px rgba(35, 165, 222, 0.18);
   }
 }
 
@@ -238,7 +262,7 @@ section {
   top: 36px;
   width: 38px;
   height: 1px;
-  background: rgba(0, 174, 239, 0.20);
+  background: rgba(35, 165, 222, 0.20);
   z-index: 1;
 }
 .timeline-item.tl-left::before  { right: -38px; }
@@ -266,7 +290,7 @@ section {
 /* Mobile: single left rail */
 @media (max-width: 768px) {
   .timeline-container { padding: 20px 16px 40px 50px; }
-  .timeline-stream-canvas { left: 20px; transform: none; }
+  .timeline-track { left: 20px; transform: none; }
 
   .timeline-item {
     width: 100% !important;

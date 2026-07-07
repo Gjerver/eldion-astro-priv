@@ -234,10 +234,10 @@
         const drawX = sineX + vx;
         const drawY = p.y  + vy;
 
-        /* cyan (0,191,255) → eldION orange (233,78,27) */
-        const r = Math.round(         p.color * 233);
-        const g = Math.round(191 - p.color * 113);
-        const b = Math.round(255 - p.color * 228);
+        /* brand sky (35,165,222) → brand orange (234,113,19) */
+        const r = Math.round( 35 + p.color * 199);
+        const g = Math.round(165 - p.color *  52);
+        const b = Math.round(222 - p.color * 203);
 
         /* Comet tail — 2 ghost dots trailing below (behind upward travel) */
         ctx.fillStyle = `rgb(${r},${g},${b})`;

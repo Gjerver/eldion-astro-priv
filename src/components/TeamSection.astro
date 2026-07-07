@@ -4,11 +4,11 @@ import { teamMembers, mentors } from '../data/team';
 <section id="team" class="pt-28 pb-20 px-4 md:px-[5vw]">
   <div class="max-w-[1100px] mx-auto">
 
-    <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
+    <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
       <span data-i18n="no">Menneskene bak</span><span data-i18n="en">The people behind</span>
     </p>
-    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-14">
-      <span data-i18n="no">Teamet bak eldION</span><span data-i18n="en">The team behind eldION</span>
+    <h2 data-animate class="m-0 mb-14 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white">
+      <span data-i18n="no">Teamet bak Eldion</span><span data-i18n="en">The team behind Eldion</span>
     </h2>
 
     <!-- ── 3-column uniform grid ─────────────────────────────── -->
@@ -17,7 +17,7 @@ import { teamMembers, mentors } from '../data/team';
         <div class="gsap-card group cursor-default">
 
           <!-- Photo: grayscale → colour on hover, slight zoom -->
-          <div class="relative overflow-hidden rounded-2xl mb-4">
+          <div class="relative mb-4 overflow-hidden rounded-xl border border-white/[0.07]">
             <img
               src={`/images/${m.image}`}
               alt={m.name}
@@ -55,10 +55,10 @@ import { teamMembers, mentors } from '../data/team';
     </div>
 
     <!-- ── Mentors: 2-column ─────────────────────────────────── -->
-    <p data-animate class="text-eldion-cyan text-[0.7rem] uppercase tracking-[0.24em] font-semibold mb-3">
+    <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
       <span data-i18n="no">Faglig støtte</span><span data-i18n="en">Advisory support</span>
     </p>
-    <h2 data-animate class="font-comfortaa text-[1.9em] text-white mb-12">
+    <h2 data-animate class="m-0 mb-12 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white">
       <span data-i18n="no">Våre mentorer</span><span data-i18n="en">Our mentors</span>
     </h2>
 
@@ -66,7 +66,7 @@ import { teamMembers, mentors } from '../data/team';
       {mentors.map((m) => (
         <div class="gsap-card group cursor-default">
 
-          <div class="relative overflow-hidden rounded-2xl mb-4">
+          <div class="relative mb-4 overflow-hidden rounded-xl border border-white/[0.07]">
             <img
               src={`/images/${m.image}`}
               alt={m.name}

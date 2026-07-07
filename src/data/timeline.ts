@@ -14,7 +14,7 @@ export const events: TimelineEvent[] = [
   {
     date: "21. Apr 2026",
     dateEn: "Apr 21, 2026",
-    logo: "logo2.png",
+    logo: "brand/logomark.svg",
     logoAlt: "Eldion",
     title: "Betydelig styrking av teamet",
     titleEn: "Significant strengthening of the team",
@@ -87,7 +87,7 @@ export const events: TimelineEvent[] = [
   {
     date: "01. Sep 2025",
     dateEn: "Sep 01, 2025",
-    logo: "logo2.png",
+    logo: "brand/logomark.svg",
     logoAlt: "eldION",
     title: "Teamet utvides",
     titleEn: "The team expands",
@@ -124,7 +124,7 @@ export const events: TimelineEvent[] = [
   {
     date: "04. Nov 2024",
     dateEn: "Nov 04, 2024",
-    logo: "logo2.png",
+    logo: "brand/logomark.svg",
     logoAlt: "eldION",
     title: "Eldion AS stiftes",
     titleEn: "Eldion AS is founded",

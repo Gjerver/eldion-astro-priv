@@ -1,53 +1,93 @@
 ---
 const navLinks = [
-  { href: '#home',    no: 'Hjem',    en: 'Home' },
-  { href: '#goal',    no: 'Løsning', en: 'Solution' },
-  { href: '#team',    no: 'Team',    en: 'Team' },
-  { href: '#contact', no: 'Kontakt', en: 'Contact' },
+  { href: '#home',    no: 'Hjem',      en: 'Home' },
+  { href: '#goal',    no: 'Løsningen', en: 'Solution' },
+  { href: '#team',    no: 'Om oss',    en: 'About us' },
+  { href: '#news',    no: 'Nyheter',   en: 'News' },
+  { href: '#contact', no: 'Kontakt',   en: 'Contact' },
 ];
 ---
-<footer class="w-full mt-[50px] bg-[rgba(10,10,10,0.7)] backdrop-blur-sm border-t border-white/10">
+<footer class="mt-20 w-full border-t border-white/[0.07] bg-brand-navy-3">
 
-  <div class="max-w-[900px] mx-auto px-6 py-10 flex flex-col items-center gap-8">
+  <div class="mx-auto grid max-w-[1180px] grid-cols-3 gap-12 px-6 py-16
+              max-[820px]:grid-cols-1 max-[820px]:gap-10 max-[820px]:py-12 max-[820px]:text-center">
 
-    <!-- Nav links -->
-    <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
-      {navLinks.map(({ href, no, en }) => (
-        <a
-          href={href}
-          class="text-[0.82rem] text-white/45 uppercase tracking-[0.18em] no-underline
-                 transition-colors duration-200 hover:text-eldion-cyan"
-        >
-          <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
-        </a>
-      ))}
-    </nav>
-
-    <!-- Divider -->
-    <div class="w-px h-0 border-t border-white/10 w-full"></div>
-
-    <!-- Contact + LinkedIn row -->
-    <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-[0.83rem] text-white/40">
-      <span>Kontakt@eldion.no</span>
-      <span class="text-white/15 hidden sm:inline">|</span>
-      <span>+47 482 04 754</span>
-      <span class="text-white/15 hidden sm:inline">|</span>
-      <a
-        href="https://www.linkedin.com/company/eldion-as"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 text-white/40 no-underline
-               transition-colors duration-200 hover:text-eldion-cyan"
-      >
-        <img src="/images/linkedin.png" alt="" class="w-4 h-4 opacity-50" />
-        LinkedIn
-      </a>
+    <!-- Brand -->
+    <div class="max-[820px]:flex max-[820px]:flex-col max-[820px]:items-center">
+      <img
+        src="/images/brand/logo-white.png"
+        alt="Eldion"
+        loading="lazy"
+        class="mb-5 w-[118px]"
+      />
+      <p class="m-0 max-w-[260px] text-[0.85rem] leading-[1.7] text-white/40">
+        <span data-i18n="no">Batteriløse, trådløse sensorsystemer drevet av industriell spillvarme.</span><span data-i18n="en">Battery-free, wireless sensor systems powered by industrial waste heat.</span>
+      </p>
     </div>
 
-    <!-- Legal -->
-    <p class="text-[0.75rem] text-white/22 text-center m-0 leading-relaxed">
-      <span data-i18n="no">eldION AS &nbsp;·&nbsp; Org.nr. 934 839 080 &nbsp;·&nbsp; © 2026</span><span data-i18n="en">eldION AS &nbsp;·&nbsp; Company no. 934 839 080 &nbsp;·&nbsp; © 2026</span>
-    </p>
+    <!-- Navigation -->
+    <div>
+      <p class="m-0 mb-5 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/30">
+        <span data-i18n="no">Navigasjon</span><span data-i18n="en">Navigation</span>
+      </p>
+      <ul class="m-0 flex list-none flex-col gap-3 p-0">
+        {navLinks.map(({ href, no, en }) => (
+          <li>
+            <a href={href}
+               class="text-[0.88rem] text-white/55 no-underline transition-colors duration-200 hover:text-white">
+              <span data-i18n="no">{no}</span><span data-i18n="en">{en}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <p class="m-0 mb-5 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/30">
+        <span data-i18n="no">Kontakt</span><span data-i18n="en">Contact</span>
+      </p>
+      <ul class="m-0 flex list-none flex-col gap-3 p-0">
+        <li>
+          <a href="mailto:kontakt@eldion.no"
+             class="text-[0.88rem] text-white/55 no-underline transition-colors duration-200 hover:text-white">
+            kontakt@eldion.no
+          </a>
+        </li>
+        <li>
+          <a href="tel:+4748204754"
+             class="text-[0.88rem] text-white/55 no-underline transition-colors duration-200 hover:text-white">
+            +47 482 04 754
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/company/eldion-as"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-[0.88rem] text-white/55 no-underline
+                   transition-colors duration-200 hover:text-white max-[820px]:justify-center"
+          >
+            <img src="/images/linkedin.png" alt="" loading="lazy" class="h-4 w-4 opacity-50" />
+            LinkedIn
+          </a>
+        </li>
+      </ul>
+    </div>
 
   </div>
+
+  <!-- Legal bar -->
+  <div class="border-t border-white/[0.06]">
+    <div class="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-2 px-6 py-5
+                max-[820px]:justify-center">
+      <p class="m-0 text-[0.72rem] text-white/28">
+        © 2026 Eldion AS
+      </p>
+      <p class="m-0 text-[0.72rem] text-white/28">
+        <span data-i18n="no">Org.nr. 934 839 080</span><span data-i18n="en">Company no. 934 839 080</span>
+      </p>
+    </div>
+  </div>
+
 </footer>

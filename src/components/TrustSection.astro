@@ -1,34 +1,31 @@
 ---
 const partners = [
-  { src: 'innovasjon_norge.png', alt: 'Innovasjon Norge', height: 60 },
-  { src: 'hydro.png',            alt: 'Hydro Aluminium',  height: 60 },
-  { src: 'elkem.png',            alt: 'Elkem',            height: 50 },
-  { src: 'Eramet.png',           alt: 'Eramet',           height: 50 },
-  { src: 'uis.png',              alt: 'Universitetet i Stavanger', height: 60 },
+  { src: 'innovasjon_norge.png', alt: 'Innovasjon Norge',               height: 44 },
+  { src: 'hydro.png',            alt: 'Hydro Aluminium',                height: 44 },
+  { src: 'elkem.png',            alt: 'Elkem',                          height: 38 },
+  { src: 'Eramet.png',           alt: 'Eramet',                         height: 38 },
+  { src: 'uis.png',              alt: 'Universitetet i Stavanger',      height: 44 },
 ];
 ---
-<section data-animate class="text-center py-[80px] px-5 mx-auto max-w-[1000px]">
+<!-- Quiet trust strip directly below hero — monochrome partner logos -->
+<section data-animate class="border-y border-white/[0.06] py-12">
+  <div class="mx-auto flex max-w-[1180px] flex-col items-center gap-9 px-6">
 
-  <h2 class="font-comfortaa text-[1.2rem] text-gray-400 mb-[40px] uppercase tracking-[2px]">
-    <span data-i18n="no">Med tillit fra:</span><span data-i18n="en">Trusted by:</span>
-  </h2>
+    <p class="m-0 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-white/35">
+      <span data-i18n="no">Med tillit fra</span><span data-i18n="en">Trusted by</span>
+    </p>
 
-  <div class="flex flex-wrap justify-center items-center gap-[clamp(24px,4vw,50px)]">
-    {partners.map(({ src, alt, height }) => (
-      <div
-        class="group flex items-center justify-center px-6 py-4 rounded-xl transition-all duration-300 hover:scale-[1.05]"
-        style="background: radial-gradient(ellipse at center, rgba(200,240,255,0.05) 0%, transparent 65%);"
-      >
+    <div class="flex flex-wrap items-center justify-center gap-x-[clamp(32px,5vw,72px)] gap-y-8">
+      {partners.map(({ src, alt, height }) => (
         <img
           src={`/images/${src}`}
           alt={alt}
-          style={`max-height: ${height}px; opacity: 0.82;
-                  filter: drop-shadow(0 0 10px rgba(255,255,255,0.55)) drop-shadow(0 0 24px rgba(0,180,255,0.28));
-                  transition: opacity 0.3s ease, filter 0.3s ease;`}
-          class="w-auto group-hover:opacity-100"
+          loading="lazy"
+          style={`height:${height}px; filter:brightness(0) invert(1);`}
+          class="w-auto opacity-45 transition-opacity duration-300 hover:opacity-90"
         />
-      </div>
-    ))}
-  </div>
+      ))}
+    </div>
 
+  </div>
 </section>
