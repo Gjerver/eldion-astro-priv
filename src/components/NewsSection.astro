@@ -1,48 +1,81 @@
 ---
-import TimelineItem from './TimelineItem.astro';
-import { events } from '../data/timeline';
+import { events, type TimelineEvent } from '../data/timeline';
+
+/* Group events by year (data is already newest-first) */
+interface YearGroup { year: string; items: TimelineEvent[]; }
+const groups: YearGroup[] = [];
+for (const e of events) {
+  const year = e.date.slice(-4);
+  const last = groups[groups.length - 1];
+  if (last && last.year === year) last.items.push(e);
+  else groups.push({ year, items: [e] });
+}
+const countNo = (n: number) => `${n} hendelse${n === 1 ? '' : 'r'}`;
+const countEn = (n: number) => `${n} event${n === 1 ? '' : 's'}`;
 ---
-<section id="news" class="pt-[140px] pb-[80px] max-[768px]:pt-[180px] relative overflow-hidden">
+<!-- Editorial milestone log — flat, annual-report register -->
+<section id="news" class="px-4 py-28 md:px-[5vw] max-[768px]:py-20">
+  <div class="mx-auto max-w-[1080px]">
 
-  <!-- Solid background — fades in on scroll, hides video so backdrop-filter is cheap -->
-  <div id="news-bg" aria-hidden="true"
-       style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,47,82,0) 0%,#032f52 160px,#032f52 calc(100% - 130px),rgba(3,47,82,0) 100%);opacity:0;transition:opacity 1.1s ease;pointer-events:none;z-index:0;"></div>
-
-  <!-- Particle canvas (desktop only, driven by JS) -->
-  <canvas id="news-particles" aria-hidden="true"
-          style="position:absolute;inset:0;pointer-events:none;z-index:1;"></canvas>
-
-  <!-- All content above bg + canvas -->
-  <div style="position:relative;z-index:2;">
-
-    <p data-animate class="mb-4 text-center text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
+    <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
+      <span data-i18n="no">Nyheter</span><span data-i18n="en">News</span>
+    </p>
+    <h2 data-animate class="m-0 mb-16 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white max-[768px]:mb-10">
       <span data-i18n="no">Milepæler</span><span data-i18n="en">Milestones</span>
-    </p>
-    <h2 data-animate class="m-0 mb-4 text-center font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white">
-      <span data-i18n="no">Vår tidslinje</span><span data-i18n="en">Our timeline</span>
     </h2>
-    <p data-animate class="mb-[70px] text-center text-sm tracking-wide text-white/35">
-      <span data-i18n="no">Scroll ned for å gå tilbake i tid ↓</span><span data-i18n="en">Scroll down to travel back in time ↓</span>
-    </p>
 
-    <div class="timeline-container">
-      <div class="timeline-track" aria-hidden="true"></div>
+    {groups.map(({ year, items }) => (
+      <div class="grid grid-cols-[170px_1fr] gap-x-12 pb-16 max-[820px]:grid-cols-1 max-[820px]:pb-10">
 
-      {events.map((event, index) => (
-        <TimelineItem
-          date={event.date}
-          dateEn={event.dateEn}
-          logo={event.logo}
-          logoAlt={event.logoAlt}
-          title={event.title}
-          titleEn={event.titleEn}
-          content={event.content}
-          contentEn={event.contentEn}
-          logoStyle={event.logoStyle}
-          side={index % 2 === 0 ? 'left' : 'right'}
-        />
-      ))}
-    </div>
+        <!-- Year marker — sticky on desktop -->
+        <div>
+          <div class="sticky top-28 pb-6 max-[820px]:static max-[820px]:mb-5 max-[820px]:pb-0">
+            <p class="m-0 font-display text-[3.2rem] font-bold leading-none tracking-[-0.02em] text-white/[0.12] max-[820px]:text-[2.1rem] max-[820px]:text-white/[0.22]">
+              {year}
+            </p>
+            <div class="mt-4 h-px w-9 bg-brand-sky/60 max-[820px]:hidden"></div>
+            <p class="m-0 mt-4 text-[0.68rem] uppercase tracking-[0.2em] text-white/30 max-[820px]:hidden">
+              <span data-i18n="no">{countNo(items.length)}</span><span data-i18n="en">{countEn(items.length)}</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Event rows -->
+        <div class="border-b border-l border-white/[0.06] max-[820px]:border-l-0">
+          {items.map((ev) => (
+            <article
+              data-animate
+              class="group grid grid-cols-[128px_1fr] gap-8 border-t border-white/[0.06]
+                     py-9 pl-10 pr-3 transition-colors duration-300
+                     hover:bg-white/[0.02]
+                     max-[820px]:pl-5 max-[640px]:grid-cols-1 max-[640px]:gap-4 max-[640px]:py-7"
+            >
+              <div>
+                <p class="m-0 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/40">
+                  <span data-i18n="no">{ev.date}</span><span data-i18n="en">{ev.dateEn}</span>
+                </p>
+                <img
+                  src={`/images/${ev.logo}`}
+                  alt={ev.logoAlt}
+                  loading="lazy"
+                  style="filter:brightness(0) invert(1);"
+                  class="mt-4 h-6 w-auto opacity-35 transition-opacity duration-300 group-hover:opacity-65 max-[640px]:mt-2.5 max-[640px]:h-5"
+                />
+              </div>
+              <div>
+                <h3 class="m-0 mb-2.5 font-display text-[1.08rem] font-semibold leading-snug tracking-tight text-white/95">
+                  <span data-i18n="no">{ev.title}</span><span data-i18n="en">{ev.titleEn}</span>
+                </h3>
+                <p class="m-0 max-w-[640px] text-[0.88rem] leading-[1.75] text-white/48">
+                  <span data-i18n="no">{ev.content}</span><span data-i18n="en">{ev.contentEn}</span>
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+      </div>
+    ))}
 
   </div>
 </section>
