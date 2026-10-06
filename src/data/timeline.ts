@@ -12,6 +12,18 @@ export interface TimelineEvent {
 
 export const events: TimelineEvent[] = [
   {
+    date: "05. Okt 2026",
+    dateEn: "Oct 05, 2026",
+    logo: "hydro.png",
+    logoAlt: "Hydro",
+    title: "Første prototype i drift hos Hydro Aluminium",
+    titleEn: "First prototype in operation at Hydro Aluminium",
+    content:
+      "Vår første operasjonelle prototype er nå installert ved smelteverket til Hydro Aluminium AS på Husnes. Installasjonen gikk raskt og uten komplikasjoner. Dette er vårt første steg fra laboratoriet ut i industrien. Testperioden som starter nå, skal dokumentere stabil drift over tid under reelle forhold.",
+    contentEn:
+      "Our first operational prototype is now installed at the Hydro Aluminium AS smelter in Husnes. The installation went quickly and without complications. This is our first step from the laboratory into industry. The test period now starting will document stable operation over time under real conditions.",
+  },
+  {
     date: "21. Apr 2026",
     dateEn: "Apr 21, 2026",
     logo: "brand/logo-colour.png",
