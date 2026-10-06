@@ -99,37 +99,6 @@
   }
 
   /* ══════════════════════════════════════════════════════════════
-     5. 3-D TILT ON SOLUTION IMAGES
-     ══════════════════════════════════════════════════════════════ */
-  if (!isTouch) {
-    document.querySelectorAll<HTMLElement>('.tilt-img').forEach((img) => {
-      img.style.transformStyle = 'preserve-3d';
-      img.style.willChange     = 'transform';
-      img.style.transition     = 'box-shadow 0.3s ease';
-
-      img.addEventListener('mousemove', (e: MouseEvent) => {
-        const r = img.getBoundingClientRect();
-        const x = ((e.clientX - r.left)  / r.width  - 0.5) * 24;
-        const y = ((e.clientY - r.top)   / r.height - 0.5) * -24;
-        gsap.to(img, {
-          rotateX: y, rotateY: x,
-          transformPerspective: 700,
-          duration: 0.28, ease: 'power2.out',
-          boxShadow: `${-x * 0.4}px ${y * 0.4}px 30px rgba(0,174,239,0.2)`,
-        });
-      });
-
-      img.addEventListener('mouseleave', () => {
-        gsap.to(img, {
-          rotateX: 0, rotateY: 0,
-          boxShadow: 'none',
-          duration: 0.55, ease: 'elastic.out(1,0.32)',
-        });
-      });
-    });
-  }
-
-  /* ══════════════════════════════════════════════════════════════
      6. PARALLAX ON PRODUCT IMAGES
      ══════════════════════════════════════════════════════════════ */
   if (!isReduced) {
