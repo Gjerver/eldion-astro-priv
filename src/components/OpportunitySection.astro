@@ -1,0 +1,88 @@
+---
+/*
+  «Muligheten» — the turn of the story, between «Utfordringen» (why industry
+  isn't wireless yet) and «Vår løsning» (how Eldion works):
+  the energy is already there — 20–50 % of industrial energy is lost as heat.
+
+  The only orange on this stretch of the page is the big figure here.
+
+  Seamless flow:
+  - Background continues unbroken from WhySection's darkest navy, lightens to
+    the canvas navy, then fades into the off-white of «Vår løsning» over the
+    last --fade pixels (the copy always ends above the fade). The fade is
+    eased and interpolated in oklab so the midtones don't turn muddy grey;
+    the first declaration is the fallback for browsers without `in oklab`.
+  - Thread height = bottom padding − 40px + the part that reaches into
+    «Vår løsning» (80px desktop / 48px mobile, stopping above its overline).
+  - A hairline "thread" drops from the figure column, through the fade, and
+    stops just above the «Vår løsning» overline, leading the eye across.
+*/
+
+const ref3 =
+  '<sup class="ml-0.5"><a href="#kilde-3" class="text-brand-sky no-underline transition-colors duration-250 hover:text-brand-white">3</a></sup>';
+---
+<section
+  id="muligheten"
+  aria-labelledby="muligheten-tittel"
+  class="relative px-4 pb-44 pt-20 [--fade:150px] md:px-[5vw] max-[768px]:pb-32 max-[768px]:pt-14 max-[768px]:[--fade:110px]"
+  style="background: linear-gradient(180deg,
+           var(--color-brand-navy-3) 0%,
+           var(--color-brand-navy) 55%,
+           var(--color-brand-navy) calc(100% - var(--fade)),
+           var(--color-brand-white) 100%);
+         background: linear-gradient(in oklab 180deg,
+           var(--color-brand-navy-3) 0%,
+           var(--color-brand-navy) 55%,
+           var(--color-brand-navy) calc(100% - var(--fade)),
+           color-mix(in oklab, var(--color-brand-navy) 72%, var(--color-brand-white)) calc(100% - var(--fade) * 0.62),
+           color-mix(in oklab, var(--color-brand-navy) 22%, var(--color-brand-white)) calc(100% - var(--fade) * 0.25),
+           var(--color-brand-white) 100%);"
+>
+  <!-- one restrained warm glow behind the figure: the energy is already there -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0"
+       style="background: radial-gradient(ellipse 38% 46% at 24% 52%, rgba(234,113,19,0.09) 0%, transparent 70%);">
+  </div>
+
+  <div class="relative mx-auto max-w-[980px]">
+
+    <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
+      <span data-i18n="no">Muligheten</span><span data-i18n="en">The opportunity</span>
+    </p>
+    <h2 id="muligheten-tittel" data-animate
+        class="m-0 mb-14 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white max-[768px]:mb-10">
+      <span data-i18n="no">Energien er allerede der</span><span data-i18n="en">The energy is already there</span>
+    </h2>
+
+    <div data-animate class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16">
+      <div>
+        <p class="m-0 whitespace-nowrap font-display text-[clamp(3.2rem,6.4vw,5.2rem)] font-bold leading-none tracking-[-0.03em] text-brand-orange">
+          20–50&nbsp;%
+        </p>
+        <p class="m-0 mt-4 max-w-[30ch] text-[0.68rem] uppercase leading-snug tracking-[0.16em] text-white/60">
+          <span data-i18n="no" set:html={`av industriens energi går tapt som spillvarme${ref3}`} /><span data-i18n="en" set:html={`of industrial energy is lost as waste heat${ref3}`} />
+        </p>
+      </div>
+
+      <div class="max-w-[26rem] lg:pb-1">
+        <p class="m-0 text-[1.02rem] leading-[1.75] text-white/75">
+          <span data-i18n="no">Eldion bruker den til å drive sensorene, uten batteri og med hyppige målinger.</span><span data-i18n="en">Eldion uses it to power the sensors, with no batteries and frequent measurements.</span>
+        </p>
+        <a
+          href="#goal"
+          class="mt-6 inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-brand-sky no-underline
+                 transition-colors duration-250 hover:text-brand-white"
+        >
+          <span data-i18n="no">Se hvordan det fungerer</span><span data-i18n="en">See how it works</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- the thread: from here, through the fade, to the «Vår løsning» overline -->
+    <div aria-hidden="true"
+         class="pointer-events-none absolute left-0 top-[calc(100%+40px)] h-[216px] w-px max-[768px]:h-[136px]"
+         style="background: linear-gradient(180deg, rgba(242,241,241,0) 0%, rgba(35,165,222,0.55) 45%, rgba(10,111,182,0.5) 100%);">
+    </div>
+
+  </div>
+</section>

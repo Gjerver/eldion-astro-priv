@@ -1,16 +1,19 @@
 ---
 /*
-  «Utfordringen» — why industry isn't wireless yet, in three steps:
-  cabling costs millions → but wireless sensors run on batteries → the
-  energy is already there (Eldion). Sits between the hero (what) and
-  «Vår løsning» (how).
+  «Utfordringen» — why industry isn't wireless yet, in two steps:
+  cabling costs millions → but wireless sensors run on batteries.
+  It only asks and answers the question; the turn ("the energy is already
+  there") follows in OpportunitySection, then «Vår løsning» explains how.
 
-  Deliberately restrained: no icons, no cards, no glow. Three columns split
-  by hairlines, big figures straight on the background. Skim path:
-  H2 → step headings → figures. Orange appears only on the step-3 figure.
+  Deliberately restrained: no icons, no cards, no glow. Two columns split by
+  a hairline, big figures straight on the background. Skim path:
+  H2 → step headings → figures.
 
   Desktop columns are a CSS subgrid, so step headings share one row and the
   figures start on the same line even when a heading wraps.
+
+  Background: fades from the hero's navy into the darkest navy (the problem),
+  and carries on unbroken into OpportunitySection, which lightens again.
 
   Figures are static HTML (no counter animation) so crawlers, link previews
   and slow phones always see the real values. Footnote marks link to the
@@ -42,21 +45,11 @@ const steps = [
     textNo: 'Vedlikeholdet du ville slippe, kommer tilbake. Og for å spare strøm sender sensorene data sjelden.',
     textEn: 'The maintenance you wanted to avoid comes back. And to save power, the sensors transmit data rarely.',
   },
-  {
-    headingNo: 'Energien er allerede der',
-    headingEn: 'The energy is already there',
-    figureNo: '20–50&nbsp;%',
-    figureEn: '20–50&nbsp;%',
-    labelNo: `av industriens energi går tapt som spillvarme${ref(3)}`,
-    labelEn: `of industrial energy is lost as waste heat${ref(3)}`,
-    textNo: 'Eldion gjør spillvarmen om til strøm, så sensoren slipper batteri og kan sende data oftere.',
-    textEn: 'Eldion turns the waste heat into electricity, so the sensor needs no battery and can transmit data often.',
-    accent: true,
-    link: true,
-  },
 ];
 ---
-<section id="hvorfor" class="bg-brand-navy-3 px-4 py-32 md:px-[5vw] max-[768px]:py-24">
+<section id="hvorfor"
+         class="px-4 pb-20 pt-32 md:px-[5vw] max-[768px]:pb-14 max-[768px]:pt-24"
+         style="background: linear-gradient(180deg, var(--color-brand-navy) 0, var(--color-brand-navy-3) 260px);">
   <div class="mx-auto max-w-[980px]">
 
     <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
@@ -66,22 +59,19 @@ const steps = [
       <span data-i18n="no">Hvorfor er ikke industrien trådløs allerede?</span><span data-i18n="en">Why isn’t industry wireless already?</span>
     </h2>
 
-    <!-- Three steps: stacked with hairlines on mobile, hairline-split columns from lg -->
+    <!-- Two steps: stacked with a hairline on mobile, hairline-split columns from lg -->
     <div data-animate
          class="grid grid-cols-1 divide-y divide-white/[0.08]
-                lg:grid-cols-3 lg:grid-rows-[auto_auto] lg:gap-y-5 lg:divide-x lg:divide-y-0">
+                lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:gap-y-5 lg:divide-x lg:divide-y-0">
       {steps.map((s) => (
         <div class="py-9 first:pt-0 last:pb-0
-                    lg:row-span-2 lg:grid lg:grid-rows-subgrid lg:px-10 lg:py-0 lg:first:pl-0 lg:last:pr-0">
+                    lg:row-span-2 lg:grid lg:grid-rows-subgrid lg:px-14 lg:py-0 lg:first:pl-0 lg:last:pr-0">
           <h3 class="m-0 mb-5 font-display text-[1.02rem] font-semibold leading-snug tracking-[-0.005em] text-white/90 lg:mb-0">
             <span data-i18n="no">{s.headingNo}</span><span data-i18n="en">{s.headingEn}</span>
           </h3>
 
-          <div>
-            <p class:list={[
-              'm-0 font-display text-[clamp(2rem,3.1vw,2.55rem)] font-bold leading-[1.08] tracking-[-0.02em]',
-              s.accent ? 'text-brand-orange' : 'text-brand-white',
-            ]}>
+          <div class="max-w-[28rem]">
+            <p class="m-0 font-display text-[clamp(2rem,3.1vw,2.55rem)] font-bold leading-[1.08] tracking-[-0.02em] text-brand-white">
               <span data-i18n="no" set:html={s.figureNo} /><span data-i18n="en" set:html={s.figureEn} />
             </p>
             <p class="m-0 mt-3 text-[0.68rem] uppercase leading-snug tracking-[0.16em] text-white/55">
@@ -90,16 +80,6 @@ const steps = [
             <p class="m-0 mt-5 text-[0.94rem] leading-[1.7] text-white/65">
               <span data-i18n="no" set:html={s.textNo} /><span data-i18n="en" set:html={s.textEn} />
             </p>
-            {s.link && (
-              <a
-                href="#goal"
-                class="mt-6 inline-flex items-center gap-1.5 text-[0.88rem] font-semibold text-brand-sky no-underline
-                       transition-colors duration-250 hover:text-brand-white"
-              >
-                <span data-i18n="no">Se hvordan det fungerer</span><span data-i18n="en">See how it works</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            )}
           </div>
         </div>
       ))}
