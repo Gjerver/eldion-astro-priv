@@ -196,6 +196,17 @@
         const v = lang === 'en' ? el.dataset.optEn : el.dataset.optNo;
         if (v != null) el.textContent = v;
       });
+      /* Image alt text: Norwegian lives in alt, English in data-alt-en */
+      document.querySelectorAll<HTMLImageElement>('img[data-alt-en]').forEach((img) => {
+        img.dataset.altNo ??= img.alt;
+        img.alt = (lang === 'en' ? img.dataset.altEn : img.dataset.altNo) ?? img.alt;
+      });
+      /* Tab title: Norwegian is server-rendered, English in data-title-en */
+      const titleEl = document.querySelector<HTMLElement>('title[data-title-en]');
+      if (titleEl) {
+        titleEl.dataset.titleNo ??= document.title;
+        document.title = (lang === 'en' ? titleEl.dataset.titleEn : titleEl.dataset.titleNo) ?? document.title;
+      }
     }
 
     const inView = (el: Element) => {

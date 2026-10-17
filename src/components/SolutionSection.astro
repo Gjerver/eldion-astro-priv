@@ -1,4 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
+import hydroPrototype from '../assets/images/hydro-husnes-prototype.jpg';
+import principleSketch from '../assets/images/skisse3.png';
 ---
 <!-- Light editorial section — colour-blocked against the navy canvas -->
 <section id="goal" class="bg-brand-white py-28 px-4 md:px-[5vw] max-[768px]:py-20">
@@ -26,15 +29,24 @@
         </p>
       </div>
 
+      <!-- Parallax sits on the figure so the caption moves with the photo -->
       <div data-animate class="flex flex-col items-center">
-        <img
-          src="/images/skisse3.png"
-          alt="Eldion prinsippskisse"
-          class="parallax-img w-full max-w-[420px] mix-blend-multiply"
-        />
-        <p class="mt-4 text-[0.7rem] tracking-wide text-brand-navy/40">
-          <span data-i18n="no">Plug &amp; Play — ingen driftsstans</span><span data-i18n="en">Plug &amp; Play — no downtime</span>
-        </p>
+        <figure class="parallax-img m-0 flex w-full max-w-[380px] flex-col items-center">
+          <Picture
+            src={hydroPrototype}
+            alt="Eldion-prototype montert på rør hos Hydro Husnes"
+            data-alt-en="Eldion prototype mounted on a pipe at Hydro Husnes"
+            width={760}
+            widths={[380, 760, 1140]}
+            sizes="(max-width: 420px) calc(100vw - 32px), 380px"
+            formats={['avif', 'webp']}
+            pictureAttributes={{ class: 'block w-full' }}
+            class="block h-auto w-full rounded-2xl shadow-[0_20px_48px_rgba(0,36,64,0.16)]"
+          />
+          <figcaption class="mt-4 text-center text-[0.7rem] tracking-wide text-brand-navy/40">
+            <span data-i18n="no">Prototype i drift hos Hydro Husnes, oktober 2026.</span><span data-i18n="en">Prototype in operation at Hydro Husnes, October 2026.</span>
+          </figcaption>
+        </figure>
       </div>
 
     </div>
@@ -78,6 +90,8 @@
       <p class="mb-6 text-[0.68rem] uppercase tracking-[0.26em] text-brand-navy/40">
         <span data-i18n="no">Tekniske data</span><span data-i18n="en">Technical data</span>
       </p>
+      <!-- Side-by-side only from lg: the spec rows need ~500px to stay on one line -->
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
       <div class="divide-y divide-brand-navy/[0.08]">
 
         <div class="flex items-start justify-between gap-8 py-4">
@@ -129,22 +143,42 @@
         </div>
 
       </div>
+
+      <figure class="m-0 flex flex-col items-center">
+        <Picture
+          src={principleSketch}
+          alt="Eldion prinsippskisse"
+          width={840}
+          widths={[420, 840, 1260]}
+          sizes="(max-width: 452px) calc(100vw - 32px), 420px"
+          formats={['avif', 'webp']}
+          fallbackFormat="png"
+          pictureAttributes={{ class: 'block w-full max-w-[420px]' }}
+          class="block h-auto w-full mix-blend-multiply"
+        />
+        <figcaption class="mt-4 text-[0.7rem] tracking-wide text-brand-navy/40">
+          <span data-i18n="no">Plug &amp; Play — ingen driftsstans</span><span data-i18n="en">Plug &amp; Play — no downtime</span>
+        </figcaption>
+      </figure>
+      </div>
     </div>
 
     <!-- ── Mounting image + pilot CTA ──────────────────────────── -->
     <div class="mt-4 grid grid-cols-1 items-center gap-14 md:grid-cols-2 md:gap-16">
 
       <div data-animate class="text-center">
-        <img
-          src="/images/montering.jpg"
-          alt="Montering"
-          loading="lazy"
-          class="parallax-img mx-auto w-full max-w-[300px] rounded-2xl
-                 shadow-[0_20px_48px_rgba(0,36,64,0.16)]"
-        />
-        <p class="mt-4 text-[0.7rem] tracking-wide text-brand-navy/40">
-          <span data-i18n="no">Fleksibel overflatemontering</span><span data-i18n="en">Flexible surface mounting</span>
-        </p>
+        <div class="parallax-img">
+          <img
+            src="/images/montering.jpg"
+            alt="Montering"
+            loading="lazy"
+            class="mx-auto w-full max-w-[300px] rounded-2xl
+                   shadow-[0_20px_48px_rgba(0,36,64,0.16)]"
+          />
+          <p class="mt-4 text-[0.7rem] tracking-wide text-brand-navy/40">
+            <span data-i18n="no">Fleksibel overflatemontering</span><span data-i18n="en">Flexible surface mounting</span>
+          </p>
+        </div>
       </div>
 
       <div data-animate>
@@ -152,8 +186,8 @@
           <span data-i18n="no">Pilot-partner</span><span data-i18n="en">Pilot partner</span>
         </p>
         <p class="mb-8 text-[1.02rem] leading-[1.8] text-brand-navy/70">
-          <span data-i18n="no" set:html={'Vi søker innovative partnere for pilottesting. Alt vi trenger er en ΔT&nbsp;&gt;&nbsp;30&nbsp;°C. Vi tilbyr gratis installasjon og utstyr.'} />
-          <span data-i18n="en" set:html={'We are looking for innovative partners for pilot testing. All we need is a ΔT&nbsp;&gt;&nbsp;30&nbsp;°C. We provide free installation and equipment.'} />
+          <span data-i18n="no" set:html={'Vi søker utvalgte pilotpartnere. Alt vi trenger er en ΔT&nbsp;&gt;&nbsp;30&nbsp;°C. Vi tilbyr gratis installasjon og utstyr.'} />
+          <span data-i18n="en" set:html={'We are looking for selected pilot partners. All we need is a ΔT&nbsp;&gt;&nbsp;30&nbsp;°C. We provide free installation and equipment.'} />
         </p>
         <a
           href="mailto:kontakt@eldion.no"

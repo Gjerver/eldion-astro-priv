@@ -8,6 +8,8 @@ export interface TimelineEvent {
   content: string;
   contentEn: string;
   logoStyle?: string;
+  /* "Read more" links; label is the source name (same in both languages) */
+  links?: { label: string; url: string }[];
 }
 
 export const events: TimelineEvent[] = [
@@ -22,19 +24,26 @@ export const events: TimelineEvent[] = [
       "Vår første operasjonelle prototype er nå installert ved smelteverket til Hydro Aluminium AS på Husnes. Installasjonen gikk raskt og uten komplikasjoner. Dette er vårt første steg fra laboratoriet ut i industrien. Testperioden som starter nå, skal dokumentere stabil drift over tid under reelle forhold.",
     contentEn:
       "Our first operational prototype is now installed at the Hydro Aluminium AS smelter in Husnes. The installation went quickly and without complications. This is our first step from the laboratory into industry. The test period now starting will document stable operation over time under real conditions.",
+    links: [
+      { label: "LinkedIn", url: "https://lnkd.in/p/emN-ghJp" },
+      { label: "Kvinnheringen", url: "https://www.kvinnheringen.no/nytt-steg-for-lokale-gr-ndarar-betyr-veldig-mykje/s/80-27-7574" },
+    ],
   },
   {
     date: "21. Apr 2026",
     dateEn: "Apr 21, 2026",
     logo: "brand/logo-colour.png",
     logoAlt: "Eldion",
-    title: "Betydelig styrking av teamet",
-    titleEn: "Significant strengthening of the team",
+    title: "Teamet styrkes",
+    titleEn: "The team grows",
     content:
-      "Vi har gleden av å ønske Håvard, Harald, Aiken og Kristoffer velkommen til Eldion. Denne utvidelsen gir oss et kraftig kapasitetsløft og tilfører kritisk spisskompetanse; både for å akselerere den tekniske utviklingen og for å styrke selskapets kommersielle fundament.",
+      "Vi ønsker Håvard, Harald, Aiken og Kristoffer velkommen til Eldion. De styrker både den tekniske utviklingen og det kommersielle arbeidet.",
     contentEn:
-      "We are delighted to welcome Håvard, Harald, Aiken and Kristoffer to Eldion. This expansion gives us a major boost in capacity and adds critical specialist expertise — both to accelerate the technical development and to strengthen the company's commercial foundation.",
+      "We welcome Håvard, Harald, Aiken and Kristoffer to Eldion. They strengthen both the technical development and the commercial work.",
     logoStyle: "h-[50px] w-auto",
+    links: [
+      { label: "LinkedIn", url: "https://www.linkedin.com/feed/update/urn:li:activity:7462396863640535041" },
+    ],
   },
   {
     date: "02. Apr 2026",
@@ -44,9 +53,12 @@ export const events: TimelineEvent[] = [
     title: "Tildelt 1 million i STUD-ENT-midler",
     titleEn: "Awarded NOK 1 million in STUD-ENT funding",
     content:
-      "Eldion mottar 1 million kroner i finansiell støtte gjennom Innovasjon Norges STUD-ENT-program. Tildelingen markerer en viktig milepæl i selskapets kommersialiseringsløp og sikrer kapital til videre teknologiutvikling. Midlene vil blant annet benyttes til å fasilitere og gjennomføre den kommende pilottestingen i samarbeid med Hydro Aluminium AS på Husnes.",
+      "Eldion mottar 1 million kroner gjennom Innovasjon Norges STUD-ENT-program. Midlene går til videre teknologiutvikling, blant annet pilottestingen hos Hydro Aluminium AS på Husnes.",
     contentEn:
-      "Eldion receives NOK 1 million in financial support through Innovation Norway's STUD-ENT programme. The award marks an important milestone in the company's commercialisation journey and secures capital for further technology development. Among other things, the funds will be used to facilitate and carry out the upcoming pilot testing in collaboration with Hydro Aluminium AS at Husnes.",
+      "Eldion receives NOK 1 million through Innovation Norway's STUD-ENT programme. The funds go towards further technology development, including the pilot testing with Hydro Aluminium AS at Husnes.",
+    links: [
+      { label: "UiS", url: "https://www.uis.no/nb/om-uis/uis-studenter-fikk-1-million-fra-innovasjon-norge-for-tradlost-overvaking-system" },
+    ],
   },
   {
     date: "04. Feb 2026",
@@ -56,9 +68,9 @@ export const events: TimelineEvent[] = [
     title: "Pilotavtale med Hydro Aluminium AS",
     titleEn: "Pilot agreement with Hydro Aluminium AS",
     content:
-      "Eldion signerer samarbeidsavtale om et FoU-testprosjekt med Hydro Aluminium AS. Avtalen gir oss tilgang til å teste teknologien i full skala ved smelteverket på Husnes. Dette er en kritisk validering fra en global industriaktør og markerer starten på den industrielle utrullingen.",
+      "Eldion signerer samarbeidsavtale om et FoU-testprosjekt med Hydro Aluminium AS. Avtalen gir oss tilgang til å teste teknologien i full skala ved smelteverket på Husnes.",
     contentEn:
-      "Eldion signs a collaboration agreement for an R&D test project with Hydro Aluminium AS. The agreement gives us access to test the technology at full scale at the Husnes smelter. This is a critical validation from a global industrial player and marks the start of the industrial rollout.",
+      "Eldion signs a collaboration agreement for an R&D test project with Hydro Aluminium AS. The agreement gives us access to test the technology at full scale at the Husnes smelter.",
   },
   {
     date: "29. Jan 2026",
@@ -92,9 +104,9 @@ export const events: TimelineEvent[] = [
     title: "Tilskudd fra Innovasjon Norge",
     titleEn: "Grant from Innovation Norway",
     content:
-      "Eldion mottar oppstartstilskudd fra Innovasjon Norge. Tildelingen validerer at forretningsidéen har betydelig nasjonalt og internasjonalt markedspotensial. Midlene dedikeres til å kartlegge betalingsvilje og sikre de første pilotkundene.",
+      "Eldion mottar oppstartstilskudd fra Innovasjon Norge. Midlene brukes til å kartlegge betalingsvilje og sikre de første pilotkundene.",
     contentEn:
-      "Eldion receives a start-up grant from Innovation Norway. The award validates that the business idea has significant national and international market potential. The funds are dedicated to mapping willingness to pay and securing the first pilot customers.",
+      "Eldion receives a start-up grant from Innovation Norway. The funds are used to map willingness to pay and secure the first pilot customers.",
   },
   {
     date: "01. Sep 2025",
@@ -104,9 +116,9 @@ export const events: TimelineEvent[] = [
     title: "Teamet utvides",
     titleEn: "The team expands",
     content:
-      "Joar Dale Landa trer inn som CFO og medeier. Med bakgrunn fra industriell økonomi og erfaring fra olje- og industrisektoren, tilfører han strategisk tyngde som ruster selskapet for kommersiell skalering.",
+      "Joar Dale Landa trer inn som CFO og medeier, med bakgrunn fra industriell økonomi og erfaring fra olje- og industrisektoren.",
     contentEn:
-      "Joar Dale Landa joins as CFO and co-owner. With a background in industrial economics and experience from the oil and industrial sectors, he adds strategic weight that prepares the company for commercial scaling.",
+      "Joar Dale Landa joins as CFO and co-owner, with a background in industrial economics and experience from the oil and industrial sectors.",
     logoStyle: "h-[50px] w-auto",
   },
   {
