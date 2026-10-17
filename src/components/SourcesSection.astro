@@ -1,0 +1,91 @@
+---
+/*
+  «Kilder og noter» — every footnote on the page, collected in one compact
+  block above the footer. Numbered in the order the marks appear on the page:
+  1–3 in «Utfordringen» (WhySection), 4–6 on the stats in «Vår løsning».
+  Each item is an anchor target (#kilde-N) for the superscript links.
+*/
+
+interface Note {
+  n: number;
+  no: string;
+  en: string;
+  sourceNo?: string;
+  sourceEn?: string;
+  url?: string;
+}
+
+const notes: Note[] = [
+  {
+    n: 1,
+    no: 'Grane-plattformen (StatoilHydro, i dag Equinor): rundt to timer mot opptil to dager for en kablet enhet.',
+    en: 'Grane platform (StatoilHydro, now Equinor): around two hours versus up to two days for a wired unit.',
+    sourceNo: 'Emerson Process Management, 2008.',
+    sourceEn: 'Emerson Process Management, 2008.',
+    url: 'https://www.emerson.com/is/content/emerson/en/corporate/shared-assets/documents/emerson-s-smart-wireless-solutions-improve-wellhead-and-heat-exchanger-monitoring-on-statoilhydro-of.pdf',
+  },
+  {
+    n: 2,
+    no: 'Beregning for en bemannet offshoreplattform med rundt 4 000 I/O, der hvert sjette målepunkt gjøres trådløst.',
+    en: 'Calculation for a manned offshore platform with around 4,000 I/O, with one in six measurement points made wireless.',
+    sourceNo: 'Emerson Process Management, E&P Magazine, 2009.',
+    sourceEn: 'Emerson Process Management, E&P Magazine, 2009.',
+    url: 'https://www.emerson.com/is/content/emerson/en/corporate/news-and-events/articles/documents/appropriate-uses-of-wireless-delineated.pdf',
+  },
+  {
+    n: 3,
+    no: '',
+    en: '',
+    sourceNo: 'U.S. Department of Energy: Waste Heat Recovery: Technology and Opportunities in U.S. Industry, 2008.',
+    sourceEn: 'U.S. Department of Energy: Waste Heat Recovery: Technology and Opportunities in U.S. Industry, 2008.',
+    url: 'https://www1.eere.energy.gov/manufacturing/intensiveprocesses/pdfs/waste_heat_recovery.pdf',
+  },
+  {
+    n: 4,
+    no: 'En typisk kabelinstallasjon i industrien har en total kostnad på 800–1 200 kr per meter kabel installert.',
+    en: 'A typical industrial cable installation has a total cost of 800–1,200 NOK per metre of cable installed.',
+  },
+  {
+    n: 5,
+    no: 'En typisk installasjon på 60 meter instrumentkabel vil kreve 100 kg CO₂, kun i materiale til kabelen.',
+    en: 'A typical 60-metre instrument-cable installation accounts for 100 kg CO₂ in cable material alone.',
+  },
+  {
+    n: 6,
+    no: 'Oppdateringsfrekvens er avhengig av temperaturdifferansen.',
+    en: 'Update frequency depends on the temperature differential.',
+  },
+];
+
+const link = 'text-white/65 underline decoration-white/25 underline-offset-2 transition-colors duration-250 hover:text-brand-white';
+---
+<aside id="kilder" aria-labelledby="kilder-tittel" class="border-t border-white/[0.06] px-4 pb-14 pt-12 md:px-[5vw]">
+  <div class="mx-auto max-w-[980px]">
+
+    <h2 id="kilder-tittel" class="m-0 mb-5 text-[0.66rem] font-semibold uppercase tracking-[0.26em] text-white/45">
+      <span data-i18n="no">Kilder og noter</span><span data-i18n="en">Sources and notes</span>
+    </h2>
+
+    <ol class="m-0 list-none p-0 md:columns-2 md:gap-x-12">
+      {notes.map((note) => (
+        <li
+          id={`kilde-${note.n}`}
+          class="mb-2 flex break-inside-avoid gap-2 text-[0.7rem] leading-relaxed text-white/50
+                 scroll-mt-28 transition-colors duration-500 target:text-white/85 max-[900px]:scroll-mt-48"
+        >
+          <span class="w-3 flex-none tabular-nums text-white/60">{note.n}</span>
+          <span>
+            <span data-i18n="no">
+              {note.no}{note.no && note.url && ' '}
+              {note.url && <a href={note.url} target="_blank" rel="noopener" class={link}>{note.sourceNo}</a>}
+            </span><span data-i18n="en">
+              {note.en}{note.en && note.url && ' '}
+              {note.url && <a href={note.url} target="_blank" rel="noopener" class={link}>{note.sourceEn}</a>}
+            </span>
+          </span>
+        </li>
+      ))}
+    </ol>
+
+  </div>
+</aside>
