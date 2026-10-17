@@ -58,6 +58,9 @@ export const events: TimelineEvent[] = [
       "Eldion receives NOK 1 million through Innovation Norway's STUD-ENT programme. The funds go towards further technology development, including the pilot testing with Hydro Aluminium AS at Husnes.",
     links: [
       { label: "UiS", url: "https://www.uis.no/nb/om-uis/uis-studenter-fikk-1-million-fra-innovasjon-norge-for-tradlost-overvaking-system" },
+      { label: "Shifter", url: "https://www.shifter.no/nyheter/disse-20-student-bedriftene-far-en-million/459693" },
+      { label: "Innovasjon Norge", url: "https://www.innovasjonnorge.no/nyhetsartikkel/millioner-til-studenter-etter-rekordstor-interesse" },
+      { label: "Kvinnheringen", url: "https://www.kvinnheringen.no/fekk-ein-million-av-innovasjon-norge-utviklar-tradlaust-adapter-driven-av-spillvarme/s/5-27-633944" },
     ],
   },
   {
