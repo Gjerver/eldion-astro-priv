@@ -1,8 +1,9 @@
 ---
 /*
   «Utfordringen» — why industry isn't wireless yet, in three steps:
-  it pays off → but batteries create new maintenance → the heat is
-  already there (Eldion). Sits between the hero (what) and «Vår løsning» (how).
+  cabling costs millions → but wireless sensors run on batteries → the
+  energy is already there (Eldion). Sits between the hero (what) and
+  «Vår løsning» (how).
 
   Deliberately restrained: no icons, no cards, no glow. Three columns split
   by hairlines, big figures straight on the background. Skim path:
@@ -21,25 +22,25 @@ const ref = (n: number) =>
 
 const steps = [
   {
-    headingNo: 'Det lønner seg',
-    headingEn: 'It pays off',
-    figureNo: '2&nbsp;timer',
-    figureEn: '2&nbsp;hours',
-    labelNo: `mot opptil 2 dager for et kablet målepunkt${ref(1)}`,
-    labelEn: `vs up to 2 days for a wired measurement point${ref(1)}`,
-    textNo: `Med hvert sjette målepunkt trådløst kunne en offshoreplattform spart opptil 35 tonn kabel og utstyr og over én million dollar.${ref(2)}`,
-    textEn: `With around one in six measurement points wireless, an offshore platform could save up to 35 tonnes of cable and equipment and more than one million dollars.${ref(2)}`,
+    headingNo: 'Kabling koster millioner',
+    headingEn: 'Cabling costs millions',
+    /* no-break spaces keep the figures from splitting into odd fragments */
+    figureNo: '&gt;&nbsp;1&nbsp;mill.&nbsp;USD',
+    figureEn: '&gt;&nbsp;USD 1&nbsp;million',
+    labelNo: `beregnet besparelse på én offshoreinstallasjon, med hvert sjette målepunkt trådløst${ref(2)}`,
+    labelEn: `calculated savings on one offshore platform, with one in six measurement points wireless${ref(2)}`,
+    textNo: `I tillegg opptil 35 tonn mindre kabel og utstyr, som kommer med et massivt karbonavtrykk.${ref(2)} Et kablet målepunkt kan ta flere dager å installere, mot et par timer for trådløst.${ref(1)}`,
+    textEn: `Plus up to 35 tonnes less cable and equipment.${ref(2)} A wired measurement point can take days to install, versus a couple of hours for wireless.${ref(1)}`,
   },
   {
-    headingNo: 'Men batteriene skaper nytt vedlikehold',
-    headingEn: 'But batteries create new maintenance',
-    /* no-break spaces keep the figure from splitting into odd fragments */
-    figureNo: '≈&nbsp;1&nbsp;bytte hver&nbsp;dag',
-    figureEn: '≈&nbsp;1&nbsp;change a&nbsp;day',
-    labelNo: 'med 1&nbsp;000 sensorer og tre års batterilevetid',
+    headingNo: 'Men trådløse sensorer går på batteri',
+    headingEn: 'But wireless sensors run on batteries',
+    figureNo: 'Batteribytte hver&nbsp;dag',
+    figureEn: 'Change battery every&nbsp;day',
+    labelNo: 'ved 1&nbsp;000 sensorer på tre års batterilevetid',
     labelEn: 'with 1,000 sensors and a three-year battery life',
-    textNo: 'Og for å vare lenge må de sende data sjelden.',
-    textEn: 'And to last, they have to transmit data rarely.',
+    textNo: 'Vedlikeholdet du ville slippe, kommer tilbake. Og for å spare strøm sender sensorene data sjelden.',
+    textEn: 'The maintenance you wanted to avoid comes back. And to save power, the sensors transmit data rarely.',
   },
   {
     headingNo: 'Energien er allerede der',
@@ -48,8 +49,8 @@ const steps = [
     figureEn: '20–50&nbsp;%',
     labelNo: `av industriens energi går tapt som spillvarme${ref(3)}`,
     labelEn: `of industrial energy is lost as waste heat${ref(3)}`,
-    textNo: 'Eldion henter strømmen derfra, uten batteribytter og med hyppige målinger.',
-    textEn: 'Eldion draws its power from there, with no battery changes and frequent measurements.',
+    textNo: 'Eldion gjør spillvarmen om til strøm, så sensoren slipper batteri og kan sende data oftere.',
+    textEn: 'Eldion turns the waste heat into electricity, so the sensor needs no battery and can transmit data often.',
     accent: true,
     link: true,
   },
