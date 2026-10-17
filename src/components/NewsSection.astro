@@ -66,20 +66,24 @@ for (const e of events) {
                   <span data-i18n="no">{ev.content}</span><span data-i18n="en">{ev.contentEn}</span>
                 </p>
                 {ev.links && (
-                  <p class="m-0 mt-4 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[0.78rem]">
+                  <!-- "Les mer:" reads as a lead-in to the external sources, not a link itself -->
+                  <p class="m-0 mt-4 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[0.78rem]">
                     <span class="text-white/40">
-                      <span data-i18n="no">Les mer</span><span data-i18n="en">Read more</span>
+                      <span data-i18n="no">Les mer:</span><span data-i18n="en">Read more:</span>
                     </span>
-                    {ev.links.map((l) => (
-                      <a
-                        href={l.url}
-                        target="_blank"
-                        rel="noopener"
-                        class="inline-flex items-center gap-1 font-semibold text-brand-sky no-underline
-                               transition-colors duration-250 hover:text-brand-white"
-                      >
-                        {l.label}<i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
-                      </a>
+                    {ev.links.map((l, i) => (
+                      <>
+                        {i > 0 && <span class="text-white/25" aria-hidden="true">·</span>}
+                        <a
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener"
+                          class="inline-flex items-center gap-1 font-semibold text-brand-sky no-underline
+                                 transition-colors duration-250 hover:text-brand-white"
+                        >
+                          {l.label}<i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+                        </a>
+                      </>
                     ))}
                   </p>
                 )}
