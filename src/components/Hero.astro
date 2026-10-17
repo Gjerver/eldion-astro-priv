@@ -1,12 +1,8 @@
 ---
-import { Picture } from 'astro:assets';
-import hydroPrototype from '../assets/images/hydro-husnes-prototype.jpg';
 ---
 <div id="home" style="scroll-margin-top: 0;">
-  <!-- Split hero from lg: copy left, product photo right. Below lg the photo
-       stacks under the copy; extra top padding clears the taller wrapped navbar. -->
   <section class="relative flex min-h-screen flex-col justify-center overflow-hidden
-                  px-[8vw] py-20 max-[900px]:pt-[190px] max-[768px]:px-6 max-[768px]:pb-16">
+                  px-[8vw] max-[768px]:px-6 max-[768px]:justify-end max-[768px]:pb-24">
 
     <!-- ── Background: flat navy + engineering grid + single soft glow ── -->
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -23,10 +19,17 @@ import hydroPrototype from '../assets/images/hydro-husnes-prototype.jpg';
       <div class="absolute inset-0"
            style="background: radial-gradient(ellipse 46% 52% at 78% 22%, rgba(10,111,182,0.20) 0%, transparent 70%);">
       </div>
+      <!-- logomark bolt as faint watermark, right edge -->
+      <img
+        src="/images/brand/logomark.svg"
+        alt=""
+        class="absolute top-1/2 -translate-y-1/2 select-none max-[900px]:hidden"
+        style="right:-14vh; height:112vh; width:auto; opacity:0.05;
+               filter: brightness(0) invert(1);"
+      />
     </div>
 
-    <div class="relative grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-[clamp(48px,6vw,96px)]">
-    <div>
+    <div class="relative">
       <!-- Overline -->
       <p class="hero-pre mb-7 text-[0.75rem] font-semibold uppercase tracking-[0.26em] text-brand-sky max-[768px]:mb-5">
         <span data-i18n="no">Batteriløs industriell IoT</span><span data-i18n="en">Battery-free industrial IoT</span>
@@ -73,27 +76,6 @@ import hydroPrototype from '../assets/images/hydro-husnes-prototype.jpg';
           <span data-i18n="no">Se løsningen</span><span data-i18n="en">See the solution</span>
         </a>
       </div>
-    </div>
-
-      <!-- Product photo: natural crop, no filters or overlays -->
-      <figure data-animate data-delay="6" class="m-0 w-full max-w-[400px] xl:max-w-[440px] lg:justify-self-end">
-        <Picture
-          src={hydroPrototype}
-          alt="Eldion-prototype montert på rør hos Hydro Husnes"
-          data-alt-en="Eldion prototype mounted on a pipe at Hydro Husnes"
-          width={880}
-          widths={[400, 600, 880, 1320]}
-          sizes="(min-width: 1280px) 440px, (min-width: 1024px) 400px, min(400px, calc(100vw - 48px))"
-          formats={['avif', 'webp']}
-          loading="eager"
-          fetchpriority="high"
-          pictureAttributes={{ class: 'block w-full' }}
-          class="block h-auto w-full rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.35)]"
-        />
-        <figcaption class="mt-3 text-[0.7rem] tracking-wide text-white/45">
-          <span data-i18n="no">Prototype i drift hos Hydro Husnes</span><span data-i18n="en">Prototype in operation at Hydro Husnes</span>
-        </figcaption>
-      </figure>
     </div>
 
     <!-- Scroll cue -->
