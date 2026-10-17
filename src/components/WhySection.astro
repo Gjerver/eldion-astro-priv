@@ -1,0 +1,223 @@
+---
+/*
+  "Hvorfor Eldion" — the argument in four steps, leading into «Vår løsning»:
+  wireless pays off → the battery eats the gains → the battery limits how
+  often you get data → the heat is already there (Eldion).
+
+  Skim path: H2 → H3s → the big figures tell the whole story on their own.
+  Colour carries meaning: blue/neutral for the setup and the problem,
+  orange only on the final panel (heat = Eldion's answer).
+
+  Figures are static text on purpose (no counter animation) so crawlers,
+  link previews and slow phones always see the real values.
+*/
+
+const stats = [
+  {
+    no: '2&nbsp;timer', en: '2&nbsp;hours', ref: 2,
+    labelNo: 'mot opptil 2 dager for et kablet målepunkt',
+    labelEn: 'vs up to 2 days for a wired point',
+  },
+  {
+    no: '35&nbsp;tonn', en: '35&nbsp;tonnes', ref: 3,
+    labelNo: 'mindre kabel og utstyr på én plattform',
+    labelEn: 'less cable and equipment on one platform',
+  },
+  {
+    no: '&gt;&nbsp;1&nbsp;mill.&nbsp;USD', en: '&gt;&nbsp;USD&nbsp;1&nbsp;million', ref: 3,
+    labelNo: 'spart på samme plattform',
+    labelEn: 'saved on the same platform',
+  },
+];
+
+const footnotes = [
+  {
+    n: 1,
+    no: 'En typisk kabelinstallasjon i industrien har en total kostnad på 800–1 200 kr per meter kabel installert.',
+    en: 'A typical industrial cable installation has a total cost of NOK 800–1,200 per metre of cable installed.',
+  },
+  {
+    n: 2,
+    no: 'Grane-plattformen (StatoilHydro, i dag Equinor): rundt to timer mot opptil to dager for en kablet enhet.',
+    en: 'Grane platform (StatoilHydro, now Equinor): around two hours versus up to two days for a wired unit.',
+    sourceNo: 'Emerson Process Management, kundecase, 2008.',
+    sourceEn: 'Emerson Process Management, customer case, 2008.',
+    url: 'https://www.emerson.com/is/content/emerson/en/corporate/shared-assets/documents/emerson-s-smart-wireless-solutions-improve-wellhead-and-heat-exchanger-monitoring-on-statoilhydro-of.pdf',
+  },
+  {
+    n: 3,
+    no: 'Beregning for en bemannet offshoreplattform med rundt 4 000 I/O.',
+    en: 'Calculation for a manned offshore platform with around 4,000 I/O.',
+    sourceNo: 'Emerson Process Management, E&P Magazine, 2009.',
+    sourceEn: 'Emerson Process Management, E&P Magazine, 2009.',
+    url: 'https://www.emerson.com/is/content/emerson/en/corporate/news-and-events/articles/documents/appropriate-uses-of-wireless-delineated.pdf',
+  },
+  {
+    n: 4,
+    no: '',
+    en: '',
+    sourceNo: 'U.S. Department of Energy: Waste Heat Recovery: Technology and Opportunities in U.S. Industry, 2008.',
+    sourceEn: 'U.S. Department of Energy: Waste Heat Recovery: Technology and Opportunities in U.S. Industry, 2008.',
+    url: 'https://www1.eere.energy.gov/manufacturing/intensiveprocesses/pdfs/waste_heat_recovery.pdf',
+  },
+];
+
+/* Shared classes. Text blocks are capped at 27rem ≈ 65 characters per line
+   (DM Sans is narrow, so `ch` units overshoot by ~30 %). */
+const sup = 'ml-0.5 text-xs font-semibold text-brand-sky';
+const h3 = 'm-0 font-display text-[clamp(1.2rem,1.9vw,1.45rem)] font-semibold leading-snug tracking-[-0.01em] text-brand-white';
+const figure = 'm-0 font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-bold leading-[1.15] tracking-tight text-brand-white';
+const labelBase = 'mt-3.5 text-[0.64rem] uppercase leading-snug tracking-[0.18em]';
+const label = `${labelBase} text-white/55`;
+const body = 'm-0 text-[0.98rem] leading-[1.8] text-white/60';
+const card = 'flex flex-col rounded-xl border border-white/[0.08] bg-brand-navy-2 p-9 shadow-[0_16px_48px_rgba(0,0,0,0.28)] max-[600px]:p-6';
+const fnLink = 'text-white/60 underline decoration-white/25 underline-offset-2 transition-colors duration-250 hover:text-brand-white';
+---
+<!-- Deepest navy band: separates clearly from the navy trust strip above
+     and the light «Vår løsning» section below -->
+<section id="hvorfor" class="bg-brand-navy-3 px-4 py-28 md:px-[5vw] max-[768px]:py-20">
+  <div class="mx-auto max-w-[980px]">
+
+    <!-- Header -->
+    <p data-animate class="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.26em] text-brand-sky">
+      <span data-i18n="no">Hvorfor Eldion</span><span data-i18n="en">Why Eldion</span>
+    </p>
+    <h2 data-animate class="m-0 mb-6 font-display text-[clamp(1.9rem,3.4vw,2.8rem)] font-bold leading-[1.1] tracking-[-0.02em] text-brand-white">
+      <span data-i18n="no"><span class="block">Trådløst er bevist.</span><span class="block">Batteriet er problemet.</span></span><span data-i18n="en"><span class="block">Wireless is proven.</span><span class="block">The battery is the problem.</span></span>
+    </h2>
+    <p data-animate class="m-0 mb-20 max-w-[27rem] text-[1.02rem] leading-[1.85] text-white/60 max-[768px]:mb-14">
+      <span data-i18n="no" set:html={`Industri 4.0 krever data fra langt flere målepunkter enn før, men kabling koster opptil 1&nbsp;200&nbsp;kr per meter<sup class="${sup}">1</sup> og er en hyppig feilkilde.`} />
+      <span data-i18n="en" set:html={`Industry 4.0 demands data from far more measurement points than before, but cabling costs up to NOK&nbsp;1,200 per metre<sup class="${sup}">1</sup> and is a frequent point of failure.`} />
+    </p>
+
+    <!-- ── 1. Wireless pays off ─────────────────────────────────── -->
+    <div class="mb-16 max-[768px]:mb-12">
+      <div data-animate class="max-w-[27rem]">
+        <div class="mb-4 flex items-start gap-3">
+          <i data-lucide="wifi" class="mt-1 h-5 w-5 flex-none text-brand-sky" aria-hidden="true"></i>
+          <h3 class={h3}>
+            <span data-i18n="no">Trådløst lønner seg</span><span data-i18n="en">Wireless pays off</span>
+          </h3>
+        </div>
+        <p class={body}>
+          <span data-i18n="no" set:html={`Et trådløst målepunkt installeres på timer i stedet for dager.<sup class="${sup}">2</sup> Bare ved å gjøre hvert sjette målepunkt trådløst kunne en offshoreplattform kvitte seg med opptil 35 tonn kabel og utstyr, frigjøre opptil 129 kubikkmeter plass og spare over én million dollar.<sup class="${sup}">3</sup>`} />
+          <span data-i18n="en" set:html={`A wireless measurement point is installed in hours rather than days.<sup class="${sup}">2</sup> Simply by making one in six measurement points wireless, an offshore platform could eliminate up to 35 tonnes of cable and equipment, free up as much as 129 cubic metres of space and save more than one million dollars.<sup class="${sup}">3</sup>`} />
+        </p>
+      </div>
+
+      <!-- Figures — same register as the stats row in «Vår løsning» -->
+      <div data-animate class="mt-12 border-y border-white/[0.08] py-10 max-[768px]:py-2">
+        <div class="grid grid-cols-1 divide-y divide-white/[0.08] md:grid-cols-3 md:divide-x md:divide-y-0">
+          {stats.map((s) => (
+            <div class="px-4 py-7 text-center md:px-6 md:py-0">
+              <p class={figure}>
+                <span data-i18n="no" set:html={s.no} /><span data-i18n="en" set:html={s.en} /><sup class={sup}>{s.ref}</sup>
+              </p>
+              <p class={`${label} mx-auto max-w-[24ch]`}>
+                <span data-i18n="no">{s.labelNo}</span><span data-i18n="en">{s.labelEn}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2 + 3. The battery problem — two cards ───────────────── -->
+    <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+
+      <article data-animate class={card}>
+        <div class="mb-6 flex items-start gap-3">
+          <i data-lucide="battery-low" class="mt-1 h-5 w-5 flex-none text-white/45" aria-hidden="true"></i>
+          <h3 class={h3}>
+            <span data-i18n="no">Men batteriet spiser gevinsten</span><span data-i18n="en">But the battery eats the gains</span>
+          </h3>
+        </div>
+        <p class={figure}>
+          <span data-i18n="no">≈ 1 batteribytte hver dag</span><span data-i18n="en">≈ 1 battery change a day</span>
+        </p>
+        <p class={label}>
+          <span data-i18n="no">med 1&nbsp;000 sensorer og tre års batterilevetid</span><span data-i18n="en">with 1,000 sensors and a three-year battery life</span>
+        </p>
+        <p class={`${body} mt-6`}>
+          <span data-i18n="no">Batteridrevne sensorer må få nye batterier, ofte på steder som er vanskelige eller farlige å komme til. Målepunktet som skulle gi mindre vedlikehold, gir mer.</span><span data-i18n="en">Battery-powered sensors need new batteries, often in places that are hard or hazardous to reach. The measurement point that was meant to reduce maintenance ends up adding to it.</span>
+        </p>
+      </article>
+
+      <article data-animate class={card}>
+        <div class="mb-6 flex items-start gap-3">
+          <i data-lucide="clock" class="mt-1 h-5 w-5 flex-none text-white/45" aria-hidden="true"></i>
+          <h3 class={h3}>
+            <span data-i18n="no">Og batteriet bestemmer hvor ofte du får data</span><span data-i18n="en">And the battery decides how often you get data</span>
+          </h3>
+        </div>
+        <p class={body}>
+          <span data-i18n="no">For å vare i årevis må batterisensorer sende sjelden. Det utelukker mange bruksområder der hyppige målinger trengs.</span><span data-i18n="en">To last for years, battery sensors have to transmit rarely. That rules out many applications where frequent measurements are needed.</span>
+        </p>
+      </article>
+
+    </div>
+
+    <!-- ── 4. The heat is already there — the warm climax ───────── -->
+    <div data-animate
+         class="relative overflow-hidden rounded-xl border border-brand-orange/25 bg-brand-navy-2
+                p-12 shadow-[0_16px_48px_rgba(0,0,0,0.28)] max-[768px]:p-8 max-[600px]:p-6">
+      <!-- one restrained warm glow behind the figure (mirrors the hero's blue glow) -->
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0"
+           style="background: radial-gradient(ellipse 55% 85% at 0% 60%, rgba(234,113,19,0.16) 0%, transparent 70%);">
+      </div>
+
+      <div class="relative">
+        <div class="mb-8 flex items-start gap-3 max-[768px]:mb-6">
+          <i data-lucide="thermometer" class="mt-1 h-5 w-5 flex-none text-brand-orange" aria-hidden="true"></i>
+          <h3 class={h3}>
+            <span data-i18n="no">Varmen er der allerede</span><span data-i18n="en">The heat is already there</span>
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-center md:gap-14">
+          <div>
+            <p class="m-0 whitespace-nowrap font-display text-[clamp(2.6rem,5vw,3.8rem)] font-bold leading-none tracking-[-0.02em] text-brand-orange">
+              20–50&nbsp;%<sup class="ml-[0.08em] top-[-2.1em] text-[0.24em] font-semibold text-brand-orange">4</sup>
+            </p>
+            <p class={`${labelBase} max-w-[26ch] text-white/65`}>
+              <span data-i18n="no">av industriens energi går tapt som spillvarme</span><span data-i18n="en">of industrial energy is lost as waste heat</span>
+            </p>
+          </div>
+
+          <div>
+            <p class="m-0 max-w-[27rem] text-[0.98rem] leading-[1.8] text-white/75">
+              <span data-i18n="no">En stor del av den går tapt fra varme overflater på utstyr og rør. Eldion henter strømmen derfra. Ingen batteribytter, og høy oppdateringsfrekvens som åpner for langt flere bruksområder.</span><span data-i18n="en">Much of it escapes from hot equipment and pipe surfaces. Eldion draws its power from there. No battery changes, and a high update rate that opens up far more applications.</span>
+            </p>
+            <!-- Same style as «Se løsningen» in the hero -->
+            <a
+              href="#goal"
+              class="mt-8 inline-flex items-center gap-2.5 rounded-lg border border-white/16 px-7 py-[15px]
+                     text-[0.95rem] font-semibold text-white/80 no-underline
+                     transition-all duration-250
+                     hover:border-white/40 hover:bg-white/[0.03] hover:text-white"
+            >
+              <span data-i18n="no">Se hvordan det fungerer</span><span data-i18n="en">See how it works</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Footnotes — same small, muted register as «Vår løsning» ─ -->
+    <div class="mt-16 space-y-1.5 border-t border-white/[0.08] pt-5">
+      {footnotes.map((f) => (
+        <p class="m-0 max-w-[24rem] text-[0.62rem] leading-relaxed text-white/50">
+          <sup class="mr-0.5 text-white/60">{f.n}</sup>
+          <span data-i18n="no">
+            {f.no}{f.no && f.url && ' '}
+            {f.url && <a href={f.url} target="_blank" rel="noopener" class={fnLink}>{f.sourceNo}</a>}
+          </span><span data-i18n="en">
+            {f.en}{f.en && f.url && ' '}
+            {f.url && <a href={f.url} target="_blank" rel="noopener" class={fnLink}>{f.sourceEn}</a>}
+          </span>
+        </p>
+      ))}
+    </div>
+
+  </div>
+</section>
