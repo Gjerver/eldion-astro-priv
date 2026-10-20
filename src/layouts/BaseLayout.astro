@@ -12,6 +12,10 @@ const { title = 'Eldion – Batteriløs industriell IoT' } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The site is designed dark. Declaring it stops browser "force dark" modes
+         (Samsung Internet, Chrome's auto-dark) from re-darkening it: they darkened
+         the orange CTAs to brown and the partner logos to near-black. -->
+    <meta name="color-scheme" content="dark" />
     <title data-title-en="Eldion – Battery-free industrial IoT">{title}</title>
     <meta name="description" content="Eldion leverer batteriløse, trådløse sensorsystemer drevet av industriell spillvarme – ingen batterier, ingen kabler. Neste generasjons industriell IoT." />
 

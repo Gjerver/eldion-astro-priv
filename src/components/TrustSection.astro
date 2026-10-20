@@ -1,10 +1,17 @@
 ---
+/*
+  Logos are pre-rendered white PNGs (public/images/partners/*-white.png),
+  not colour logos whitened with a CSS filter: Samsung Internet's dark mode
+  overrides CSS filters on images, which turned the strip dark on Galaxy
+  phones. Baked-in white survives it (as the white navbar logo always has).
+  w/h are the files' intrinsic size, so the browser reserves the right space.
+*/
 const partners = [
-  { src: 'innovasjon_norge.png', alt: 'Innovasjon Norge',               height: 44 },
-  { src: 'hydro.png',            alt: 'Hydro Aluminium',                height: 44 },
-  { src: 'elkem.png',            alt: 'Elkem',                          height: 38 },
-  { src: 'Eramet.png',           alt: 'Eramet',                         height: 38 },
-  { src: 'uis.png',              alt: 'Universitetet i Stavanger',      height: 44 },
+  { src: 'innovasjon-norge-white.png', alt: 'Innovasjon Norge',          w: 330, h: 132, height: 44 },
+  { src: 'hydro-white.png',            alt: 'Hydro Aluminium',           w: 132, h: 132, height: 44 },
+  { src: 'elkem-white.png',            alt: 'Elkem',                     w: 413, h: 132, height: 38 },
+  { src: 'eramet-white.png',           alt: 'Eramet',                    w: 268, h: 132, height: 38 },
+  { src: 'uis-white.png',              alt: 'Universitetet i Stavanger', w: 290, h: 132, height: 44 },
 ];
 ---
 <!-- Quiet trust strip directly below hero — monochrome partner logos -->
@@ -16,12 +23,14 @@ const partners = [
     </p>
 
     <div class="flex flex-wrap items-center justify-center gap-x-[clamp(32px,5vw,72px)] gap-y-8">
-      {partners.map(({ src, alt, height }) => (
+      {partners.map(({ src, alt, w, h, height }) => (
         <img
-          src={`/images/${src}`}
+          src={`/images/partners/${src}`}
           alt={alt}
+          width={w}
+          height={h}
           loading="lazy"
-          style={`height:${height}px; filter:brightness(0) invert(1);`}
+          style={`height:${height}px;`}
           class="w-auto opacity-45 transition-opacity duration-300 hover:opacity-90"
         />
       ))}

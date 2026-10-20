@@ -28,6 +28,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Same declaration as the <meta name="color-scheme"> in BaseLayout: the page
+     is already dark, so browser force-dark modes should leave it alone. */
+  color-scheme: dark;
 }
 
 /* Brand text selection */
